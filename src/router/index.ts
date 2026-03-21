@@ -11,6 +11,16 @@ const routes = [
     name: 'modules',
     component: () => import('@/pages/ModulesPage.vue'),
   },
+  {
+    path: '/reflection',
+    name: 'reflection',
+    component: () => import('@/pages/ReflectionPage.vue'),
+  },
+  {
+    path: '/credits',
+    name: 'credits',
+    component: () => import('@/pages/CreditsPage.vue'),
+  },
 ]
 
 export const router = createRouter({
