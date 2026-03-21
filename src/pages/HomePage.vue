@@ -1,159 +1,286 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { uploadHeroImage } from '@/services/uploadImage'
+import { onMounted, ref } from 'vue';
+import { getStorageImageUrl } from '@/services/storage';
 
-const heroImageUrl = ref<string>('')
-const isUploading = ref(false)
-const errorMessage = ref('')
+const homeImageUrl = ref('');
+const isLoadingImage = ref(true);
+const imageError = ref('');
 
-async function handleImageChange(event: Event) {
-  const target = event.target as HTMLInputElement
-  const file = target.files?.[0]
-
-  if (!file) return
-
+onMounted(async () => {
   try {
-    isUploading.value = true
-    errorMessage.value = ''
-    heroImageUrl.value = await uploadHeroImage(file)
+    // example path inside Firebase Storage
+    // upload your file manually in Firebase Storage under:
+    // home/hom-image.jpg
+    homeImageUrl.value = await getStorageImageUrl('hom-image.png');
   } catch (error) {
-    console.error(error)
-    errorMessage.value = 'Failed to upload image.'
+    console.error(error);
+    imageError.value = 'Failed to load home image from Firebase Storage.';
   } finally {
-    isUploading.value = false
+    isLoadingImage.value = false;
   }
-}
+});
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#FCFAF6] text-black">
-    <nav class="sticky top-0 z-50 border-b border-[#E4E4E4] bg-[#FCFAF6]/95 backdrop-blur">
-      <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-3 px-4 py-4 md:justify-start md:gap-6 md:px-6">
-        <RouterLink to="/" class="rounded px-3 py-2 text-sm md:text-base hover:bg-black/5">
-          Home
-        </RouterLink>
-        <RouterLink to="/modules" class="rounded px-3 py-2 text-sm md:text-base hover:bg-black/5">
-          Explore
-        </RouterLink>
-        <RouterLink to="/reflection" class="rounded px-3 py-2 text-sm md:text-base hover:bg-black/5">
-          Reflection
-        </RouterLink>
-        <RouterLink to="/credits" class="rounded px-3 py-2 text-sm md:text-base hover:bg-black/5">
-          Credits
-        </RouterLink>
-      </div>
+  <div class="home-page">
+    <nav class="nav-bar">
+      <RouterLink to="/" class="nav-link">Home</RouterLink>
+      <RouterLink to="/explore" class="nav-link">Explore</RouterLink>
+      <RouterLink to="/about-us" class="nav-link">About us</RouterLink>
+      <RouterLink to="/credits" class="nav-link">Credits</RouterLink>
     </nav>
 
-    <section class="mx-auto flex max-w-7xl flex-col items-center gap-8 px-4 py-10 md:gap-12 md:px-6 md:py-16">
-      <h1 class="text-center font-serif text-4xl leading-tight font-bold md:text-6xl">
-        Co-Creation<br />
-        Human X Ai
-      </h1>
-
-      <div class="w-full">
-        <label class="mb-3 block text-sm">Test upload 1 hero image</label>
-        <input type="file" accept="image/*" @change="handleImageChange" class="block w-full text-sm" />
-        <p v-if="isUploading" class="mt-2 text-sm">Uploading...</p>
-        <p v-if="errorMessage" class="mt-2 text-sm text-red-600">{{ errorMessage }}</p>
+    <section class="hom-section">
+      <div class="survey-link-row">
+        <a href="#" class="survey-link">Survey here</a>
       </div>
 
-      <div class="w-full overflow-hidden rounded-xl shadow-lg">
-        <img
-          v-if="heroImageUrl"
-          :src="heroImageUrl"
-          alt="AI and human co-creation showcase"
-          class="h-[260px] w-full object-cover sm:h-[360px] md:h-[520px]"
-        />
-        <div
-          v-else
-          class="flex h-[260px] w-full items-center justify-center bg-black/10 text-center text-sm sm:h-[360px] md:h-[520px]"
-        >
-          Upload an image to Firebase Storage to preview it here.
+      <h1 class="hom-title">Co-Creation<br />Human X Ai</h1>
+
+      <a href="#" class="join-link">Join us</a>
+
+      <div class="hom-image-container">
+        <img v-if="homeImageUrl && !isLoadingImage" :src="homeImageUrl" alt="Co-Creation Human X AI"
+          class="hom-image" />
+
+        <div v-else-if="isLoadingImage" class="hom-placeholder">
+          Loading image...
+        </div>
+
+        <div v-else class="hom-placeholder">
+          {{ imageError || 'No image available.' }}
         </div>
       </div>
     </section>
 
-    <main class="mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 pb-12 md:gap-16 md:px-6 md:pb-20">
-      <p class="max-w-5xl text-center font-serif text-lg leading-relaxed md:text-2xl">
-        Caption: Zachary Kelbaugh's stamp design after using DALL-E image generation to help with arm anatomy
-      </p>
+    <main class="content-section">
+      <div class="caption-text">
+        Caption: Zachary Kelbaugh’s stamp design after using DALL-E image generation to help with arm anatomy
+      </div>
 
-      <h2 class="text-center font-serif text-4xl leading-tight md:text-6xl">
-        Artists in the Age of AI
-      </h2>
+      <h2 class="main-title">Artists in the Age of AI</h2>
 
-      <div class="max-w-4xl rounded-xl bg-[#FCFAF6] p-6 text-center shadow-sm md:p-10">
-        <p class="font-serif text-lg leading-relaxed md:text-2xl">
-          Artificial Intelligence is becoming an important part of modern creative work. Today, many artists,
-          designers, writers, and photographers use AI tools to support their ideas, speed up their workflow,
-          and explore new creative possibilities. Rather than replacing human creativity, AI works best as a
-          collaborative partner that helps creators experiment and refine their work.
+      <div class="text-box">
+        <p class="body-text">
+          Artificial Intelligence is becoming an important part of modern creative work.
+          Today, many artists, designers, writers, and creators use AI as a tool to support
+          ideation, exploration, and creative experimentation.
         </p>
       </div>
 
-      <div class="max-w-4xl rounded-xl bg-[#FCFAF6] p-6 text-center shadow-sm md:p-10">
-        <p class="font-serif text-lg leading-relaxed md:text-2xl">
-          This website explores how humans and AI can work together in the creative process, also known as
-          co-creation. Through examples, tools, and explanations, it shows how AI can assist creators while
-          still keeping human imagination, judgment, and intent at the center of creative work.
+      <div class="text-box">
+        <p class="body-text">
+          Human creativity remains central. AI can help generate references, assist in visual
+          exploration, and speed up some steps, but artistic direction, intention, and judgment
+          still come from people.
         </p>
       </div>
-
-      <div class="grid w-full max-w-7xl grid-cols-1 gap-5 md:grid-cols-2">
-        <div class="rounded-xl bg-[#FCFAF6] p-6 text-center shadow-sm md:col-span-2 md:p-10">
-          <p class="mb-6 font-serif text-lg leading-relaxed md:text-2xl">
-            By understanding how to use AI responsibly and effectively, creators can expand their imagination
-            while maintaining authorship and originality.
-          </p>
-          <p class="font-serif text-xl md:text-2xl">What You'll Learn</p>
-        </div>
-
-        <div class="rounded-xl bg-[#FCFAF6] p-6 text-center shadow-sm md:min-h-[240px] md:p-10">
-          <p class="font-serif text-lg leading-relaxed md:text-2xl">
-            What co-creation means and how artists and AI collaborate creatively
-          </p>
-        </div>
-
-        <div class="rounded-xl bg-[#FCFAF6] p-6 text-center shadow-sm md:min-h-[240px] md:p-10">
-          <p class="font-serif text-lg leading-relaxed md:text-2xl">
-            How AI is used in creative software, such as tools in Adobe Photoshop
-          </p>
-        </div>
-
-        <div class="rounded-xl bg-[#FCFAF6] p-6 text-center shadow-sm md:min-h-[240px] md:p-10">
-          <p class="font-serif text-lg leading-relaxed md:text-2xl">
-            Using AI as a reference or assistant under human guidance rather than the final output
-          </p>
-        </div>
-
-        <div class="rounded-xl bg-[#FCFAF6] p-6 text-center shadow-sm md:min-h-[240px] md:p-10">
-          <p class="font-serif text-lg leading-relaxed md:text-2xl">
-            The ethical responsibilities of artists using AI within creative fields
-          </p>
-        </div>
-      </div>
-
-      <p class="max-w-5xl text-center font-serif text-lg leading-relaxed md:text-2xl">
-        This site aims to explain how AI can enhance creativity while keeping the human creator in control of the artistic vision.
-      </p>
     </main>
 
-    <footer class="mx-auto mt-8 flex w-full max-w-7xl flex-col gap-6 rounded-t-xl bg-[#545454] px-4 py-8 text-[#FCFAF6] md:px-6 md:py-10">
-      <div class="text-2xl font-serif md:text-3xl">Debate It. Don't Hate It.</div>
+    <footer class="footer">
+      <div class="footer-main-row">
+        <div class="footer-slogan">Debate It. Don’t Hate It.</div>
 
-      <div class="flex flex-col gap-6 md:flex-row md:justify-between">
-        <div></div>
-
-        <div class="space-y-2 font-serif text-lg md:text-2xl">
-          <p>hello@figma.com</p>
-          <p>1750 Candyland Lane,<br />Portland, OR 97205</p>
-          <p>(646) 555-4567</p>
+        <div class="footer-contact-column">
+          <div class="footer-contact">hello@figma.com</div>
+          <div class="footer-contact">1750 Candyland Lane,<br />Portland, OR 97205</div>
+          <div class="footer-contact">(646) 555-4567</div>
         </div>
       </div>
 
-      <div class="text-sm text-[#E4E4E4]">
-        Lincoln High School © 2025 All Rights Reserved
+      <div class="footer-bottom">
+        <div class="footer-copyright">Lincoln High School © 2025 All Rights Reserved</div>
       </div>
     </footer>
   </div>
 </template>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Rethink+Sans:wght@400&display=swap');
+
+:global(body) {
+  margin: 0;
+  background: #fcfaf6;
+  font-family: 'Gowun Batang', serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.home-page {
+  min-height: 100vh;
+  background: #fcfaf6;
+  color: #000;
+}
+
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e4e4e4;
+  background: rgba(252, 250, 246, 0.95);
+  backdrop-filter: blur(12px);
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #000;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  padding: 0.25rem 0.5rem;
+}
+
+.hom-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.survey-link-row {
+  width: 100%;
+  background: #efe8dc;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0 2rem;
+}
+
+.survey-link {
+  color: #000;
+  font-size: 0.95rem;
+}
+
+.hom-title {
+  text-align: center;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 700;
+  margin: 1rem 0 2rem;
+}
+
+.join-link {
+  color: #000;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.hom-image-container {
+  width: 100%;
+  min-height: 320px;
+  height: clamp(320px, 58vw, 760px);
+  overflow: hidden;
+  background: #e9e4dc;
+}
+
+.hom-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hom-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.content-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.caption-text,
+.body-text,
+.footer-slogan,
+.footer-contact {
+  font-size: clamp(1rem, 2.2vw, 1.75rem);
+  line-height: 1.4;
+  text-align: center;
+}
+
+.caption-text {
+  margin-top: 0.5rem;
+}
+
+.main-title {
+  font-size: clamp(2.25rem, 5vw, 4.2rem);
+  line-height: 1.15;
+  text-align: center;
+  font-weight: 400;
+  margin-top: 2rem;
+}
+
+.text-box {
+  width: min(100%, 900px);
+}
+
+.footer {
+  margin-top: 3rem;
+  background: #545454;
+  color: #fcfaf6;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.footer-main-row {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-contact-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footer-bottom {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.footer-copyright {
+  color: #e4e4e4;
+  font-size: 0.95rem;
+  font-family: 'Rethink Sans', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .nav-bar {
+    justify-content: center;
+  }
+
+  .footer-main-row {
+    flex-direction: column;
+  }
+
+  .footer-slogan,
+  .footer-contact,
+  .footer-copyright {
+    text-align: left;
+  }
+}
+</style>

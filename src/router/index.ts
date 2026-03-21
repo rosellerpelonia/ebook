@@ -1,29 +1,17 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomePage from '@/pages/HomePage.vue';
+import ModulesPage from '@/pages/ModulesPage.vue';
+import ReflectionPage from '@/pages/ReflectionPage.vue';
+import CreditsPage from '@/pages/CreditsPage.vue';
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: () => import('@/pages/HomePage.vue'),
-  },
-  {
-    path: '/modules',
-    name: 'modules',
-    component: () => import('@/pages/ModulesPage.vue'),
-  },
-  {
-    path: '/reflection',
-    name: 'reflection',
-    component: () => import('@/pages/ReflectionPage.vue'),
-  },
-  {
-    path: '/credits',
-    name: 'credits',
-    component: () => import('@/pages/CreditsPage.vue'),
-  },
-]
-
-export const router = createRouter({
+const router = createRouter({
   history: createWebHistory(),
-  routes,
-})
+  routes: [
+    { path: '/', name: 'home', component: HomePage },
+    { path: '/explore', name: 'explore', component: ModulesPage },
+    { path: '/about-us', name: 'about-us', component: ReflectionPage },
+    { path: '/credits', name: 'credits', component: CreditsPage },
+  ],
+});
+
+export default router;

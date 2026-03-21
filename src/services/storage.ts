@@ -1,12 +1,7 @@
-import { initializeApp } from 'firebase/app'
+import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from './firebase';
 
-const firebaseConfig = {
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'YOUR_PROJECT.firebaseapp.com',
-  projectId: 'YOUR_PROJECT_ID',
-  storageBucket: 'YOUR_PROJECT.appspot.com',
-  messagingSenderId: 'YOUR_SENDER_ID',
-  appId: 'YOUR_APP_ID',
+export async function getStorageImageUrl(path: string): Promise<string> {
+  const imageRef = ref(storage, path);
+  return await getDownloadURL(imageRef);
 }
-
-export const firebaseApp = initializeApp(firebaseConfig)
