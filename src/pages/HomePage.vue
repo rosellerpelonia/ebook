@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import MainLayout from '@/layouts/MainLayout.vue';
 import { getStorageImageUrl } from '@/services/storage';
 
 const homeImageUrl = ref('');
@@ -19,422 +20,276 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="home-page">
-    <nav class="nav-bar">
-      <RouterLink to="/" class="nav-link">Home</RouterLink>
-      <RouterLink to="/explore" class="nav-link">Explore</RouterLink>
-      <RouterLink to="/about-us" class="nav-link">About us</RouterLink>
-      <RouterLink to="/credits" class="nav-link">Credits</RouterLink>
-    </nav>
-
-    <section class="hom-section">
-      <div class="survey-link-row">
-        <a href="#" class="survey-link">Survey here</a>
-      </div>
-
-      <h1 class="hom-title">Co-Creation<br />Human X Ai</h1>
-
-      <a href="#" class="join-link">Join us</a>
-
-      <div class="hom-image-container">
-        <img
-          v-if="homeImageUrl && !isLoadingImage"
-          :src="homeImageUrl"
-          alt="Co-Creation Human X AI"
-          class="hom-image"
-        />
-
-        <div v-else-if="isLoadingImage" class="hom-placeholder">
-          Loading image...
+  <MainLayout>
+    <section class="home-page">
+      <div class="home-page__inner">
+        <div class="hero-utility hero-utility--top">
+          <a href="#" class="hero-utility__link">Survey here</a>
         </div>
 
-        <div v-else class="hom-placeholder">
-          {{ imageError || 'No image available.' }}
+        <h1 class="hero-title">Co-Creation<br />Human X Ai</h1>
+
+        <div class="hero-utility hero-utility--bottom">
+          <a href="#" class="hero-utility__link">Join us</a>
         </div>
+
+        <div class="hero-image-container">
+          <img
+            v-if="homeImageUrl && !isLoadingImage"
+            :src="homeImageUrl"
+            alt="AI and human co-creation showcase"
+            class="hero-image"
+          />
+
+          <div v-else-if="isLoadingImage" class="image-placeholder">
+            Loading image...
+          </div>
+
+          <div v-else class="image-placeholder">
+            {{ imageError || 'No image available.' }}
+          </div>
+        </div>
+
+        <main class="content-section">
+          <div class="caption-text">
+            Caption: Zachary Kelbaugh's stamp design after using DALL-E image generation
+            to help with arm anatomy
+          </div>
+
+          <h2 class="main-title">Artists in the Age of AI</h2>
+
+          <div class="text-box">
+            <p class="body-text">
+              Artificial Intelligence is becoming an important part of modern creative work.
+              Today, many artists, designers, writers, and photographers use AI tools to
+              support their ideas, speed up their workflow, and explore new creative
+              possibilities. Rather than replacing human creativity, AI works best as a
+              collaborative partner that helps creators experiment and refine their work.
+            </p>
+          </div>
+
+          <div class="text-box">
+            <p class="body-text">
+              This website explores how humans and AI can work together in the creative
+              process, also known as co-creation. Through examples, tools, and explanations,
+              it shows how AI can assist creators while still keeping human imagination,
+              judgment, and intent at the center of creative work.
+            </p>
+          </div>
+
+          <div class="content-grid">
+            <div class="learning-header">
+              <p class="body-text">
+                By understanding how to use AI responsibly and effectively, creators can
+                expand their imagination while maintaining authorship and originality.
+              </p>
+              <p class="body-text">What You'll Learn</p>
+            </div>
+
+            <div class="learning-card">
+              <p class="body-text">
+                What co-creation means and how artists and AI collaborate creatively
+              </p>
+            </div>
+
+            <div class="learning-card">
+              <p class="body-text">
+                How AI is used in creative software, such as tools in Adobe Photoshop
+              </p>
+            </div>
+
+            <div class="learning-card">
+              <p class="body-text">
+                Using AI as a reference or assistant under human guidance rather than the
+                final output
+              </p>
+            </div>
+
+            <div class="learning-card">
+              <p class="body-text">
+                The ethical responsibilities of artists using AI within creative fields
+              </p>
+            </div>
+          </div>
+
+          <div class="closing-text">
+            <p class="body-text">
+              This site aims to explain how AI can enhance creativity while keeping the
+              human creator in control of the artistic vision.
+            </p>
+          </div>
+        </main>
       </div>
     </section>
-
-    <main class="content-section">
-      <div class="caption-text">
-        Caption: Zachary Kelbaugh’s stamp design after using DALL-E image generation to help with arm anatomy
-      </div>
-
-      <h2 class="main-title">Artists in the Age of AI</h2>
-
-      <div class="text-box">
-        <p class="body-text">
-          Artificial Intelligence is becoming an important part of modern creative work.
-          Today, many artists, designers, writers, and photographers use AI tools to support
-          their ideas, speed up their workflow, and explore new creative possibilities.
-          Rather than replacing human creativity, AI works best as a collaborative partner
-          that helps creators experiment and refine their work.
-        </p>
-      </div>
-
-      <div class="text-box">
-        <p class="body-text">
-          This website explores how humans and AI can work together in the creative process,
-          also known as co-creation. Through examples, tools, and explanations, it shows how
-          AI can assist creators while still keeping human imagination, judgment, and intent
-          at the center of creative work.
-        </p>
-      </div>
-
-      <div class="text-box narrow-text-box">
-        <p class="body-text">
-          By understanding how to use AI responsibly and effectively, creators can expand
-          their imagination while maintaining authorship and originality.
-        </p>
-      </div>
-
-      <div class="learn-section">
-        <h3 class="learn-title">What You’ll Learn</h3>
-
-        <div class="learn-grid">
-          <div class="learn-item">
-            <span class="bullet">•</span>
-            <p class="learn-text">
-              What co-creation means and how artists and AI collaborate creatively
-            </p>
-          </div>
-
-          <div class="learn-item">
-            <span class="bullet">•</span>
-            <p class="learn-text">
-              How AI is used in creative software, such as tools in Adobe Photoshop
-            </p>
-          </div>
-
-          <div class="learn-item">
-            <span class="bullet">•</span>
-            <p class="learn-text">
-              Using AI as a reference or assistant under human guidance rather than the final output
-            </p>
-          </div>
-
-          <div class="learn-item">
-            <span class="bullet">•</span>
-            <p class="learn-text">
-              The ethical responsibilities of artists using AI within creative fields
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="text-box final-text-box">
-        <p class="body-text">
-          This site aims to explain how AI can enhance creativity while keeping the human
-          creator in control of the artistic vision.
-        </p>
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-icons">f &nbsp; ⊙ &nbsp; ♫</div>
-
-      <div class="footer-main-row">
-        <div class="footer-slogan">Debate It. Don’t Hate It.</div>
-
-        <div class="footer-contact-column">
-          <div class="footer-contact">hello@figma.com</div>
-          <div class="footer-contact">
-            1750 Candyland Lane,<br />
-            Portland, OR 97205<br />
-            (646) 555-4567
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div class="footer-copyright">Lincoln High School © 2025 All Rights Reserved</div>
-      </div>
-    </footer>
-  </div>
+  </MainLayout>
 </template>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Rethink+Sans:wght@400&display=swap');
-
-:global(body) {
-  margin: 0;
-  background: #fcfaf6;
-  font-family: 'Gowun Batang', serif;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 .home-page {
-  min-height: 100vh;
   background: #fcfaf6;
-  color: #000;
 }
 
-.nav-bar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e4e4e4;
-  background: rgba(252, 250, 246, 0.95);
-  backdrop-filter: blur(12px);
-}
-
-.nav-link {
-  text-decoration: none;
-  color: #000;
-  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
-  padding: 0.25rem 0.5rem;
-}
-
-.hom-section {
+.home-page__inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 1rem 1rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: clamp(1.5rem, 4vw, 2rem) clamp(1rem, 3vw, 1.25rem)
+    clamp(3rem, 8vw, 6rem);
 }
 
-.survey-link-row {
+.hero-utility {
   width: 100%;
-  background: #efe8dc;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  margin: 1rem 0 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  background: #ece7db;
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
 }
 
-.survey-link {
-  color: #000;
-  font-size: 0.95rem;
+.hero-utility--top {
+  margin-bottom: clamp(2rem, 6vw, 3rem);
+  text-align: left;
 }
 
-.hom-title {
+.hero-utility--bottom {
+  margin-top: clamp(1.5rem, 5vw, 2.5rem);
+  margin-bottom: clamp(2rem, 6vw, 3.5rem);
   text-align: center;
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  line-height: 1.05;
-  font-weight: 700;
-  margin: 1rem 0 2rem;
+  background: transparent;
+  padding: 0;
 }
 
-.join-link {
-  color: #000;
-  margin-bottom: 2rem;
-  font-size: 0.95rem;
+.hero-utility__link {
+  color: #111;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
-.hom-image-container {
+.hero-title {
+  font-size: clamp(2rem, 6vw, 4rem);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.hero-image-container {
   width: 100%;
+  max-width: 1280px;
   min-height: 320px;
-  height: clamp(320px, 58vw, 760px);
+  border-radius: 18px;
   overflow: hidden;
-  background: #e9e4dc;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-.hom-image {
+.hero-image {
   width: 100%;
-  height: 100%;
+  display: block;
   object-fit: cover;
 }
 
-.hom-placeholder {
-  width: 100%;
-  height: 100%;
+.image-placeholder {
+  min-height: 320px;
   display: grid;
   place-items: center;
-  padding: 1rem;
-  text-align: center;
-  font-size: 1rem;
+  background: #e9e4d8;
+  font-family: 'Rethink Sans', sans-serif;
+  color: #444;
 }
 
 .content-section {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+  padding: clamp(3rem, 10vw, 6rem) 0 0;
 }
 
 .caption-text {
-  margin-top: 0.5rem;
-  margin-bottom: 4rem;
-  font-size: clamp(1rem, 1.6vw, 1.5rem);
-  line-height: 1.4;
+  color: black;
+  font-size: clamp(1.25rem, 3vw, 1.875rem);
+  font-family: 'Gowun Batang', serif;
+  font-weight: 400;
+  line-height: 1.2;
   text-align: center;
   max-width: 1100px;
 }
 
 .main-title {
-  font-size: clamp(2.2rem, 4.8vw, 4rem);
-  line-height: 1.15;
-  text-align: center;
+  color: black;
+  font-size: clamp(2.5rem, 7vw, 4.375rem);
+  font-family: 'Gowun Batang', serif;
   font-weight: 400;
-  margin: 0 0 3rem;
-}
-
-.text-box {
-  width: min(100%, 820px);
-  margin-bottom: 2.75rem;
-}
-
-.narrow-text-box {
-  width: min(100%, 760px);
-}
-
-.final-text-box {
-  width: min(100%, 900px);
-  margin-top: 3rem;
-  margin-bottom: 2rem;
+  line-height: 1.1;
+  text-align: center;
 }
 
 .body-text {
-  font-size: clamp(1.05rem, 1.7vw, 1.6rem);
-  line-height: 1.45;
-  text-align: center;
-  margin: 0;
-}
-
-.learn-section {
-  width: 100%;
-  max-width: 950px;
-  margin-top: 1rem;
-}
-
-.learn-title {
-  text-align: center;
-  font-size: clamp(1.2rem, 1.8vw, 1.7rem);
+  color: black;
+  font-size: clamp(1.15rem, 3vw, 1.875rem);
+  font-family: 'Gowun Batang', serif;
   font-weight: 400;
-  margin: 0 0 3.5rem;
+  line-height: 1.35;
+  text-align: center;
 }
 
-.learn-grid {
+.text-box {
+  width: 100%;
+  max-width: 800px;
+  background: #fcfaf6;
+  border-radius: 16px;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.content-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 6rem;
-  row-gap: 3rem;
+  gap: 1.25rem;
 }
 
-.learn-item {
+.learning-header,
+.learning-card {
+  background: #fcfaf6;
+  border-radius: 16px;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.learning-header {
+  grid-column: 1 / -1;
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.learning-card {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  min-height: 130px;
 }
 
-.bullet {
-  font-size: 1.5rem;
-  line-height: 1;
-  margin-top: 0.1rem;
-}
-
-.learn-text {
-  margin: 0;
-  max-width: 250px;
-  text-align: center;
-  font-size: clamp(1rem, 1.45vw, 1.35rem);
-  line-height: 1.35;
-}
-
-.footer {
-  margin-top: 3rem;
-  background: #545454;
-  color: #fcfaf6;
-  padding: 0.75rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.footer-icons {
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-  font-size: 0.85rem;
-}
-
-.footer-main-row {
-  max-width: 1280px;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.footer-slogan,
-.footer-contact {
-  font-size: clamp(1rem, 1.5vw, 1.35rem);
-  line-height: 1.35;
-}
-
-.footer-contact-column {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.footer-bottom {
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.footer-copyright {
-  color: #e4e4e4;
-  font-size: 0.7rem;
-  font-family: 'Rethink Sans', sans-serif;
-}
-
-@media (max-width: 900px) {
-  .learn-grid {
-    grid-template-columns: 1fr;
-    column-gap: 0;
-    row-gap: 2rem;
-  }
-
-  .learn-item {
-    min-height: auto;
-  }
-
-  .learn-text {
-    max-width: 320px;
-  }
+.closing-text {
+  max-width: 1000px;
 }
 
 @media (max-width: 768px) {
-  .nav-bar {
-    justify-content: center;
+  .content-grid {
+    grid-template-columns: 1fr;
   }
 
-  .caption-text {
-    margin-bottom: 2.5rem;
+  .hero-utility {
+    border-radius: 12px;
   }
 
-  .main-title {
-    margin-bottom: 2rem;
+  .hero-image-container {
+    min-height: 240px;
   }
 
-  .text-box {
-    margin-bottom: 2rem;
-  }
-
-  .footer-main-row {
-    flex-direction: column;
-  }
-
-  .footer-slogan,
-  .footer-contact,
-  .footer-copyright {
-    text-align: left;
+  .image-placeholder {
+    min-height: 240px;
   }
 }
 </style>

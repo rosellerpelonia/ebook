@@ -1,67 +1,43 @@
 <script setup lang="ts">
 import MainLayout from '@/layouts/MainLayout.vue';
-
-const tools = [
-  'Adobe Photoshop (AI features) – generative fill and image editing',
-  'Stable Diffusion – text-to-image concept exploration',
-  'Krita (AI tools) – assisted sketching and drawing',
-  'ChatGPT Image Generation (OpenAI) – idea exploration',
-  'DALL·E (OpenAI) – early concept image generation',
-];
 </script>
 
 <template>
   <MainLayout>
-    <section class="credits-page">
-      <div class="credits-page__inner">
+    <section class="about-page">
+      <div class="about-page__inner">
         <div class="hero-utility hero-utility--top">
           <a href="#" class="hero-utility__link">Survey here</a>
         </div>
 
-        <h1 class="hero-title">Credits &amp; Tools Used</h1>
+        <h1 class="hero-title">Reflection / Conclusion</h1>
 
         <div class="hero-utility hero-utility--bottom">
           <a href="#" class="hero-utility__link">Join us</a>
         </div>
 
         <main class="content-section">
-          <div class="credits-card text-box">
+          <div class="reflection-card text-box">
             <p class="body-text">
-              This project recognizes the AI tools that supported the creative workflow
-              while maintaining that the human creator remains the primary author.
+              Human-AI collaboration is changing the creative process. Instead of simply
+              automating tasks, AI can participate in a dynamic creative exchange where
+              humans and machines influence each other's ideas.
             </p>
           </div>
 
-          <div class="credits-card text-box">
+          <div class="reflection-card text-box">
             <p class="body-text">
-              Research shows that AI-assisted outputs are still considered human creations
-              when humans control the prompts, editing, and final decisions.
+              Research shows that AI can improve creative performance by helping with idea
+              exploration, experimentation, and refinement. However, these benefits only
+              occur when human intention and judgment remain central.
             </p>
           </div>
 
-          <div class="tools-grid">
-            <div class="tools-header credits-card">
-              <p class="body-text">AI Tools Referenced</p>
-            </div>
-
-            <div
-              v-for="tool in tools"
-              :key="tool"
-              class="tools-card credits-card text-box"
-            >
-              <p class="body-text">{{ tool }}</p>
-            </div>
-          </div>
-
-          <div class="credits-card text-box credits-card--double">
+          <div class="reflection-card text-box">
             <p class="body-text">
-              Even when these tools were used, the final creative decisions, edits, and
-              artistic direction were made by the human creator.
-            </p>
-
-            <p class="body-text">
-              Acknowledging AI tools promotes ethical transparency while reinforcing that
-              creativity, meaning, and responsibility remain human-centered.
+              The future of creativity depends on how humans choose to use AI tools. When
+              used responsibly, AI can expand imagination and support innovation while still
+              preserving human creativity, authorship, and meaning.
             </p>
           </div>
         </main>
@@ -71,11 +47,11 @@ const tools = [
 </template>
 
 <style scoped>
-.credits-page {
+.about-page {
   background: #fcfaf6;
 }
 
-.credits-page__inner {
+.about-page__inner {
   max-width: 1280px;
   margin: 0 auto;
   padding: clamp(1.5rem, 4vw, 2rem) clamp(1rem, 3vw, 1.25rem)
@@ -140,8 +116,7 @@ const tools = [
   text-align: center;
 }
 
-.text-box,
-.tools-header {
+.text-box {
   width: 100%;
   max-width: 800px;
   background: #fcfaf6;
@@ -150,41 +125,14 @@ const tools = [
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-.credits-card {
+.reflection-card {
+  min-height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 180px;
-}
-
-.credits-card--double {
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.tools-grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
-  align-items: stretch;
-}
-
-.tools-header {
-  max-width: none;
-  grid-column: 1 / -1;
-  min-height: 120px;
-}
-
-.tools-card {
-  min-height: 180px;
 }
 
 @media (max-width: 768px) {
-  .tools-grid {
-    grid-template-columns: 1fr;
-  }
-
   .hero-utility {
     border-radius: 12px;
   }
