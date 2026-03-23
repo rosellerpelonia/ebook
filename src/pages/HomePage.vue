@@ -24,10 +24,10 @@ onMounted(async () => {
     <section class="home-page">
       <div class="home-page__inner">
         <div class="hero-utility hero-utility--top">
-          <a href="#" class="hero-utility__link">Survey here</a>
+          <a href="#" class="hero-utility__link">Survey here TEST</a>
         </div>
 
-        <h1 class="hero-title">Co-Creation TEST TEST<br />Human X Ai</h1>
+        <h1 class="hero-title">Co-Creation<br />Human X Ai</h1>
 
         <div class="hero-utility hero-utility--bottom">
           <a href="#" class="hero-utility__link">Join us</a>

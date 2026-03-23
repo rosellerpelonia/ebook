@@ -29,7 +29,7 @@ const tools = [
             <p class="body-text">
               This project recognizes the AI tools that supported the creative workflow
               while maintaining that the human creator remains the primary author.
-            </p>
+            </p>asdfasfafsa
           </div>
 
           <div class="credits-card text-box">
