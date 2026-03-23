@@ -10,10 +10,10 @@ import MainLayout from '@/layouts/MainLayout.vue';
           <a href="#" class="hero-utility__link">Survey here</a>
         </div>
 
-        <h1 class="hero-title">Reflection / Conclusion</h1>
+        <h1 class="hero-title">Reflection / Conclusion123</h1>
 
         <div class="hero-utility hero-utility--bottom">
-          <a href="#" class="hero-utility__link">Join us</a>
+          <a href="#" class="hero-utility__link">Join us123</a>
         </div>
 
         <main class="content-section">
