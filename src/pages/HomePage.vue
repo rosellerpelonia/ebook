@@ -27,7 +27,7 @@ onMounted(async () => {
           <a href="#" class="hero-utility__link">Survey here</a>
         </div>
 
-        <h1 class="hero-title">Co-Creation<br />Human X Ai</h1>
+        <h1 class="hero-title">Co-Creation TEST TEST<br />Human X Ai</h1>
 
         <div class="hero-utility hero-utility--bottom">
           <a href="#" class="hero-utility__link">Join us</a>

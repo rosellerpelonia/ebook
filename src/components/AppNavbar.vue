@@ -6,8 +6,8 @@
     <RouterLink to="/explore" class="app-nav__link" active-class="app-nav__link--active">
       Explore
     </RouterLink>
-    <RouterLink to="/about-us" class="app-nav__link" active-class="app-nav__link--active">
-      About us
+    <RouterLink to="/reflection" class="app-nav__link" active-class="app-nav__link--active">
+      Reflection
     </RouterLink>
     <RouterLink to="/credits" class="app-nav__link" active-class="app-nav__link--active">
       Credits
