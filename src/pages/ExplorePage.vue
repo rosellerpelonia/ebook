@@ -93,15 +93,9 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
     <section class="explore-page">
       <div class="explore-page__inner">
         <section class="page-hero">
-          <div class="hero-utility hero-utility--top">
-            <a href="#" class="hero-utility__link">Survey here</a>
-          </div>
 
           <h1 class="hero-title">What Is Co-Creation?</h1>
 
-          <div class="hero-utility hero-utility--bottom">
-            <a href="#" class="hero-utility__link">Join us</a>
-          </div>
         </section>
 
         <section v-if="isLoading" class="status-box">
