@@ -6,15 +6,8 @@ import MainLayout from '@/layouts/MainLayout.vue';
   <MainLayout>
     <section class="about-page">
       <div class="about-page__inner">
-        <div class="hero-utility hero-utility--top">
-          <a href="#" class="hero-utility__link">Survey here</a>
-        </div>
 
         <h1 class="hero-title">Reflection / Conclusion</h1>
-
-        <div class="hero-utility hero-utility--bottom">
-          <a href="#" class="hero-utility__link">Join us</a>
-        </div>
 
         <main class="content-section">
           <div class="reflection-card text-box">
