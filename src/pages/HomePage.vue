@@ -23,15 +23,9 @@ onMounted(async () => {
   <MainLayout>
     <section class="home-page">
       <div class="home-page__inner">
-        <div class="hero-utility hero-utility--top">
-          <a href="#" class="hero-utility__link">Survey here</a>
-        </div>
 
         <h1 class="hero-title">Co-Creation TEST TEST<br />Human X Ai</h1>
 
-        <div class="hero-utility hero-utility--bottom">
-          <a href="#" class="hero-utility__link">Join us</a>
-        </div>
 
         <div class="hero-image-container">
           <img
