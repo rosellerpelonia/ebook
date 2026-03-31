@@ -24,7 +24,7 @@ onMounted(async () => {
     <section class="home-page">
       <div class="home-page__inner">
 
-        <h1 class="hero-title">Co-Creation <br />Human X Ai</h1>
+        <h1 class="hero-title">Co-Creation<br />Human X Ai</h1>
 
 
         <div class="hero-image-container">
