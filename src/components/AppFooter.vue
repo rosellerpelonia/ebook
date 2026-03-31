@@ -1,17 +1,20 @@
 <template>
   <footer class="app-footer">
     <div class="app-footer__top">
-      <div class="app-footer__brand">Debate It. Don't Hate It.</div>
+      <div class="app-footer__brand">Co-Creation Human X Ai</div>
 
       <div class="app-footer__contact">
-        <div>hello@figma.com</div>
-        <div>1750 Candyland Lane,<br />Portland, OR 97205</div>
-        <div>(646) 555-4567</div>
+        <div>STI College</div>
+        <div>Santa Rosa Laguna</div>
+        <div>0977-783-2784
+             0938-573-4511
+             (049) 534-2719
+             (02) 8668-4784</div>
       </div>
     </div>
 
     <div class="app-footer__bottom">
-      Lincoln High School © 2025 All Rights Reserved
+      STI College Santa Rosa @ 2026
     </div>
   </footer>
 </template>
