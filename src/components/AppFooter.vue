@@ -4,12 +4,11 @@
       <div class="app-footer__brand">Co-Creation Human X Ai</div>
 
       <div class="app-footer__contact">
-        <div>STI College</div>
-        <div>Santa Rosa Laguna</div>
-        <div>0977-783-2784 <br>
-             0938-573-4511 <br>
-             (049) 534-2719 <br>
-             (02) 8668-4784</div>
+        <div> Haile Pelonia <br>
+              Ronel Sumague <br>
+              Justin Casamina <br>
+              Josef Nuyles <br>
+              Rhobert Sawal </div>
       </div>
     </div>
 
