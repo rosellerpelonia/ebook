@@ -16,7 +16,7 @@ import AppFooter from '@/components/AppFooter.vue';
 <style scoped>
 .main-layout {
   min-height: 100vh;
-  background: #fcfaf6;
+  background: #c89b40;
 }
 
 .main-layout__content {

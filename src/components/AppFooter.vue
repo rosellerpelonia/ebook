@@ -23,7 +23,7 @@
 
 <style scoped>
 .app-footer {
-  background: #545454;
+  background: #081724;
   color: #fcfaf6;
   padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 5vw, 3rem);
   display: flex;

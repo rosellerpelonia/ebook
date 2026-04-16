@@ -27,13 +27,13 @@
   align-items: center;
   gap: clamp(0.75rem, 3vw, 2rem);
   padding: 1rem clamp(1rem, 4vw, 2rem);
-  background: rgba(252, 250, 246, 0.92);
+  background: #081724;
   backdrop-filter: blur(12px);
   border-bottom: 1px solid #e7e2d8;
 }
 
 .app-nav__link {
-  color: #1b1b1b;
+  color: #ffffff;
   text-decoration: none;
   font-family: 'Rethink Sans', sans-serif;
   font-size: clamp(0.95rem, 2vw, 1.15rem);
