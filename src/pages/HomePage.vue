@@ -120,7 +120,7 @@ onMounted(async () => {
 
 <style scoped>
 .home-page {
-  background: #fcfaf6;
+  background: #e67db8;
 }
 
 .home-page__inner {
@@ -134,7 +134,7 @@ onMounted(async () => {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  background: #ece7db;
+  background: #ffba2f;
   border-radius: 16px;
   padding: 1rem 1.25rem;
 }
@@ -161,9 +161,14 @@ onMounted(async () => {
 }
 
 .hero-title {
-  font-size: clamp(2rem, 6vw, 4rem);
+  color: black;
+  font-size: clamp(2rem, 7vw, 6.25rem);
+  font-family: 'Helvetica', serif;
+  font-weight: 700;
+  line-height: 0.95;
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin: 0 auto;
+  max-width: 800px;
 }
 
 .hero-image-container {
@@ -186,9 +191,9 @@ onMounted(async () => {
   min-height: 320px;
   display: grid;
   place-items: center;
-  background: #e9e4d8;
+  background: #ffba2f;
   font-family: 'Rethink Sans', sans-serif;
-  color: #444;
+  color: #ffba2f;
 }
 
 .content-section {
@@ -202,8 +207,8 @@ onMounted(async () => {
 .caption-text {
   color: black;
   font-size: clamp(1.25rem, 3vw, 1.875rem);
-  font-family: 'Gowun Batang', serif;
-  font-weight: 400;
+  font-family: 'Helvetica', serif;
+  font-weight: 200;
   line-height: 1.2;
   text-align: center;
   max-width: 1100px;
@@ -212,25 +217,25 @@ onMounted(async () => {
 .main-title {
   color: black;
   font-size: clamp(2.5rem, 7vw, 4.375rem);
-  font-family: 'Gowun Batang', serif;
-  font-weight: 400;
+  font-family: 'Helvetica', serif;
+  font-weight: 600;
   line-height: 1.1;
   text-align: center;
 }
 
 .body-text {
   color: black;
-  font-size: clamp(1.15rem, 3vw, 1.875rem);
+  font-size: clamp(1.15rem, 5vw, 1.6rem);
   font-family: 'Gowun Batang', serif;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.35;
-  text-align: center;
+  text-align: justify;
 }
 
 .text-box {
   width: 100%;
-  max-width: 800px;
-  background: #fcfaf6;
+  max-width: 1000px;
+  background: #ffba2f;
   border-radius: 16px;
   padding: clamp(1.5rem, 5vw, 3rem);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -245,7 +250,7 @@ onMounted(async () => {
 
 .learning-header,
 .learning-card {
-  background: #fcfaf6;
+  background: #ffba2f;
   border-radius: 16px;
   padding: clamp(1.5rem, 5vw, 3rem);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);

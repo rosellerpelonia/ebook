@@ -65,7 +65,7 @@ const tools = [
 
 <style scoped>
 .credits-page {
-  background: #fcfaf6;
+  background: #e67db8;
 }
 
 .credits-page__inner {
@@ -79,7 +79,7 @@ const tools = [
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  background: #ece7db;
+  background: #ffba2f;
   border-radius: 16px;
   padding: 1rem 1.25rem;
 }
@@ -98,7 +98,7 @@ const tools = [
 }
 
 .hero-utility__link {
-  color: #111;
+  color: #000000;
   font-family: 'Rethink Sans', sans-serif;
   font-size: clamp(1rem, 2vw, 1.2rem);
   text-decoration: underline;
@@ -107,13 +107,13 @@ const tools = [
 
 .hero-title {
   color: black;
-  font-size: clamp(2.5rem, 7vw, 4.375rem);
-  font-family: 'Gowun Batang', serif;
-  font-weight: 400;
-  line-height: 1.1;
+  font-size: clamp(2rem, 7vw, 6.25rem);
+  font-family: 'Helvetica', serif;
+  font-weight: 700;
+  line-height: 0.95;
   text-align: center;
   margin: 0 auto;
-  max-width: 983px;
+  max-width: 800px;
 }
 
 .content-section {
@@ -126,18 +126,18 @@ const tools = [
 
 .body-text {
   color: black;
-  font-size: clamp(1.15rem, 3vw, 1.875rem);
+  font-size: clamp(1.15rem, 5vw, 1.6rem);
   font-family: 'Gowun Batang', serif;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.35;
-  text-align: center;
+  text-align: justify;
 }
 
 .text-box,
 .tools-header {
   width: 100%;
-  max-width: 800px;
-  background: #fcfaf6;
+  max-width: 1000px;
+  background: #ffba2f;
   border-radius: 16px;
   padding: clamp(1.5rem, 5vw, 3rem);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
@@ -152,7 +152,7 @@ const tools = [
 
 .credits-card--double {
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0.1rem;
 }
 
 .tools-grid {
