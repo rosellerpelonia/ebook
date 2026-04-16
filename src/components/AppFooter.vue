@@ -13,7 +13,7 @@
     </div>
 
     <div class="app-footer__bottom">
-      STI College Santa Rosa @ 2026
+      Created to assist, not replace.
     </div>
   </footer>
 </template>
