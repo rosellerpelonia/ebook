@@ -162,7 +162,7 @@ onMounted(async () => {
 
 .hero-title {
   color: black;
-  font-size: clamp(2rem, 7vw, 6.25rem);
+  font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 700;
   line-height: 0.95;
@@ -200,15 +200,15 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(2rem, 6vw, 5rem);
+  gap: clamp(1rem, 1vw, 5rem);
   padding: clamp(3rem, 10vw, 6rem) 0 0;
 }
 
 .caption-text {
   color: black;
-  font-size: clamp(1.25rem, 3vw, 1.875rem);
+  font-size: clamp(1.25rem, 1vw, 1.875rem);
   font-family: 'Helvetica', serif;
-  font-weight: 200;
+  font-weight: 400;
   line-height: 1.2;
   text-align: center;
   max-width: 1100px;
@@ -216,7 +216,7 @@ onMounted(async () => {
 
 .main-title {
   color: black;
-  font-size: clamp(2.5rem, 7vw, 4.375rem);
+  font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 600;
   line-height: 1.1;
@@ -225,7 +225,7 @@ onMounted(async () => {
 
 .body-text {
   color: black;
-  font-size: clamp(1.15rem, 5vw, 1.6rem);
+  font-size: clamp(1.15rem, 1vw, 1.6rem);
   font-family: 'Gowun Batang', serif;
   font-weight: 500;
   line-height: 1.35;
@@ -242,9 +242,10 @@ onMounted(async () => {
 }
 
 .content-grid {
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-height: 100px;
+  max-width: 1000px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.25rem;
 }
 

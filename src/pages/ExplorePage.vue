@@ -914,7 +914,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 
 .hero-title {
   color: black;
-  font-size: clamp(2rem, 7vw, 6.25rem);
+  font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 700;
   line-height: 0.95;
@@ -925,7 +925,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 
 .main-title {
   color: black;
-  font-size: clamp(2.5rem, 7vw, 4.375rem);
+  font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 600;
   line-height: 1.1;
@@ -934,7 +934,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 
 .body-text {
   color: black;
-  font-size: clamp(1.15rem, 5vw, 1.6rem);
+  font-size: clamp(1.15rem, 1vw, 1.6rem);
   font-family: 'Gowun Batang', serif;
   font-weight: 500;
   line-height: 1.35;
@@ -945,7 +945,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(2rem, 6vw, 3.5rem);
+  gap: clamp(1rem, 1vw, 3.5rem);
   padding: clamp(2rem, 6vw, 3rem) 0 0;
 }
 
@@ -967,9 +967,10 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 }
 
 .content-grid {
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-height: 100px;
+  max-width: 1000px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.25rem;
 }
 
@@ -985,12 +986,15 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
   grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  min-height: 100px;
+  max-width: 1000px;
+  gap: 1rem;
+  align-items: stretch;
 }
 
 .learning-card {
-  min-height: 220px;
-  display: flex;
+  min-height: 100px;
+  
   align-items: center;
   justify-content: center;
 }

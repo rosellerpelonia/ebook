@@ -107,7 +107,7 @@ const tools = [
 
 .hero-title {
   color: black;
-  font-size: clamp(2rem, 7vw, 6.25rem);
+  font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 700;
   line-height: 0.95;
@@ -120,13 +120,13 @@ const tools = [
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(2rem, 6vw, 3.5rem);
+  gap: clamp(1rem, 1vw, 3.5rem);
   padding: clamp(2rem, 6vw, 3rem) 0 0;
 }
 
 .body-text {
   color: black;
-  font-size: clamp(1.15rem, 5vw, 1.6rem);
+  font-size: clamp(1.15rem, 1vw, 1.6rem);
   font-family: 'Gowun Batang', serif;
   font-weight: 500;
   line-height: 1.35;
@@ -147,7 +147,7 @@ const tools = [
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 180px;
+  min-height: 100px;
 }
 
 .credits-card--double {
@@ -156,10 +156,11 @@ const tools = [
 }
 
 .tools-grid {
-  width: 100%;
+  min-height: 100px;
+  max-width: 1000px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.25rem;
+  gap: 1rem;
   align-items: stretch;
 }
 
@@ -170,7 +171,7 @@ const tools = [
 }
 
 .tools-card {
-  min-height: 180px;
+  min-height: 100px;
 }
 
 @media (max-width: 768px) {
