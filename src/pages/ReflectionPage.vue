@@ -83,7 +83,7 @@ import MainLayout from '@/layouts/MainLayout.vue';
 
 .hero-title {
   color: black;
-  font-size: clamp(2rem, 7vw, 6.25rem);
+  font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 700;
   line-height: 0.95;
@@ -96,13 +96,13 @@ import MainLayout from '@/layouts/MainLayout.vue';
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(2rem, 6vw, 3.5rem);
+  gap: clamp(1rem, 1vw, 3.5rem);
   padding: clamp(2rem, 6vw, 3rem) 0 0;
 }
 
 .body-text {
   color: black;
-  font-size: clamp(1.15rem, 5vw, 1.6rem);
+  font-size: clamp(1.15rem, 1vw, 1.6rem);
   font-family: 'Gowun Batang', serif;
   font-weight: 500;
   line-height: 1.35;
@@ -119,7 +119,7 @@ import MainLayout from '@/layouts/MainLayout.vue';
 }
 
 .reflection-card {
-  min-height: 220px;
+  min-height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;

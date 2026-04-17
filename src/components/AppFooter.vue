@@ -40,18 +40,19 @@
 
 .app-footer__brand {
   font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  font-family: 'Helvetica', sans-serif;
 }
 
 .app-footer__contact {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  font-family: 'Rethink Sans', sans-serif;
+  font-family: 'Helvetica', sans-serif;
 }
 
 .app-footer__bottom {
   color: #e4e4e4;
   font-size: 0.9rem;
-  font-family: 'Rethink Sans', sans-serif;
+  font-family: 'Helvetica', sans-serif;
 }
 </style>
