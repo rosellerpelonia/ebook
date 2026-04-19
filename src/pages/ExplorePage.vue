@@ -417,7 +417,8 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
               Uizard allows designers to generate UI layouts from text prompts, sketches, or 
               wireframes. It can transform hand-drawn ideas into digital mockups, making it useful 
               for quickly prototyping app or website designs. This is ideal for artists who do not 
-              know how to code and the UI is simple to navigate around, similar to Canva.
+              know how to code and the UI is simple to navigate around, similar to Canva. 
+              </p>
           </div>
 
         <section class="image-section">
@@ -435,6 +436,8 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
             </p>
           </div>
 
+        </section>
+
 
         <h2 class="main-title">Canva’s Brand Kit</h2>
         <div class="text-box">
@@ -444,6 +447,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
               can be automatically applied to any design, ensuring that all outputs follow the same 
               visual identity. This reduces the need to manually check brand guidelines every time 
               a new design is created.
+              </p>
           </div>
 
         <section class="image-section">
@@ -459,6 +463,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
               ability to manage multiple Brand Kits for different campaigns or sub-brands. Designers 
               can quickly switch between them, making it easier to maintain consistency across 
               various projects without confusion.
+              </p>
           </div>
 
         <!-- 3. AI INSIDE ADOBE PHOTOSHOP -->
