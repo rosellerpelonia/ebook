@@ -120,13 +120,13 @@ const tools = [
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(2rem, 6vw, 3.5rem);
+  gap: clamp(2rem, 1vw, 3.5rem);
   padding: clamp(2rem, 6vw, 3rem) 0 0;
 }
 
 .body-text {
   color: black;
-  font-size: clamp(1.15rem, 5vw, 1.6rem);
+  font-size: clamp(1.15rem, 23vw, 1.6rem);
   font-family: 'Gowun Batang', serif;
   font-weight: 500;
   line-height: 1.35;

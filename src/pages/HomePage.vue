@@ -55,19 +55,26 @@ onMounted(async () => {
           <div class="text-box">
             <p class="body-text">
               Artificial Intelligence is becoming an important part of modern creative work.
-              Today, many artists, designers, writers, and photographers use AI tools to
-              support their ideas, speed up their workflow, and explore new creative
-              possibilities. Rather than replacing human creativity, AI works best as a
-              collaborative partner that helps creators experiment and refine their work.
-            </p>
-          </div>
+              Today, many artists, designers, writers, and photographers use AI tools to support 
+              their ideas, speed up their workflow, and explore new creative possibilities. 
+              Rather than replacing human creativity, AI works best as a collaborative partner 
+              that helps creators experiment and refine their work.
 
-          <div class="text-box">
-            <p class="body-text">
-              This website explores how humans and AI can work together in the creative
-              process, also known as co-creation. Through examples, tools, and explanations,
-              it shows how AI can assist creators while still keeping human imagination,
-              judgment, and intent at the center of creative work.
+              <br><br>
+
+              However, creativity is not only about producing content, it is also about how ideas 
+              are communicated to an audience. This is where Brand Communication becomes important. It allows artists to express 
+              their identity, message, and creative intent through their work. Even when AI is 
+              involved, it ensures that the human voice remains clear, meaningful, 
+              and recognizable.
+
+              <br><br>
+
+              This website explores how humans and AI can work together in the creative process, 
+              also known as co-creation, while highlighting how communication plays a key role in 
+              preserving human creativity.
+
+
             </p>
           </div>
 
@@ -200,13 +207,13 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(2rem, 6vw, 5rem);
+  gap: clamp(2rem, 1vw, 5rem);
   padding: clamp(3rem, 10vw, 6rem) 0 0;
 }
 
 .caption-text {
   color: black;
-  font-size: clamp(1.25rem, 3vw, 1.875rem);
+  font-size: clamp(1.25rem, 1vw, 1.875rem);
   font-family: 'Helvetica', serif;
   font-weight: 200;
   line-height: 1.2;
@@ -216,7 +223,7 @@ onMounted(async () => {
 
 .main-title {
   color: black;
-  font-size: clamp(2.5rem, 7vw, 4.375rem);
+  font-size: clamp(2.5rem, 5vw, 4.375rem);
   font-family: 'Helvetica', serif;
   font-weight: 600;
   line-height: 1.1;
@@ -237,7 +244,7 @@ onMounted(async () => {
   max-width: 1000px;
   background: #ffba2f;
   border-radius: 16px;
-  padding: clamp(1.5rem, 5vw, 3rem);
+  padding: clamp(1.5rem, 1vw, 3rem);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
