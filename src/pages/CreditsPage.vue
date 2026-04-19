@@ -110,7 +110,7 @@ const tools = [
 
 .hero-title {
   color: black;
-  font-size: clamp(2rem, 7vw, 6.25rem);
+  font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 700;
   line-height: 0.95;
@@ -129,7 +129,7 @@ const tools = [
 
 .body-text {
   color: black;
-  font-size: clamp(1.15rem, 5vw, 1.6rem);
+  font-size: clamp(1.15rem, 1vw, 1.6rem);
   font-family: 'Gowun Batang', serif;
   font-weight: 500;
   line-height: 1.35;
@@ -140,9 +140,10 @@ const tools = [
 .tools-header {
   width: 100%;
   max-width: 1000px;
+  min-height: 800px;
   background: #ffba2f;
   border-radius: 16px;
-  padding: clamp(1.5rem, 5vw, 3rem);
+  padding: clamp(1.5rem, 3vw, 3rem);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
@@ -159,11 +160,11 @@ const tools = [
 }
 
 .tools-grid {
-  width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.25rem;
   align-items: stretch;
+  max-width: 1000px;
 }
 
 .tools-header {
