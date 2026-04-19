@@ -12,25 +12,19 @@ import MainLayout from '@/layouts/MainLayout.vue';
         <main class="content-section">
           <div class="reflection-card text-box">
             <p class="body-text">
-              Human-AI collaboration is changing the creative process. Instead of simply
-              automating tasks, AI can participate in a dynamic creative exchange where
-              humans and machines influence each other's ideas.
+              Human-AI collaboration is changing the creative process. AI can assist with 
+              idea generation, experimentation, and efficiency, but it does not replace human 
+              intention and creativity. The meaning of creative work still comes from the artist.
+
             </p>
           </div>
 
           <div class="reflection-card text-box">
             <p class="body-text">
-              Research shows that AI can improve creative performance by helping with idea
-              exploration, experimentation, and refinement. However, these benefits only
-              occur when human intention and judgment remain central.
-            </p>
-          </div>
-
-          <div class="reflection-card text-box">
-            <p class="body-text">
-              The future of creativity depends on how humans choose to use AI tools. When
-              used responsibly, AI can expand imagination and support innovation while still
-              preserving human creativity, authorship, and meaning.
+              Through Brand Communication, artists are able to express their identity, message, 
+              and values, ensuring that their work remains human-centered even when AI is involved.
+              The future of creativity depends not only on how AI is used, but also on how artists 
+              communicate their ideas to their audience.
             </p>
           </div>
         </main>

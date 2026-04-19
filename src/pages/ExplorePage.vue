@@ -376,47 +376,90 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
           </div>
         </section>
 
-        <section class="image-section">
-          <img v-if="imageUrls.explore4" :src="imageUrls.explore4" alt="Wu Jin Long artwork" class="section-image" />
-          <img v-if="imageUrls.explore5" :src="imageUrls.explore5" alt="Wu Jin Long process" class="section-image" />
-          <div class="caption-box">
+ <section class="content-section">
+          <h2 class="main-title">
+           Branding Consistency
+          </h2>
+
+          <div class="text-box">
             <p class="body-text">
-              Caption: Wu Jin Long's AI-assisted illustration process
+              AI is also transforming how artists approach branding by assisting with visual 
+              consistency, color decisions, and user interface design. These tools help streamline 
+              creative workflows while maintaining strong brand identity across different platforms.
+              Some design platforms now include AI-powered color tools that help designers create 
+              cohesive and appealing palettes based on brand identity or mood.
             </p>
           </div>
+
+          <h2 class="main-title">Coolers</h2>
+          <div class="text-box">
+            <p class="body-text">
+              Coolors generate color palettes based on user preferences. Designers can use the AI 
+              by selecting colors they like, and the system will generate combinations tailored to 
+              their taste. This helps in developing brand color schemes that are visually harmonious 
+              and aligned with a brand’s personality and allows users to quickly explore variations 
+              for branding projects. <br>
+              Coolors is also a feature that can be used in Figma, which is ideal for UI UX projects.
+            </p>
+          </div>
+
+          <div class="text-box">
+            <p class="body-text">
+              There is also a color contrast checker by Coolors to see if your chosen colors are an 
+              ideal match in terms of text color and background color for readability.
+            </p>
+          </div>
+        </section>
+
+        <h2 class="main-title">Uizard</h2>
+        <div class="text-box">
+            <p class="body-text">
+              Uizard allows designers to generate UI layouts from text prompts, sketches, or 
+              wireframes. It can transform hand-drawn ideas into digital mockups, making it useful 
+              for quickly prototyping app or website designs. This is ideal for artists who do not 
+              know how to code and the UI is simple to navigate around, similar to Canva.
+          </div>
+
+        <section class="image-section">
+          <img v-if="imageUrls.explore4" :src="imageUrls.explore4" alt="Wu Jin Long artwork" class="section-image" />
         </section>
 
         <section class="content-section">
           <div class="text-box">
             <p class="body-text">
-              In this workflow, AI helped generate ideas and visual references, while the
-              artist remained responsible for the drawing, painting, and final creative
-              decisions.
+              You can drag and drop an image of what your desired UI design, and it will generate it
+              for you from the buttons and text placements to the overall layout and structure of the 
+              interface. The tool analyzes the visual elements in the uploaded image and converts them 
+              into editable UI components, allowing designers to quickly transform ideas into functional 
+              prototypes.
             </p>
           </div>
 
-          <div class="text-box">
+
+        <h2 class="main-title">Canva’s Brand Kit</h2>
+        <div class="text-box">
             <p class="body-text">
-              Please refer to the link provided for more information:
-            </p>
-            <a href="https://www.artstation.com/artwork/4NO811" target="_blank" rel="noopener noreferrer"
-              class="hero-utility__link">
-              Mixed Media Workflow Tutorial – From AI Inspiration to Final Digital
-              Illustration, Wu Jin Long
-            </a>
+              Canva’s Brand Kit allows designers to store brand assets such as logos, fonts, 
+              colors, and templates directly to the design platform. Once set up, these elements 
+              can be automatically applied to any design, ensuring that all outputs follow the same 
+              visual identity. This reduces the need to manually check brand guidelines every time 
+              a new design is created.
           </div>
 
-          <div class="text-box">
-            <p class="body-text">
-              In the end, AI should act as an assistant while the human remains the author.
-              AI can generate ideas and variations, but it does not have emotions, personal
-              experiences, or creative intentions. Instead, it produces outputs based on
-              patterns learned from large datasets. Because of this, the artist still makes
-              the final decisions, choosing which ideas to develop and shaping the final
-              message of the artwork.
-            </p>
-          </div>
+        <section class="image-section">
+          <img v-if="imageUrls.explore4" :src="imageUrls.explore4" alt="Wu Jin Long artwork" class="section-image" />
         </section>
+
+          <div class="text-box">
+            <p class="body-text">
+              The tool also integrates with their AI-powered features like Magic Studio in Canva, 
+              allowing designs to be generated or adjusted while keeping brand elements consistent. 
+              This means that even AI-generated layouts or content will follow predefined brand 
+              styles, improving efficiency while maintaining accuracy.Another useful feature is the 
+              ability to manage multiple Brand Kits for different campaigns or sub-brands. Designers 
+              can quickly switch between them, making it easier to maintain consistency across 
+              various projects without confusion.
+          </div>
 
         <!-- 3. AI INSIDE ADOBE PHOTOSHOP -->
         <section class="content-section">
@@ -557,6 +600,19 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
               such as object removal, selection, and image generation, these features
               support the creative process and enable users to explore ideas more
               efficiently.
+            </p>
+          </div>
+        </section>
+
+                <section class="content-section">
+          <div class="text-box quote-box">
+            <p class="body-text">
+              These AI tools simplify technical processes and improve efficiency. However, they
+              do not replace the role of the artist.
+
+              The artist still decides how the final image is presented and interpreted, which 
+              is a key part of Brand Communication. Through layout, composition, and design choices, 
+              artists guide how their work is understood by the audience.
             </p>
           </div>
         </section>
@@ -721,12 +777,13 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 
           <div class="text-box">
             <p class="body-text">
-              As AI becomes more common in creative work, it is important for artists and
-              designers to use it responsibly and ethically. While AI can be a helpful
-              creative tool, artists should still follow certain principles to ensure
-              fairness, transparency, and respect for other artists. These guidelines help
-              maintain trust within the creative community and prevent misuse of AI-generated
-              content.
+              Ethical use of AI is also an important part of Brand Communication, as it affects 
+              how audiences perceive and trust the artist. Transparency about AI usage helps 
+              communicate honesty, while proper credit and responsible practices show respect for 
+              other creators. These actions strengthen the artist’s credibility and relationship 
+              with their audience. In this way, communication is not only about visuals, but also 
+              about values and responsibility.
+
             </p>
           </div>
         </section>

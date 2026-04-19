@@ -7,6 +7,9 @@ const tools = [
   'Krita (AI tools) – assisted sketching and drawing',
   'ChatGPT Image Generation (OpenAI) – idea exploration',
   'DALL·E (OpenAI) – early concept image generation',
+  'Canva’s Magic Studio',
+  'Coolors',
+  'Figma',
 ];
 </script>
 
@@ -126,7 +129,7 @@ const tools = [
 
 .body-text {
   color: black;
-  font-size: clamp(1.15rem, 23vw, 1.6rem);
+  font-size: clamp(1.15rem, 5vw, 1.6rem);
   font-family: 'Gowun Batang', serif;
   font-weight: 500;
   line-height: 1.35;
