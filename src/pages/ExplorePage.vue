@@ -542,7 +542,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 
           <div class="text-box">
             <p class="body-text">Video embedded on the web article with thumbnail</p>
-              <a href="https://www.youtube.com/watch?v=30lc8fW7m2Y" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.youtube.com/watch?v=30lc8fW7m2Y" target="_blank" rel="noopener noreferrer"
               class="hero-utility__link">
               Photoshop - 5 Basic Retouching Tools
             </a>
@@ -612,8 +612,8 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
             <p class="body-text">
               Please refer to the link provided for more information:
             </p>
-              <a href="https://krita-artists.org/t/introducing-a-new-project-fast-line-art/94265" target="_blank" rel="noopener noreferrer"
-              class="hero-utility__link">
+            <a href="https://krita-artists.org/t/introducing-a-new-project-fast-line-art/94265" target="_blank"
+              rel="noopener noreferrer" class="hero-utility__link">
               Introducing a New Project: Fast Line Art
             </a>
           </div>
@@ -647,7 +647,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
             <p class="body-text">
               Please refer to the link provided for more information:
             </p>
-              <a href="https://www.youtube.com/watch?v=Ly6USRwTHe0" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.youtube.com/watch?v=Ly6USRwTHe0" target="_blank" rel="noopener noreferrer"
               class="hero-utility__link">
               Generative AI for Krita - With ControlNet
             </a>
@@ -708,8 +708,8 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
             <p class="body-text">
               Please refer to the link provided for more information:
             </p>
-              <a href="https://help.clip-studio.com/en-us/manual_en/390_filters/AI_Tools.htm" target="_blank" rel="noopener noreferrer"
-              class="hero-utility__link">
+            <a href="https://help.clip-studio.com/en-us/manual_en/390_filters/AI_Tools.htm" target="_blank"
+              rel="noopener noreferrer" class="hero-utility__link">
               Clip Studio Paint Official User Guide
             </a>
           </div>
@@ -810,10 +810,8 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
             <p class="body-text">
               Please refer to the link provided for more information:
             </p>
-              <a href="https://interaksyon.philstar.com/trends-spotlights/2024/09/13/283483/poster-making-contest-draws-flak-for-recognizing-ai-generated-work/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="hero-utility__link">
+            <a href="https://interaksyon.philstar.com/trends-spotlights/2024/09/13/283483/poster-making-contest-draws-flak-for-recognizing-ai-generated-work/"
+              target="_blank" rel="noopener noreferrer" class="hero-utility__link">
               Digit-AI art? Poster-making contest draws flak for recognizing 'AI-generated'
               work
             </a>
@@ -854,7 +852,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
             <p class="body-text">
               Please refer to the link provided for more information:
             </p>
-              <a href="https://www.deviantart.com/team/journal/933537821" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.deviantart.com/team/journal/933537821" target="_blank" rel="noopener noreferrer"
               class="hero-utility__link">
               Create AI-Generated Art Fairly with DreamUp by Team on DeviantArt
             </a>
@@ -886,7 +884,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  background:  ##ffba2f;
+  background: #ffba2f;
   border-radius: 16px;
   padding: 1rem 1.25rem;
 }
@@ -994,7 +992,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 
 .learning-card {
   min-height: 100px;
-  
+
   align-items: center;
   justify-content: center;
 }
@@ -1035,8 +1033,8 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 }
 
 .status-box--warning {
-  background:  #ffba2f;
-  color:  #000000;
+  background: #ffba2f;
+  color: #000000;
 }
 
 @media (max-width: 768px) {
