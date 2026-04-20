@@ -12,6 +12,12 @@
     <RouterLink to="/credits" class="app-nav__link" active-class="app-nav__link--active">
       Credits
     </RouterLink>
+    <RouterLink to="/quiz" class="app-nav__link" active-class="app-nav__link--active">
+      Quiz
+    </RouterLink>
+    <RouterLink to="/add-quiz" class="app-nav__link" active-class="app-nav__link--active">
+      Add Quiz
+    </RouterLink>
   </nav>
 </template>
 
