@@ -33,6 +33,7 @@ const saving = ref(false)
 const submitted = ref(false)
 const errorMessage = ref('')
 const saveMessage = ref('')
+const expandedImage = ref<string | null>(null)
 
 const score = computed(() => {
     return questions.value.reduce((total, question) => {
@@ -220,13 +221,12 @@ onMounted(() => {
                             class="group overflow-hidden rounded-[1.8rem] border border-white/70 bg-white/80 shadow-[0_18px_50px_rgba(179,106,146,0.10)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(179,106,146,0.16)]">
 
                             <div v-if="question.imageUrl" class="p-2">
-                                <div
-                                    class="relative h-56 w-full overflow-hidden rounded-[20px] md:h-72 shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
-
+                                <button type="button"
+                                    class="relative h-56 w-full overflow-hidden rounded-[20px] shadow-[0_20px_60px_rgba(0,0,0,0.15)] md:h-72 cursor-zoom-in text-left"
+                                    @click="expandedImage = question.imageUrl">
                                     <img :src="question.imageUrl" :alt="question.question"
                                         class="h-full w-full object-cover object-[center_20%] transition duration-700 group-hover:scale-110" />
 
-                                    <!-- Overlay gradient -->
                                     <div
                                         class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent">
                                     </div>
@@ -242,7 +242,14 @@ onMounted(() => {
                                         Leonardo da Vinci • c. 1503
                                     </div>
 
-                                </div>
+                                    <div
+                                        class="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 transition duration-300 hover:opacity-100">
+                                        <span
+                                            class="rounded-full border border-white/40 bg-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md">
+                                            View Artwork
+                                        </span>
+                                    </div>
+                                </button>
                             </div>
 
                             <div class="p-6 md:p-7">
@@ -344,6 +351,23 @@ onMounted(() => {
                     </div>
                 </div>
             </div>
+
+            <transition name="lightbox">
+                <div v-if="expandedImage"
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4 py-6 backdrop-blur-md"
+                    @click="expandedImage = null">
+                    <div class="relative max-h-full max-w-6xl" @click.stop>
+                        <button type="button"
+                            class="absolute -right-2 -top-2 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md transition hover:bg-white/30"
+                            @click="expandedImage = null">
+                            ✕
+                        </button>
+
+                        <img :src="expandedImage" alt="Expanded artwork"
+                            class="max-h-[90vh] w-auto max-w-full rounded-[1.5rem] object-contain shadow-[0_30px_100px_rgba(0,0,0,0.55)]" />
+                    </div>
+                </div>
+            </transition>
         </div>
     </MainLayout>
 </template>
@@ -372,6 +396,23 @@ onMounted(() => {
 .card-leave-to {
     opacity: 0;
     transform: translateY(10px);
+}
+
+.lightbox-enter-active,
+.lightbox-leave-active {
+    transition: all 0.25s ease;
+}
+
+.lightbox-enter-from,
+.lightbox-leave-to {
+    opacity: 0;
+    transform: scale(0.96);
+}
+
+.lightbox-enter-to,
+.lightbox-leave-from {
+    opacity: 1;
+    transform: scale(1);
 }
 
 @keyframes floatSlow {
