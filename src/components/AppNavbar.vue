@@ -1,22 +1,27 @@
 <template>
   <nav class="app-nav">
-    <RouterLink to="/" class="app-nav__link" active-class="app-nav__link--active">
-      Home
+    <RouterLink to="/" v-slot="{ isActive }">
+      <span :class="['nav-link', { active: isActive }]">Home</span>
     </RouterLink>
-    <RouterLink to="/explore" class="app-nav__link" active-class="app-nav__link--active">
-      Explore
+
+    <RouterLink to="/explore" v-slot="{ isActive }">
+      <span :class="['nav-link', { active: isActive }]">Explore</span>
     </RouterLink>
-    <RouterLink to="/reflection" class="app-nav__link" active-class="app-nav__link--active">
-      Reflection
+
+    <RouterLink to="/reflection" v-slot="{ isActive }">
+      <span :class="['nav-link', { active: isActive }]">Reflection</span>
     </RouterLink>
-    <RouterLink to="/credits" class="app-nav__link" active-class="app-nav__link--active">
-      Credits
+
+    <RouterLink to="/credits" v-slot="{ isActive }">
+      <span :class="['nav-link', { active: isActive }]">Credits</span>
     </RouterLink>
-    <RouterLink to="/quiz" class="app-nav__link" active-class="app-nav__link--active">
-      Quiz
+
+    <RouterLink to="/quiz" v-slot="{ isActive }">
+      <span :class="['nav-link', { active: isActive }]">Quiz</span>
     </RouterLink>
-    <RouterLink to="/add-quiz" class="app-nav__link" active-class="app-nav__link--active">
-      Add Quiz
+
+    <RouterLink to="/add-quiz" v-slot="{ isActive }">
+      <span :class="['nav-link', { active: isActive }]">Add Quiz</span>
     </RouterLink>
   </nav>
 </template>
@@ -31,13 +36,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: clamp(0.75rem, 3vw, 2rem);
-  padding: 1rem clamp(1rem, 4vw, 2rem);
-  background: #081724;
-  backdrop-filter: blur(12px);
-  /* border-bottom: 1px solid #e7e2d8; */
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(8, 23, 36, 0.9);
+  backdrop-filter: blur(10px);
 }
 
+/* base */
+.nav-link {
+  color: #ffffff;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* hover (modern soft glow) */
+.nav-link:hover {
+  background: rgba(255, 186, 47, 0.2);
+  color: #ffba2f;
+  transform: translateY(-1px);
+}
+
+/* active (clicked/current page) */
+.nav-link.active {
+  background: #ffba2f;
+  color: #081724;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(255, 186, 47, 0.4);
+}
+
+/* optional: active + hover */
+.nav-link.active:hover {
+  transform: none;
+  background: #ffba2f;
+}
 .app-nav__link {
   color: #ffffff;
   text-decoration: none;
