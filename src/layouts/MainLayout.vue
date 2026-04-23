@@ -17,6 +17,10 @@ import AppFooter from '@/components/AppFooter.vue';
 .main-layout {
   min-height: 100vh;
   background: #c89b40;
+  background-image: url('/images/gif-bg.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .main-layout__content {
