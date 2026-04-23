@@ -35,7 +35,7 @@
   padding: 1rem clamp(1rem, 4vw, 2rem);
   background: #081724;
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid #e7e2d8;
+  /* border-bottom: 1px solid #e7e2d8; */
 }
 
 .app-nav__link {

@@ -40,9 +40,9 @@ import MainLayout from '@/layouts/MainLayout.vue';
 </template>
 
 <style scoped>
-.about-page {
+/* .about-page {
   background: #e67db8;
-}
+} */
 
 .about-page__inner {
   max-width: 1280px;
@@ -82,7 +82,7 @@ import MainLayout from '@/layouts/MainLayout.vue';
 }
 
 .hero-title {
-  color: black;
+  color: #f2f2f2;
   font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 700;

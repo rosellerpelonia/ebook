@@ -22,7 +22,11 @@ type ImageKey =
   | 'explore15'
   | 'explore16'
   | 'explore17'
-  | 'explore18';
+  | 'explore18'
+  | 'explore19'
+  | 'explore20'
+  | 'explore21'
+  | 'explore22';
 
 const imagePaths: Record<ImageKey, string> = {
   explore1: 'explore-image-1.png',
@@ -44,6 +48,10 @@ const imagePaths: Record<ImageKey, string> = {
   explore16: 'explore-image-16.png',
   explore17: 'explore-image-17.png',
   explore18: 'explore-image-18.png',
+  explore19: 'brandkitcanva.gif',
+  explore20: 'coolorcontrast.png',
+  explore21: 'coolors.png',
+  explore22: 'uizard.gif',
 };
 
 const imageUrls = reactive<Record<ImageKey, string>>({
@@ -66,6 +74,10 @@ const imageUrls = reactive<Record<ImageKey, string>>({
   explore16: '',
   explore17: '',
   explore18: '',
+  explore19: '',
+  explore20: '',
+  explore21: '',
+  explore22: '',
 });
 
 const isLoading = ref(true);
@@ -380,7 +392,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
           <img v-if="imageUrls.explore4" :src="imageUrls.explore4" alt="Wu Jin Long artwork" class="section-image" />
           <img v-if="imageUrls.explore5" :src="imageUrls.explore5" alt="Wu Jin Long process" class="section-image" />
           <div class="caption-box">
-            <p class="body-text">
+            <p class="caption">
               Caption: Wu Jin Long's AI-assisted illustration process
             </p>
           </div>
@@ -417,6 +429,132 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
             </p>
           </div>
         </section>
+
+        <section class="content-section">
+          <h2 class="main-title">
+            Branding Consistency
+          </h2>
+        </section>
+
+        <section class="content-section">
+          <div class="text-box">
+            <p class="body-text">
+              AI is also transforming how artists approach branding by assisting with visual consistency, color
+              decisions, and user interface design. These tools help streamline creative workflows while maintaining
+              strong brand identity across different platforms.
+            </p>
+          </div>
+
+          <div class="text-box">
+            <p class="body-text">
+              Some design platforms now include AI-powered color tools that help designers create cohesive and appealing
+              palettes based on brand identity or mood
+            </p>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <h2 class="main-title">Coolors</h2>
+        </section>
+
+        <section class="content-section">
+          <div class="text-box">
+            <p class="body-text">
+              Coolors generate color palettes based on user preferences. Designers can use the AI by selecting colors
+              they like, and the system will generate combinations tailored to their taste. This helps in developing
+              brand color schemes that are visually harmonious and aligned with a brand’s personality and allows users
+              to quickly explore variations for branding projects.
+            </p>
+          </div>
+
+          <div class="text-box">
+            <p class="body-text">
+              Coolors is also a feature that can be used in Figma, which is ideal for UI UX projects.
+            </p>
+          </div>
+        </section>
+
+        <section class="image-section">
+          <img v-if="imageUrls.explore21" :src="imageUrls.explore21" alt="Wu Jin Long artwork" class="section-image" />
+
+          <div class="caption-box">
+            <p class="caption">
+              There is also a color contrast checker by Coolors to see if your chosen colors are an ideal match in terms
+              of text color and background color for readability.
+            </p>
+          </div>
+          <img v-if="imageUrls.explore20" :src="imageUrls.explore20" alt="Wu Jin Long process" class="section-image" />
+        </section>
+
+        <section class="content-section">
+          <h2 class="main-title">Uizard</h2>
+        </section>
+
+        <section class="content-section">
+          <div class="text-box">
+            <p class="body-text">
+              Uizard allows designers to generate UI layouts from text prompts, sketches, or wireframes. It can
+              transform hand-drawn ideas into digital mockups, making it useful for quickly prototyping app or website
+              designs. This is ideal for artists who do not know how to code and the UI is simple to navigate around,
+              similar to Canva.
+            </p>
+          </div>
+        </section>
+
+        <section class="image-section">
+          <img v-if="imageUrls.explore22" :src="imageUrls.explore22" alt="Wu Jin Long artwork" class="section-image" />
+        </section>
+
+        <section class="content-section">
+          <div class="text-box">
+            <p class="body-text">
+              You can drag and drop an image of what your desired UI design, and it will generate it for you from the
+              buttons and text placements to the overall layout and structure of the interface. The tool analyzes the
+              visual elements in the uploaded image and converts them into editable UI components, allowing designers to
+              quickly transform ideas into functional prototypes.
+            </p>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <h2 class="main-title">Canva’s Brand Kit</h2>
+        </section>
+
+        <section class="content-section">
+          <div class="text-box">
+            <p class="body-text">
+              Canva’s Brand Kit allows designers to store brand assets such as logos, fonts, colors, and templates
+              directly to the design platform. Once set up, these elements can be automatically applied to any design,
+              ensuring that all outputs follow the same visual identity. This reduces the need to manually check brand
+              guidelines every time a new design is created.
+            </p>
+          </div>
+        </section>
+
+        <section class="image-section">
+          <img v-if="imageUrls.explore19" :src="imageUrls.explore19" alt="Wu Jin Long artwork" class="section-image" />
+        </section>
+
+        <section class="content-section">
+          <div class="text-box">
+            <p class="body-text">
+              The tool also integrates with their AI-powered features like Magic Studio in Canva, allowing designs to be
+              generated or adjusted while keeping brand elements consistent. This means that even AI-generated layouts
+              or content will follow predefined brand styles, improving efficiency while maintaining accuracy.
+            </p>
+          </div>
+        </section>
+
+        <section class="content-section">
+          <div class="text-box">
+            <p class="body-text">
+              Another useful feature is the ability to manage multiple Brand Kits for different campaigns or sub-brands.
+              Designers can quickly switch between them, making it easier to maintain consistency across various
+              projects without confusion.
+            </p>
+          </div>
+        </section>
+
 
         <!-- 3. AI INSIDE ADOBE PHOTOSHOP -->
         <section class="content-section">
@@ -864,9 +1002,9 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 </template>
 
 <style scoped>
-.explore-page {
+/* .explore-page {
   background: #e67db8;
-}
+} */
 
 .explore-page__inner {
   max-width: 1280px;
@@ -911,7 +1049,7 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 }
 
 .hero-title {
-  color: black;
+  color: #f2f2f2;
   font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 700;
@@ -922,12 +1060,21 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 }
 
 .main-title {
-  color: black;
+  color: #f2f2f2;
   font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 600;
   line-height: 1.1;
   text-align: center;
+}
+
+.caption {
+  color: #f2f2f2;
+  font-size: clamp(1.15rem, 1vw, 1.6rem);
+  font-family: 'Gowun Batang', serif;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: justify;
 }
 
 .body-text {

@@ -64,9 +64,9 @@ const tools = [
 </template>
 
 <style scoped>
-.credits-page {
+/* .credits-page {
   background: #e67db8;
-}
+} */
 
 .credits-page__inner {
   max-width: 1280px;
@@ -106,7 +106,7 @@ const tools = [
 }
 
 .hero-title {
-  color: black;
+  color: #f2f2f2;
   font-size: clamp(2rem, 4vw, 6.25rem);
   font-family: 'Helvetica', serif;
   font-weight: 700;
