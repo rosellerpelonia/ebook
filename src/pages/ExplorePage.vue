@@ -121,6 +121,32 @@ onMounted(async () => {
 });
 
 const hasImageErrors = computed(() => imageErrors.value.length > 0);
+
+const isVideoModalOpen = ref(false);
+const activeVideoUrl = ref('');
+const activeVideoTitle = ref('');
+
+function getYoutubeEmbedUrl(url: string): string {
+  const regExp = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/;
+  const match = url.match(regExp);
+  const videoId = match?.[1] ?? '';
+
+  return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : '';
+}
+
+function openVideoModal(url: string, title: string) {
+  activeVideoUrl.value = getYoutubeEmbedUrl(url);
+  activeVideoTitle.value = title;
+  isVideoModalOpen.value = true;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVideoModal() {
+  isVideoModalOpen.value = false;
+  activeVideoUrl.value = '';
+  activeVideoTitle.value = '';
+  document.body.style.overflow = '';
+}
 </script>
 
 <template>
@@ -661,10 +687,12 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 
             <div class="text-box">
               <p class="body-text">Video embedded on the web article with thumbnail</p>
-              <a href="https://www.youtube.com/watch?v=Sp6K3qpVFO0" target="_blank" rel="noopener noreferrer"
-                class="hero-utility__link">
+
+              <button type="button"
+                @click="openVideoModal('https://www.youtube.com/watch?v=Sp6K3qpVFO0', 'Introduction to Generative Fill | Adobe Photoshop')"
+                class="hero-utility__link hero-utility__button">
                 Introduction to Generative Fill | Adobe Photoshop
-              </a>
+              </button>
             </div>
           </section>
 
@@ -703,10 +731,11 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 
             <div class="text-box">
               <p class="body-text">Video embedded on the web article with thumbnail</p>
-              <a href="https://www.youtube.com/watch?v=B6dS3zYlJW8" target="_blank" rel="noopener noreferrer"
-                class="hero-utility__link">
+              <button type="button"
+                @click="openVideoModal('https://www.youtube.com/watch?v=B6dS3zYlJW8', 'Content-Aware Fill in Photoshop | Learn from the Experts | Adobe Creative Cloud')"
+                class="hero-utility__link hero-utility__button">
                 Content-Aware Fill in Photoshop | Learn from the Experts | Adobe Creative Cloud
-              </a>
+              </button>
             </div>
           </section>
 
@@ -724,10 +753,11 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 
             <div class="text-box">
               <p class="body-text">Video embedded on the web article with thumbnail</p>
-              <a href="https://www.youtube.com/watch?v=lgeYBcriWk4" target="_blank" rel="noopener noreferrer"
-                class="hero-utility__link">
+              <button type="button"
+                @click="openVideoModal('https://www.youtube.com/watch?v=lgeYBcriWk4', 'Select and Mask in Photoshop | Learn from the Experts | Adobe Creative Cloud')"
+                class="hero-utility__link hero-utility__button">
                 Select and Mask in Photoshop | Learn from the Experts | Adobe Creative Cloud
-              </a>
+              </button>
             </div>
           </section>
 
@@ -745,10 +775,11 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 
             <div class="text-box">
               <p class="body-text">Video embedded on the web article with thumbnail</p>
-              <a href="https://www.youtube.com/watch?v=30lc8fW7m2Y" target="_blank" rel="noopener noreferrer"
-                class="hero-utility__link">
+              <button type="button"
+                @click="openVideoModal('https://www.youtube.com/watch?v=30lc8fW7m2Y', 'Photoshop - 5 Basic Retouching Tools')"
+                class="hero-utility__link hero-utility__button">
                 Photoshop - 5 Basic Retouching Tools
-              </a>
+              </button>
             </div>
           </section>
 
@@ -852,10 +883,11 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
               <p class="body-text">
                 Please refer to the link provided for more information:
               </p>
-              <a href="https://www.youtube.com/watch?v=Ly6USRwTHe0" target="_blank" rel="noopener noreferrer"
-                class="hero-utility__link">
+              <button type="button"
+                @click="openVideoModal('https://www.youtube.com/watch?v=Ly6USRwTHe0', 'Generative AI for Krita - With ControlNet')"
+                class="hero-utility__link hero-utility__button">
                 Generative AI for Krita - With ControlNet
-              </a>
+              </button>
             </div>
           </section>
         </section>
@@ -1071,6 +1103,24 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
       </div>
     </section>
   </MainLayout>
+  <Teleport to="body">
+    <div v-if="isVideoModalOpen" class="video-modal-overlay" @click="closeVideoModal">
+      <div class="video-modal" @click.stop>
+        <button type="button" class="video-modal__close" @click="closeVideoModal" aria-label="Close video">
+          ×
+        </button>
+
+        <p class="video-modal__title">{{ activeVideoTitle }}</p>
+
+        <div class="video-modal__frame-wrapper">
+          <iframe v-if="activeVideoUrl" :src="activeVideoUrl" :title="activeVideoTitle" class="video-modal__frame"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -1254,6 +1304,83 @@ const hasImageErrors = computed(() => imageErrors.value.length > 0);
 .status-box--warning {
   background: #ffba2f;
   color: #000000;
+}
+
+.hero-utility__button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.video-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+.video-modal {
+  position: relative;
+  width: min(100%, 960px);
+  background: #081724;
+  border-radius: 24px;
+  padding: 1.25rem 1.25rem 1rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.video-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.9rem;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.video-modal__title {
+  margin: 0 2.5rem 1rem 0;
+  color: #ffffff;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 600;
+}
+
+.video-modal__frame-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000000;
+}
+
+.video-modal__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .video-modal {
+    border-radius: 18px;
+    padding: 1rem 1rem 0.9rem;
+  }
+
+  .video-modal__close {
+    top: 0.5rem;
+    right: 0.75rem;
+  }
 }
 
 @media (max-width: 768px) {
