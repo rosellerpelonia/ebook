@@ -17,9 +17,20 @@ onMounted(async () => {
     isLoadingImage.value = false
   }
 })
+
+const selectedImage = ref<string | null>(null)
+
+function openImage(src: string) {
+  selectedImage.value = src
+}
+
+function closeImage() {
+  selectedImage.value = null
+}
 </script>
 
 <template>
+
   <MainLayout>
     <section class="home-page">
       <div class="background-overlay"></div>
@@ -35,14 +46,10 @@ onMounted(async () => {
             human imagination, authorship, and creative direction at the center.
           </p>
         </header>
-
-        <div class="hero-image-container fade-up fade-delay-1">
-          <img
-            v-if="homeImageUrl && !isLoadingImage"
-            :src="homeImageUrl"
-            alt="AI and human co-creation showcase"
-            class="hero-image"
-          />
+        <div class="hero-image-container fade-up fade-delay-1 cursor-zoom-in"
+          @click="homeImageUrl && !isLoadingImage && openImage(homeImageUrl)">
+          <img v-if="homeImageUrl && !isLoadingImage" :src="homeImageUrl" alt="AI and human co-creation showcase"
+            class="hero-image" />
 
           <div v-else-if="isLoadingImage" class="image-placeholder">
             Loading image...
@@ -53,11 +60,6 @@ onMounted(async () => {
           </div>
 
           <div class="hero-image-overlay"></div>
-
-          <!-- <div class="hero-caption">
-            Caption: Zachary Kelbaugh's stamp design after using DALL-E image generation
-            to help with arm anatomy
-          </div> -->
         </div>
 
         <main class="content-section">
@@ -130,11 +132,20 @@ onMounted(async () => {
         </main>
       </div>
     </section>
+    <div v-if="selectedImage"
+      class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/90 px-4 backdrop-blur-md"
+      @click="closeImage">
+      <img :src="selectedImage" alt="Expanded preview" class="max-h-[90vh] max-w-[90vw] rounded-2xl shadow-2xl"
+        @click.stop />
+
+      <button class="absolute right-6 top-6 text-3xl font-bold text-white" @click="closeImage">
+        ✕
+      </button>
+    </div>
   </MainLayout>
 </template>
 
 <style scoped>
-
 .home-page__inner {
   position: relative;
   z-index: 1;
@@ -207,12 +218,10 @@ onMounted(async () => {
 .hero-image-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(5, 7, 45, 0.78) 0%,
-    rgba(5, 7, 45, 0.22) 36%,
-    rgba(5, 7, 45, 0.06) 100%
-  );
+  background: linear-gradient(to top,
+      rgba(5, 7, 45, 0.78) 0%,
+      rgba(5, 7, 45, 0.22) 36%,
+      rgba(5, 7, 45, 0.06) 100%);
 }
 
 .hero-caption {
@@ -291,11 +300,9 @@ onMounted(async () => {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.18),
-    transparent 45%
-  );
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.18),
+      transparent 45%);
   border-radius: inherit;
   pointer-events: none;
 }
@@ -440,6 +447,12 @@ onMounted(async () => {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.hero-image-container:hover {
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(255, 186, 47, 0.25);
 }
 
 @media (max-width: 1024px) {
