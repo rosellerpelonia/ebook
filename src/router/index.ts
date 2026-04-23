@@ -16,6 +16,10 @@ const router = createRouter({
     { path: "/quiz", name: "quiz", component: QuizPage },
     { path: "/add-quiz", name: "add-quiz", component: AddQuiz },
   ],
+
+    scrollBehavior() {
+    return { top: 0, left: 0, behavior: "smooth" };
+  },
 });
 
 export default router;
