@@ -20,9 +20,9 @@
       <span :class="['nav-link', { active: isActive }]">Quiz</span>
     </RouterLink>
 
-    <RouterLink to="/add-quiz" v-slot="{ isActive }">
+    <!-- <RouterLink to="/add-quiz" v-slot="{ isActive }">
       <span :class="['nav-link', { active: isActive }]">Add Quiz</span>
-    </RouterLink>
+    </RouterLink> -->
   </nav>
 </template>
 

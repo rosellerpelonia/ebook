@@ -51,8 +51,8 @@ async function addQuizQuestion() {
         !payload.options[1] ||
         !payload.options[2] ||
         !payload.options[3] ||
-        !payload.answer ||
-        !payload.imageUrl
+        !payload.answer
+        // !payload.imageUrl
     ) {
         message.value = 'Please fill in all fields.'
         messageType.value = 'error'
@@ -229,8 +229,8 @@ async function addQuizQuestion() {
                         </div>
 
                         <div v-if="message" class="rounded-2xl border px-4 py-3 text-sm font-medium" :class="messageType === 'success'
-                                ? 'border-green-300 bg-green-50 text-green-700'
-                                : 'border-red-300 bg-red-50 text-red-700'
+                            ? 'border-green-300 bg-green-50 text-green-700'
+                            : 'border-red-300 bg-red-50 text-red-700'
                             ">
                             {{ message }}
                         </div>
