@@ -144,20 +144,20 @@ onMounted(() => {
             class="relative min-h-screen overflow-hidden px-4 py-10 md:px-6">
 
             <!-- background glow -->
-            <div class="pointer-events-none absolute inset-0 overflow-hidden">
-                <div class="absolute -left-20 top-0 h-[28rem] w-[28rem] rounded-full bg-[#e67db8]/25 blur-[120px]">
+            <!-- <div class="pointer-events-none absolute inset-0 overflow-hidden">
+                <div class="absolute -left-20 top-0 h-[28rem] w-[28rem] rounded-full">
                 </div>
-                <div class="absolute right-0 top-20 h-[30rem] w-[30rem] rounded-full bg-[#ffba2f]/20 blur-[140px]">
+                <div class="absolute right-0 top-20 h-[30rem] w-[30rem] rounded-full">
                 </div>
-                <div class="absolute bottom-0 left-1/4 h-[24rem] w-[24rem] rounded-full bg-[#e67db8]/15 blur-[120px]">
+                <div class="absolute bottom-0 left-1/4 h-[24rem] w-[24rem] rounded-full">
                 </div>
-                <div class="absolute bottom-10 right-1/4 h-[22rem] w-[22rem] rounded-full bg-[#ffba2f]/15 blur-[120px]">
+                <div class="absolute bottom-10 right-1/4 h-[22rem] w-[22rem] rounded-full">
                 </div>
 
                 <div class="absolute left-10 top-1/3 rotate-12 text-7xl opacity-[0.05]">🎨</div>
                 <div class="absolute right-20 top-1/2 -rotate-12 text-7xl opacity-[0.05]">🖌️</div>
                 <div class="absolute bottom-20 left-1/2 text-7xl opacity-[0.05]">✨</div>
-            </div>
+            </div> -->
 
             <div class="relative mx-auto max-w-5xl">
                 <div
