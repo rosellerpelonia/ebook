@@ -72,15 +72,21 @@ function closeImage() {
               support their ideas, speed up their workflow, and explore new creative
               possibilities. Rather than replacing human creativity, AI works best as a
               collaborative partner that helps creators experiment and refine their work.
+
+              However, creativity is not only about producing content, it is also about how ideas
+              are communicated to an audience. This is where Brand Communication becomes
+              important. It allows artists to express their identity, message, and creative intent
+              through their work. Even when AI is involved, it ensures that the human voice remains
+              clear, meaningful, and recognizable.
+
             </p>
           </div>
 
           <div class="text-box text-box--right fade-up fade-delay-3">
             <p class="body-text">
-              This website explores how humans and AI can work together in the creative
-              process, also known as co-creation. Through examples, tools, and explanations,
-              it shows how AI can assist creators while still keeping human imagination,
-              judgment, and intent at the center of creative work.
+              This website explores how humans and AI can work together in the creative process,
+              also known as co-creation, while highlighting how communication plays a key role in
+              preserving human creativity.
             </p>
           </div>
 
