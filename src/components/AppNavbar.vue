@@ -4,9 +4,21 @@
       <span :class="['nav-link', { active: isActive }]">Home</span>
     </RouterLink>
 
-    <RouterLink to="/explore" v-slot="{ isActive }">
-      <span :class="['nav-link', { active: isActive }]">Explore</span>
-    </RouterLink>
+    <div class="nav-dropdown">
+      <RouterLink to="/explore" v-slot="{ isActive }">
+        <button :class="['nav-link nav-dropdown__button', { active: isActive }]">
+          Explore
+          <span class="nav-dropdown__chevron">⌄</span>
+        </button>
+      </RouterLink>
+
+      <div class="nav-dropdown__menu">
+        <button v-for="section in sections" :key="section.id" type="button" class="nav-dropdown__item"
+          @click="goToExploreSection(section.id)">
+          {{ section.label }}
+        </button>
+      </div>
+    </div>
 
     <RouterLink to="/reflection" v-slot="{ isActive }">
       <span :class="['nav-link', { active: isActive }]">Reflection</span>
@@ -19,14 +31,40 @@
     <RouterLink to="/quiz" v-slot="{ isActive }">
       <span :class="['nav-link', { active: isActive }]">Quiz</span>
     </RouterLink>
-
-    <!-- <RouterLink to="/add-quiz" v-slot="{ isActive }">
-      <span :class="['nav-link', { active: isActive }]">Add Quiz</span>
-    </RouterLink> -->
   </nav>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const sections = [
+  { id: 'co-creation', label: 'Co-Creation' },
+  { id: 'how-artists-use-ai', label: 'Artists & AI' },
+  { id: 'branding-consistency', label: 'Branding' },
+  { id: 'ai-inside-photoshop', label: 'Photoshop AI' },
+  { id: 'ai-inside-krita', label: 'Krita AI' },
+  { id: 'ai-tools-clip-studio', label: 'Clip Studio AI' },
+  { id: 'ethics-ai-art', label: 'Ethics' },
+];
+
+async function goToExploreSection(id: string) {
+  await router.push('/explore');
+
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    const y = el.getBoundingClientRect().top + window.scrollY - 90;
+
+    window.scrollTo({
+      top: y,
+      behavior: 'smooth',
+    });
+  }, 150);
+}
+</script>
 
 <style scoped>
 .app-nav {
@@ -42,7 +80,12 @@
   backdrop-filter: blur(10px);
 }
 
-/* base */
+.nav-explore {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .nav-link {
   color: #ffffff;
   font-family: 'Rethink Sans', sans-serif;
@@ -53,14 +96,12 @@
   transition: all 0.25s ease;
 }
 
-/* hover (modern soft glow) */
 .nav-link:hover {
   background: rgba(255, 186, 47, 0.2);
   color: #ffba2f;
   transform: translateY(-1px);
 }
 
-/* active (clicked/current page) */
 .nav-link.active {
   background: #ffba2f;
   color: #081724;
@@ -68,33 +109,110 @@
   box-shadow: 0 4px 14px rgba(255, 186, 47, 0.4);
 }
 
-/* optional: active + hover */
 .nav-link.active:hover {
   transform: none;
   background: #ffba2f;
 }
-.app-nav__link {
-  color: #ffffff;
-  text-decoration: none;
-  font-family: 'Rethink Sans', sans-serif;
-  font-size: clamp(0.95rem, 2vw, 1.15rem);
-  padding: 0.55rem 0.9rem;
+
+.nav-module-select {
+  max-width: 150px;
+  border: 1px solid rgba(255, 186, 47, 0.5);
   border-radius: 999px;
-  transition: 0.25s ease;
+  background: #081724;
+  color: #ffffff;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.75rem;
+  outline: none;
+  cursor: pointer;
 }
 
-.app-nav__link:hover {
-  background: rgba(0, 0, 0, 0.06);
+.nav-module-select:focus {
+  border-color: #ffba2f;
+  box-shadow: 0 0 0 3px rgba(255, 186, 47, 0.2);
 }
 
-.app-nav__link--active {
-  background: rgba(0, 0, 0, 0.1);
-  font-weight: 600;
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown__button {
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-dropdown__chevron {
+  font-size: 0.9rem;
+}
+
+.nav-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  left: 50%;
+  min-width: 220px;
+  padding: 0.5rem;
+  border-radius: 18px;
+  background: rgba(8, 23, 36, 0.96);
+  border: 1px solid rgba(255, 186, 47, 0.35);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+  transform: translateX(-50%) translateY(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+.nav-dropdown:hover .nav-dropdown__menu,
+.nav-dropdown:focus-within .nav-dropdown__menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown__item {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-dropdown__item:hover {
+  background: rgba(255, 186, 47, 0.18);
+  color: #ffba2f;
+}
+
+@media (max-width: 640px) {
+  .nav-dropdown__menu {
+    left: 0;
+    right: auto;
+    transform: translateY(8px);
+  }
+
+  .nav-dropdown:hover .nav-dropdown__menu,
+  .nav-dropdown:focus-within .nav-dropdown__menu {
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 640px) {
   .app-nav {
     flex-wrap: wrap;
+  }
+
+  .nav-explore {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-module-select {
+    max-width: 135px;
   }
 }
 </style>
