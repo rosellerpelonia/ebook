@@ -1,7 +1,7 @@
 <template>
   <footer class="app-footer">
     <div class="app-footer__top">
-      <div class="app-footer__brand">Co-Creation Human X Ai</div>
+      <div class="app-footer__brand">Co-Creation Human X AI</div>
 
       <div class="app-footer__contact">
         <div> Haile Pelonia <br>
