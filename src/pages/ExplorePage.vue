@@ -154,56 +154,56 @@ function getYoutubeEmbedUrl(videoId: string): string {
           <section class="content-section">
             <div class="text-box">
               <p class="body-text">
-                To cocreate is to create something together resulting in something that neither
-                could easily be created alone. In this context, co-creation with AI describes
-                the collaborative process in which artists with the assistance of AI work
-                together to develop ideas, content, and or solutions.
+                 To cocreate is to <strong>create something together</strong> resulting in something that neither
+  could easily be created alone. In this context, <strong>co-creation with AI</strong> describes
+  the collaborative process in which artists with the assistance of AI work
+  together to develop <strong>ideas, content, and or solutions</strong>.
               </p>
             </div>
 
             <div class="content-grid">
               <div class="learning-header">
                 <p class="body-text">
-                  Artists provide the core elements of creativity, such as:
+                  <strong>Artists provide the core elements of creativity</strong>, such as:
                 </p>
               </div>
               <div class="learning-card">
-                <p class="body-text">Vision – the main idea or concept of the project</p>
+                <p class="body-text"><strong>Vision</strong> – the main idea or concept of the project</p>
               </div>
               <div class="learning-card">
-                <p class="body-text">Theme – personal style and aesthetic judgment</p>
+                <p class="body-text"><strong>Theme</strong> – personal style and aesthetic judgment</p>
               </div>
               <div class="learning-card">
-                <p class="body-text">Direction – guiding the project toward a goal</p>
+                <p class="body-text"><strong>Direction</strong> – guiding the project toward a goal</p>
               </div>
               <div class="learning-card">
                 <p class="body-text">
-                  Meaning – giving the work emotional, cultural, or symbolic value
+                  <strong>Meaning</strong> – giving the work emotional, cultural, or symbolic value
                 </p>
               </div>
 
               <div class="learning-header">
                 <p class="body-text">
-                  While AI supports the process by providing:
+                  <strong>While AI supports the process by providing:</strong>
                 </p>
               </div>
               <div class="learning-card">
-                <p class="body-text">Suggestions – offering possible ideas or concepts</p>
+                <p class="body-text"><strong>Suggestions</strong> – offering possible ideas or concepts</p>
               </div>
               <div class="learning-card">
                 <p class="body-text">
-                  Variations – generating multiple versions of a prompt
+                  <strong>Variations</strong> – generating multiple versions of a prompt
                 </p>
               </div>
               <div class="learning-card">
                 <p class="body-text">
-                  Speed – quickly producing concepts and references that would take artists
+                  <strong>Speed</strong> – quickly producing concepts and references that would take artists
                   longer
                 </p>
               </div>
               <div class="learning-card">
                 <p class="body-text">
-                  Exploration – helping creators test different combinations and possibilities
+                  <strong>Exploration</strong> – helping creators test different combinations and possibilities
                 </p>
               </div>
             </div>
@@ -224,18 +224,18 @@ function getYoutubeEmbedUrl(videoId: string): string {
           <section class="content-section">
             <div class="text-box quote-box">
               <p class="body-text">
-                "Just like inspiration tools such as Pinterest, AI can be used to gather ideas
-                and explore visual possibilities. However, artists should treat these results
-                as inspiration rather than copying them directly." - Cat Coquillette
+                "<strong>Just like inspiration tools such as Pinterest, AI can be used to gather ideas
+  and explore visual possibilities.</strong> However, artists should treat these results
+  as inspiration rather than copying them directly." - Cat Coquillette
               </p>
             </div>
 
             <div class="text-box">
               <p class="body-text">
-                In her process, Cat Coquillette used AI image generation to quickly explore
-                visual styles and concepts that could inspire her illustrations. The generated
-                images helped her experiment with colors, themes, and compositions before
-                developing her own artwork based on the ideas she found most interesting.
+                In her process, Cat Coquillette used <strong>AI image generation to quickly explore
+  visual styles and concepts</strong> that could inspire her illustrations. The generated
+  images helped her <strong>experiment with colors, themes, and compositions</strong> before
+  developing her own artwork based on the ideas she found most interesting.
               </p>
             </div>
 
@@ -263,19 +263,19 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box quote-box">
               <p class="body-text">
-                "I generated several options and kept the ones that had elements I liked, using
-                them as references while I developed my own sketches."
+                "I generated several options and kept the ones that had <strong>elements I liked</strong>, using
+  them as references while I developed my own sketches."
               </p>
             </div>
 
             <div class="text-box">
               <p class="body-text">
-                To create the stamp design, Kelbaugh generated several AI images to study a
-                difficult pose involving lighting, arm position, and costume details. He
-                selected a few results that had useful elements and kept them beside his
-                workspace while sketching in Procreate, gradually refining the drawing before
-                inking the final design. The AI images were used purely as references, while
-                the final illustration was drawn and finished by the artist himself.
+                To create the stamp design, Kelbaugh generated several AI images to <strong>study a
+  difficult pose</strong> involving lighting, arm position, and costume details. He
+  selected a few results that had useful elements and kept them beside his
+  workspace while sketching in Procreate, gradually refining the drawing before
+  inking the final design. The AI images were used purely as references, while
+  the final illustration was <strong>drawn and finished by the artist himself</strong>.
               </p>
             </div>
 
@@ -291,12 +291,12 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Even though AI can generate ideas, us artists will make the final decisions.
-                Depending on the artist's workflow, AI assistance is used in situations where
-                they need the most help in. The artist works on the product, chooses what to
-                keep, what to change, and what the final work should appear visually as well as
-                the purpose behind the final output. Because of this, AI is best understood as
-                a tool or creative assistant, not the author.
+                Even though AI can <strong>generate ideas</strong>, us artists will make the
+  <strong>final decisions</strong>. Depending on the artist's workflow, AI assistance is used in
+  situations where they need the most help in. The artist works on the product,
+  <strong>chooses what to keep, what to change</strong>, and what the final work should appear visually
+  as well as the purpose behind the final output. Because of this, AI is best
+  understood as a <strong>tool or creative assistant, not the author</strong>.
               </p>
             </div>
           </section>
@@ -309,12 +309,12 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Artists often use AI as a tool to help them experiment with ideas and assist
-                with time-consuming parts of the creative process either from external Ai
-                websites to built-in smart software tool features. From these 2 case studies
-                provided below, AI assistance in their workflow act as visual references that
-                help the artist explore possibilities more quickly before refining the final
-                artwork manually in their own style.
+                Artists often use AI as a <strong>tool to help them experiment with ideas</strong> and assist
+  with time-consuming parts of the creative process either from external AI
+  websites to built-in smart software tool features. From these 2 case studies
+  provided below, AI assistance in their workflow act as <strong>visual references
+  that help the artist explore possibilities more quickly</strong> before refining the
+  final artwork manually in their own style.
               </p>
             </div>
           </section>
@@ -331,10 +331,10 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                In his workflow, AI is mainly used during the early idea generation stage. The
-                artist begins by generating multiple visual concepts using AI tools to explore
-                possible compositions, lighting, and environments. These AI outputs act as
-                inspiration, similar to a mood board.
+                In his workflow, AI is mainly used during the <strong>early idea generation stage</strong>.
+  The artist begins by generating multiple visual concepts using AI tools to
+  explore possible compositions, lighting, and environments. These AI outputs
+  act as <strong>inspiration, similar to a mood board</strong>.
               </p>
             </div>
 
@@ -355,10 +355,10 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Instead of producing the final artwork, the AI helps the artist quickly explore
-                visual ideas that would normally take much longer to develop manually. The
-                final artwork is still shaped through the artist's own drawing, painting, and
-                editing decisions.
+                  Instead of producing the final artwork, the AI helps the artist quickly explore
+  visual ideas that would normally take much longer to develop manually. The
+  final artwork is still shaped through the artist's own <strong>drawing, painting,
+  and editing decisions</strong>.
               </p>
             </div>
           </section>
@@ -395,27 +395,27 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Digital artist Wu Jin Long demonstrated how AI can be integrated into a full
-                illustration workflow while still relying on traditional artistic skills.
+                Digital artist Wu Jin Long demonstrated how AI can be <strong>integrated into a full
+  illustration workflow</strong> while still relying on traditional artistic skills.
               </p>
             </div>
 
             <div class="text-box">
               <p class="body-text">
                 For his artwork Dreamwalkers: The Origin of the Worlds, he first generated
-                visual inspiration using AI tools such as DALL·E 3 and Midjourney to explore
-                possible compositions and color ideas. After gathering inspiration, he created
-                pencil sketches to plan the scene and overall layout.
+  visual inspiration using AI tools such as DALL·E 3 and Midjourney to explore
+  possible compositions and color ideas. After gathering inspiration, he created
+  <strong>pencil sketches to plan the scene and overall layout</strong>.
               </p>
             </div>
 
             <div class="text-box">
               <p class="body-text">
-                The sketch was then used to generate additional AI variations, helping the
-                artist experiment with different lighting and color palettes. Using these
-                references, he continued refining the artwork digitally in Procreate and later
-                finalized the piece in Adobe Photoshop, where he added details, fixed
-                artifacts, and improved the overall composition.
+                The sketch was then used to generate <strong>additional AI variations</strong>, helping the
+  artist experiment with different lighting and color palettes. Using these
+  references, he continued refining the artwork digitally in Procreate and later
+  finalized the piece in Adobe Photoshop, where he added details, fixed
+  artifacts, and improved the overall composition.
               </p>
             </div>
           </section>
@@ -437,9 +437,9 @@ function getYoutubeEmbedUrl(videoId: string): string {
           <section class="content-section">
             <div class="text-box">
               <p class="body-text">
-                In this workflow, AI helped generate ideas and visual references, while the
-                artist remained responsible for the drawing, painting, and final creative
-                decisions.
+                In this workflow, AI helped <strong>generate ideas and visual references</strong>, while the
+  artist remained responsible for the drawing, painting, and
+  <strong>final creative decisions</strong>.
               </p>
             </div>
 
@@ -456,12 +456,12 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                In the end, AI should act as an assistant while the human remains the author.
-                AI can generate ideas and variations, but it does not have emotions, personal
-                experiences, or creative intentions. Instead, it produces outputs based on
-                patterns learned from large datasets. Because of this, the artist still makes
-                the final decisions, choosing which ideas to develop and shaping the final
-                message of the artwork.
+                In the end, AI should act as an <strong>assistant while the human remains the author</strong>.
+  AI can generate ideas and variations, but it does not have emotions, personal
+  experiences, or creative intentions. Instead, it produces outputs based on
+  patterns learned from large datasets. Because of this, the artist still makes
+  the <strong>final decisions</strong>, choosing which ideas to develop and shaping the final
+  message of the artwork.
               </p>
             </div>
           </section>
@@ -477,8 +477,8 @@ function getYoutubeEmbedUrl(videoId: string): string {
           <section id="branding-consistency" class="content-section">
             <div class="text-box">
               <p class="body-text">
-                AI is also transforming how artists approach branding by assisting with visual consistency, color
-                decisions, and user interface design. These tools help streamline creative workflows while maintaining
+                AI is also transforming how artists approach <strong>branding</strong> by assisting with <strong>visual
+  consistency, color decisions, and user interface design.</strong> These tools help streamline creative workflows while maintaining
                 strong brand identity across different platforms.
               </p>
             </div>
@@ -499,7 +499,7 @@ function getYoutubeEmbedUrl(videoId: string): string {
           <section class="content-section">
             <div class="text-box">
               <p class="body-text">
-                Coolors generate color palettes based on user preferences. Designers can use the AI by selecting colors
+                Coolors generate <strong>color palettes based on user preferences</strong>. Designers can use the AI by selecting colors
                 they like, and the system will generate combinations tailored to their taste. This helps in developing
                 brand color schemes that are visually harmonious and aligned with a brand’s personality and allows users
                 to quickly explore variations for branding projects.
@@ -537,7 +537,7 @@ function getYoutubeEmbedUrl(videoId: string): string {
           <section class="content-section">
             <div class="text-box">
               <p class="body-text">
-                Uizard allows designers to generate UI layouts from text prompts, sketches, or wireframes. It can
+                Uizard allows designers to <strong>generate UI layouts from text prompts, sketches, or wireframes.</strong> It can
                 transform hand-drawn ideas into digital mockups, making it useful for quickly prototyping app or website
                 designs. This is ideal for artists who do not know how to code and the UI is simple to navigate around,
                 similar to Canva.
@@ -570,8 +570,8 @@ function getYoutubeEmbedUrl(videoId: string): string {
           <section class="content-section">
             <div class="text-box">
               <p class="body-text">
-                Canva’s Brand Kit allows designers to store brand assets such as logos, fonts, colors, and templates
-                directly to the design platform. Once set up, these elements can be automatically applied to any design,
+                Canva’s Brand Kit allows designers to <strong>store brand assets such as logos,
+  fonts, colors, and templates directly to the design platform.</strong> Once set up, these elements can be automatically applied to any design,
                 ensuring that all outputs follow the same visual identity. This reduces the need to manually check brand
                 guidelines every time a new design is created.
               </p>
@@ -620,8 +620,8 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Generative Fill is an AI feature that allows users to add, remove, or modify
-                parts of an image using text prompts.
+                 Generative Fill is an AI feature that allows users to <strong>add, remove, or modify
+  parts of an image</strong> using text prompts.
               </p>
             </div>
 
@@ -662,8 +662,8 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Content-Aware Fill removes objects from an image and automatically fills the
-                empty space using surrounding textures and details.
+                Content-Aware Fill <strong>removes objects from an image and automatically fills the
+  empty space.</strong>
               </p>
             </div>
 
@@ -729,8 +729,7 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Tools such as Spot Healing Brush, Healing Brush, and Patch Tool help fix
-                imperfections in photos by analyzing nearby pixels and blending them naturally
+                Tools such as <strong>Spot Healing Brush, Healing Brush, and Patch Tool help fix imperfections in photos</strong> by analyzing nearby pixels and blending them naturally
                 into the edited area. This allows users to quickly remove blemishes or
                 unwanted marks while keeping the image looking clean and polished.
               </p>
@@ -753,11 +752,11 @@ function getYoutubeEmbedUrl(videoId: string): string {
           <section class="content-section">
             <div class="text-box quote-box">
               <p class="body-text">
-                These examples show some of the fundamental AI-assisted tools in Adobe
-                Photoshop that are widely used by artists and designers. By simplifying tasks
-                such as object removal, selection, and image generation, these features
-                support the creative process and enable users to explore ideas more
-                efficiently.
+                These examples show some of the <strong>fundamental AI-assisted tools</strong> in Adobe
+  Photoshop that are widely used by artists and designers. By simplifying tasks
+  such as <strong>object removal, selection, and image generation</strong>, these features
+  support the <strong>creative process</strong> and enable users to explore ideas more
+  efficiently.
               </p>
             </div>
           </section>
@@ -769,9 +768,9 @@ function getYoutubeEmbedUrl(videoId: string): string {
             <div class="text-box">
               <p class="body-text">
                 AI features are also being introduced in other illustration programs to help
-                artists speed up workflows and improve drawing accuracy. These tools often
-                assist with tasks such as line art creation, automatic coloring, and pose
-                referencing.
+    artists <strong>speed up workflows and improve drawing accuracy</strong>. These tools often
+    assist with tasks such as <strong>line art creation, automatic coloring, and pose
+    referencing</strong>.
               </p>
             </div>
           </section>
@@ -783,18 +782,18 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Some illustration programs experiment with AI tools that help artists refine
-                sketches into clean line art. One example is the Fast Line Art project in
-                Krita.
+                Some illustration programs experiment with AI tools that help artists <strong>refine
+    sketches into clean line art</strong>. One example is the <strong>Fast Line Art project</strong> in
+    Krita.
               </p>
             </div>
 
             <div class="text-box">
               <p class="body-text">
-                Fast Line Art is an experimental AI feature that converts rough sketches into
-                clean line art using neural networks. Instead of manually tracing over a sketch
-                multiple times, the tool automatically generates smoother lines that follow the
-                artist's original drawing.
+                Fast Line Art is an experimental AI feature that <strong>converts rough sketches into
+    clean line art</strong> using neural networks. Instead of manually tracing over a sketch
+    multiple times, the tool automatically generates <strong>smoother lines</strong> that follow the
+    artist's original drawing.
               </p>
             </div>
 
@@ -807,9 +806,9 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                This tool is designed to assist artists on linework rather than generate
-                entirely new artwork, meaning it closely follows the sketch provided by the
-                user.
+                This tool is designed to <strong>assist artists on linework</strong> rather than generate
+    entirely new artwork, meaning it <strong>closely follows the sketch</strong> provided by the
+    user.
               </p>
             </div>
 
@@ -829,10 +828,10 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Because Krita is open-source software, developers and artists can create
-                additional tools and extensions that expand its capabilities. One example is
-                Krita AI by Acly, which integrates AI image generation features directly inside
-                the program and function similarly to Adobe Photoshop's AI features.
+                Because Krita is <strong>open-source software</strong>, developers and artists can create
+    additional tools and extensions that <strong>expand its capabilities</strong>. One example is
+    Krita AI by Acly, which integrates <strong>AI image generation features</strong> directly inside
+    the program and function similarly to Adobe Photoshop's AI features.
               </p>
             </div>
 
@@ -842,10 +841,10 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                This tool allows artists to generate images from text prompts or from existing
-                sketches within the Krita workspace with the help of Stable Diffusion AI.
-                Artists can use it to quickly create concept ideas, experiment with
-                compositions, or generate references that help guide their illustrations.
+                This tool allows artists to <strong>generate images from text prompts</strong> or from existing
+    sketches within the Krita workspace with the help of Stable Diffusion AI.
+    Artists can use it to <strong>quickly create concept ideas</strong>, experiment with
+    compositions, or generate <strong>references that help guide their illustrations</strong>.
               </p>
             </div>
 
@@ -870,17 +869,17 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Clip Studio Paint includes several AI-based tools that assist artists with
-                coloring, posing, and image adjustments.
+                Clip Studio Paint includes several <strong>AI-based tools</strong> that assist artists with
+    <strong>coloring, posing, and image adjustments</strong>.
               </p>
             </div>
 
             <div class="text-box">
               <p class="body-text">
                 <strong>AI Colorize</strong><br />
-                The Colorize feature automatically fills line drawings with colors using
-                machine learning. Artists can either let the AI generate colors automatically
-                or provide color hints for more control.
+                The Colorize feature automatically <strong>fills line drawings with colors</strong> using
+    machine learning. Artists can either let the AI generate colors automatically
+    or provide color hints for more control.
               </p>
             </div>
 
@@ -891,8 +890,8 @@ function getYoutubeEmbedUrl(videoId: string): string {
             <div class="text-box">
               <p class="body-text">
                 <strong>Pose Scanner</strong><br />
-                Pose Scanner is an AI feature that extracts poses from photos and applies them
-                to 3D drawing figures in the program.
+                Pose Scanner is an AI feature that <strong>extracts poses from photos</strong> and applies them
+    to 3D drawing figures in the program.
               </p>
             </div>
 
@@ -906,10 +905,10 @@ function getYoutubeEmbedUrl(videoId: string): string {
             <div class="text-box">
               <p class="body-text">
                 <strong>Smart Smoothing</strong><br />
-                Smart Smoothing is another AI-assisted tool that improves image quality by
-                smoothing jagged edges and reducing noise when images are enlarged or edited.
-                This feature is also common on other digital software like Adobe Photoshop and
-                IbisPaintX.
+                Smart Smoothing is another <strong>AI-assisted tool</strong> that improves image quality by
+    <strong>smoothing jagged edges and reducing noise</strong> when images are enlarged or edited.
+    This feature is also common on other digital software like Adobe Photoshop and
+    IbisPaintX.
               </p>
             </div>
 
@@ -940,11 +939,11 @@ function getYoutubeEmbedUrl(videoId: string): string {
             <div class="text-box">
               <p class="body-text">
                 As AI becomes more common in creative work, it is important for artists and
-                designers to use it responsibly and ethically. While AI can be a helpful
-                creative tool, artists should still follow certain principles to ensure
-                fairness, transparency, and respect for other artists. These guidelines help
-                maintain trust within the creative community and prevent misuse of AI-generated
-                content.
+    designers to use it <strong>responsibly and ethically</strong>. While AI can be a helpful
+    creative tool, artists should still follow certain principles to ensure
+    <strong>fairness, transparency, and respect</strong> for other artists. These guidelines help
+    maintain <strong>trust within the creative community</strong> and prevent misuse of AI-generated
+    content.
               </p>
             </div>
           </section>
@@ -953,35 +952,35 @@ function getYoutubeEmbedUrl(videoId: string): string {
             <div class="text-box">
               <h2 class="main-title">Transparency</h2>
               <p class="body-text">
-                Creators should clearly explain when and how AI tools are used. Being open
-                about AI involvement helps maintain trust with audiences and collaborators.
+                Creators should clearly explain <strong>when and how AI tools are used</strong>. Being open
+  about AI involvement helps maintain <strong>trust with audiences and collaborators</strong>.
               </p>
             </div>
 
             <div class="text-box">
               <h2 class="main-title">Credit and Consent</h2>
               <p class="body-text">
-                Many AI models are trained using large collections of existing creative works.
-                This raises concerns about credit, ownership, and fair compensation for
-                original creators.
+                Many AI models are trained using <strong>large collections of existing creative works</strong>.
+    This raises concerns about <strong>credit, ownership, and fair compensation</strong> for
+    original creators.
               </p>
             </div>
 
             <div class="text-box">
               <h2 class="main-title">Avoiding Over-Reliance</h2>
               <p class="body-text">
-                While AI can make tasks easier, relying too heavily on it may reduce creative
-                engagement and skill development. Humans should still stay actively involved in
-                the creative process.
+                While AI can make tasks easier, <strong>relying too heavily on it</strong> may reduce creative
+    engagement and skill development. Humans should still <strong>stay actively involved in
+    the creative process</strong>.
               </p>
             </div>
 
             <div class="text-box">
               <h2 class="main-title">Authenticity</h2>
               <p class="body-text">
-                Real creative meaning often comes from human experiences, emotions, and
-                cultural context. AI should enhance creativity without replacing the artist's
-                personal voice.
+                Real creative meaning often comes from <strong>human experiences, emotions, and
+    cultural context</strong>. AI should enhance creativity without <strong>replacing the artist's
+    personal voice</strong>.
               </p>
             </div>
           </section>
@@ -992,12 +991,12 @@ function getYoutubeEmbedUrl(videoId: string): string {
                 PHILRECA Digital Poster-Making Contest Controversy
               </h2>
               <p class="body-text">
-                One example of these concerns occurred in a nationwide digital poster-making
-                contest organized by the Philippine Rural Electric Cooperatives Association
-                (PHILRECA). The competition faced backlash after an artwork suspected of being
-                AI-generated was recognized by a local electric cooperative. Many online users
-                questioned the decision because the contest rules required entries to be
-                original works and emphasized creativity and unique design.
+                One example of these concerns occurred in a <strong>nationwide digital poster-making
+    contest</strong> organized by the Philippine Rural Electric Cooperatives Association
+    (PHILRECA). The competition faced backlash after an <strong>artwork suspected of being
+    AI-generated</strong> was recognized by a local electric cooperative. Many online users
+    questioned the decision because the contest rules required entries to be
+    <strong>original works</strong> and emphasized creativity and <strong>unique design</strong>.
               </p>
             </div>
 
@@ -1018,11 +1017,11 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
             <div class="text-box">
               <p class="body-text">
-                Critics argued that allowing AI-generated images in the competition could
-                undermine the effort and skill of artists who created their work manually. The
-                incident sparked discussions online about transparency and whether AI-generated
-                images should be allowed in art competitions as well as educating others who
-                are not knowledgeable about AI art.
+                Critics argued that allowing <strong>AI-generated images</strong> in the competition could
+    undermine the <strong>effort and skill of artists</strong> who created their work manually. The
+    incident sparked discussions online about <strong>transparency</strong> and whether
+    AI-generated images should be allowed in art competitions as well as educating
+    others who are not knowledgeable about AI art.
               </p>
             </div>
 

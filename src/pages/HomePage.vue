@@ -42,98 +42,100 @@ function closeImage() {
           <!-- <p class="hero-kicker">Interactive Thesis Ebook</p> -->
           <h1 class="hero-title">Co-Creation<br />Human X AI</h1>
           <p class="hero-subtitle">
-            Exploring how artists and artificial intelligence collaborate while keeping
-            human imagination, authorship, and creative direction at the center.
-          </p>
-        </header>
-        <div class="hero-image-container fade-up fade-delay-1 cursor-zoom-in"
-          @click="homeImageUrl && !isLoadingImage && openImage(homeImageUrl)">
-          <img v-if="homeImageUrl && !isLoadingImage" :src="homeImageUrl" alt="AI and human co-creation showcase"
-            class="hero-image" />
+  Exploring how <strong>artists</strong> and <strong>artificial intelligence</strong> collaborate while keeping
+  <strong>human imagination</strong>, <strong>authorship</strong>, and <strong>creative direction</strong> at the center.
+</p>
+</header>
 
-          <div v-else-if="isLoadingImage" class="image-placeholder">
-            Loading image...
-          </div>
+<div class="hero-image-container fade-up fade-delay-1 cursor-zoom-in"
+  @click="homeImageUrl && !isLoadingImage && openImage(homeImageUrl)">
+  <img v-if="homeImageUrl && !isLoadingImage" :src="homeImageUrl" alt="AI and human co-creation showcase"
+    class="hero-image" />
 
-          <div v-else class="image-placeholder">
-            {{ imageError || 'No image available.' }}
-          </div>
+  <div v-else-if="isLoadingImage" class="image-placeholder">
+    Loading image...
+  </div>
 
-          <div class="hero-image-overlay"></div>
-        </div>
+  <div v-else class="image-placeholder">
+    {{ imageError || 'No image available.' }}
+  </div>
 
-        <main class="content-section">
-          <h2 class="main-title fade-up fade-delay-2">Artists in the Age of AI</h2>
+  <div class="hero-image-overlay"></div>
+</div>
 
-          <div class="text-box text-box--left fade-up fade-delay-2">
-            <p class="body-text">
-              Artificial Intelligence is becoming an important part of modern creative work.
-              Today, many artists, designers, writers, and photographers use AI tools to
-              support their ideas, speed up their workflow, and explore new creative
-              possibilities. Rather than replacing human creativity, AI works best as a
-              collaborative partner that helps creators experiment and refine their work.
+<main class="content-section">
+  <h2 class="main-title fade-up fade-delay-2">Artists in the Age of AI</h2>
 
-              However, creativity is not only about producing content, it is also about how ideas
-              are communicated to an audience. This is where Brand Communication becomes
-              important. It allows artists to express their identity, message, and creative intent
-              through their work. Even when AI is involved, it ensures that the human voice remains
-              clear, meaningful, and recognizable.
+  <div class="text-box text-box--left fade-up fade-delay-2">
+    <p class="body-text">
+      <strong>Artificial Intelligence</strong> is becoming an important part of modern creative work.
+      Today, many <strong>artists, designers, writers, and photographers</strong> use AI tools to
+      support their ideas, <strong>speed up their workflow</strong>, and explore new creative
+      possibilities. Rather than replacing human creativity, AI works best as a
+      <strong>collaborative partner</strong> that helps creators experiment and refine their work.
 
-            </p>
-          </div>
+      <br><br>
 
-          <div class="text-box text-box--right fade-up fade-delay-3">
-            <p class="body-text">
-              This website explores how humans and AI can work together in the creative process,
-              also known as co-creation, while highlighting how communication plays a key role in
-              preserving human creativity.
-            </p>
-          </div>
+      However, creativity is not only about producing content—it is also about how ideas
+      are <strong>communicated to an audience</strong>. This is where <strong>Brand Communication</strong> becomes
+      important. It allows artists to express their <strong>identity, message, and creative intent</strong>
+      through their work. Even when AI is involved, it ensures that the
+      <strong>human voice remains clear, meaningful, and recognizable</strong>.
+    </p>
+  </div>
 
-          <section class="content-grid fade-up fade-delay-3">
-            <div class="learning-header">
-              <p class="body-text">
-                By understanding how to use AI responsibly and effectively, creators can
-                expand their imagination while maintaining authorship and originality.
-              </p>
-              <p class="learning-title">What You'll Learn</p>
-            </div>
+  <div class="text-box text-box--right fade-up fade-delay-3">
+    <p class="body-text">
+      This website explores how <strong>humans and AI can work together</strong> in the creative process,
+      also known as <strong>co-creation</strong>, while highlighting how <strong>communication plays a key role</strong>
+      in preserving human creativity.
+    </p>
+  </div>
 
-            <div class="learning-card">
-              <span class="card-number">01</span>
-              <p class="body-text body-text--card">
-                What co-creation means and how artists and AI collaborate creatively
-              </p>
-            </div>
+  <section class="content-grid fade-up fade-delay-3">
+    <div class="learning-header">
+      <p class="body-text">
+        By understanding how to use AI <strong>responsibly and effectively</strong>, creators can
+        <strong>expand their imagination</strong> while maintaining <strong>authorship and originality</strong>.
+      </p>
+      <p class="learning-title">What You'll Learn</p>
+    </div>
 
-            <div class="learning-card">
-              <span class="card-number">02</span>
-              <p class="body-text body-text--card">
-                How AI is used in creative software, such as tools in Adobe Photoshop
-              </p>
-            </div>
+    <div class="learning-card">
+      <span class="card-number">01</span>
+      <p class="body-text body-text--card">
+        What <strong>co-creation</strong> means and how <strong>artists and AI collaborate creatively</strong>
+      </p>
+    </div>
 
-            <div class="learning-card">
-              <span class="card-number">03</span>
-              <p class="body-text body-text--card">
-                Using AI as a reference or assistant under human guidance rather than the
-                final output
-              </p>
-            </div>
+    <div class="learning-card">
+      <span class="card-number">02</span>
+      <p class="body-text body-text--card">
+        How AI is used in creative software, such as tools in <strong>Adobe Photoshop</strong>
+      </p>
+    </div>
 
-            <div class="learning-card">
-              <span class="card-number">04</span>
-              <p class="body-text body-text--card">
-                The ethical responsibilities of artists using AI within creative fields
-              </p>
-            </div>
-          </section>
+    <div class="learning-card">
+      <span class="card-number">03</span>
+      <p class="body-text body-text--card">
+        Using AI as a <strong>reference or assistant</strong> under human guidance rather than the
+        final output
+      </p>
+    </div>
 
-          <div class="closing-text fade-up fade-delay-4">
-            <p class="body-text closing-copy">
-              This site aims to explain how AI can enhance creativity while keeping the
-              human creator in control of the artistic vision.
-            </p>
+    <div class="learning-card">
+      <span class="card-number">04</span>
+      <p class="body-text body-text--card">
+        The <strong>ethical responsibilities</strong> of artists using AI within creative fields
+      </p>
+    </div>
+  </section>
+
+  <div class="closing-text fade-up fade-delay-4">
+    <p class="body-text closing-copy">
+      This site aims to explain how AI can <strong>enhance creativity</strong> while keeping the
+      <strong>human creator in control</strong> of the artistic vision.
+    </p>
           </div>
         </main>
       </div>
