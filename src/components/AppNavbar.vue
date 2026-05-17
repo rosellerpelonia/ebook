@@ -28,9 +28,9 @@
       <span :class="['nav-link', { active: isActive }]">Credits</span>
     </RouterLink>
 
-    <RouterLink to="/quiz" v-slot="{ isActive }">
+    <!-- <RouterLink to="/quiz" v-slot="{ isActive }">
       <span :class="['nav-link', { active: isActive }]">Quiz</span>
-    </RouterLink>
+    </RouterLink> -->
   </nav>
 </template>
 
