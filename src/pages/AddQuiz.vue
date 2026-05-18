@@ -1,276 +1,316 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { collection, addDoc } from 'firebase/firestore'
-import { db } from '@/services/firestore'
-import MainLayout from '@/layouts/MainLayout.vue'
+import { ref } from 'vue';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import MainLayout from '@/layouts/MainLayout.vue';
+import { db } from '@/services/firestore';
 
-const question = ref('')
-const optionA = ref('')
-const optionB = ref('')
-const optionC = ref('')
-const optionD = ref('')
-const answer = ref('')
-const imageUrl = ref('')
-const message = ref('')
-const messageType = ref<'success' | 'error' | ''>('')
-const saving = ref(false)
-
-const options = computed(() => [
-    optionA.value.trim(),
-    optionB.value.trim(),
-    optionC.value.trim(),
-    optionD.value.trim(),
-])
-
-function clearForm() {
-    question.value = ''
-    optionA.value = ''
-    optionB.value = ''
-    optionC.value = ''
-    optionD.value = ''
-    answer.value = ''
-    imageUrl.value = ''
-    message.value = ''
-    messageType.value = ''
+interface ExploreQuizSeed {
+  topicId: string;
+  order: number;
+  question: string;
+  options: string[];
+  answer: string;
 }
 
-async function addQuizQuestion() {
-    message.value = ''
-    messageType.value = ''
+const saving = ref(false);
+const message = ref('');
+const messageType = ref<'success' | 'error' | ''>('');
 
-    const payload = {
-        question: question.value.trim(),
-        options: options.value,
-        answer: answer.value.trim(),
-        imageUrl: imageUrl.value.trim(),
+const questions: ExploreQuizSeed[] = [
+  {
+    topicId: 'brand-identity',
+    order: 1,
+    question: 'What is the primary difference of the "Human Voice" in AI-assisted branding?',
+    options: [
+      'The speed of logo generation',
+      'The strategic intent, emotion, and personal narrative behind the work',
+      'The number of colors used',
+      'The file resolution',
+    ],
+    answer: 'The strategic intent, emotion, and personal narrative behind the work',
+  },
+  {
+    topicId: 'brand-identity',
+    order: 2,
+    question: 'According to Boden’s theory, what unique human ability does AI struggle to replicate?',
+    options: [
+      'Rapid pattern recognition',
+      'Transformational creativity (breaking and remaking rules)',
+      'Storing large datasets',
+      'Generating 3D renders',
+    ],
+    answer: 'Transformational creativity (breaking and remaking rules)',
+  },
+  {
+    topicId: 'brand-identity',
+    order: 3,
+    question: 'Why is "Empathy" essential in Strategic Positioning?',
+    options: [
+      'To finish the work faster',
+      'To truly understand and share the feelings of the target audience',
+      'To save money on professional designers',
+      'To create a random layout',
+    ],
+    answer: 'To truly understand and share the feelings of the target audience',
+  },
+  {
+    topicId: 'brand-identity',
+    order: 4,
+    question: 'In the context of branding, what does "Intentionality" signify?',
+    options: [
+      'Using expensive software',
+      'The desire to express a specific message rather than generating based on probability',
+      'Copying existing works',
+      'Automatically generating layouts',
+    ],
+    answer: 'The desire to express a specific message rather than generating based on probability',
+  },
+  {
+    topicId: 'ai-workflow',
+    order: 1,
+    question: 'Where does the creative process begin in a Human AI collaboration?',
+    options: [
+      'With a random AI prompt',
+      'With human ideas, visions, and brand values',
+      'With a final market evaluation',
+      'With a suggestion from computer hardware',
+    ],
+    answer: 'With human ideas, visions, and brand values',
+  },
+  {
+    topicId: 'ai-workflow',
+    order: 2,
+    question: 'What is the role of "Evaluation" after AI produces an output?',
+    options: [
+      'Let the computer choose the winner',
+      'A human led process to adjust the design based on cultural and emotional standards',
+      'To immediately publish the first result',
+      'To delete all AI-generated work',
+    ],
+    answer: 'A human led process to adjust the design based on cultural and emotional standards',
+  },
+  {
+    topicId: 'ai-workflow',
+    order: 3,
+    question: 'What is meant by a "Semantic Filter" in branding?',
+    options: [
+      'A type of photo filter in software',
+      'The human selection of AI outputs that carry true meaning and resonance',
+      'The speed of the internet connection',
+      'An algorithm for color selection',
+    ],
+    answer: 'The human selection of AI outputs that carry true meaning and resonance',
+  },
+  {
+    topicId: 'ai-workflow',
+    order: 4,
+    question: 'How does AI function as a "support tool" in the workflow?',
+    options: [
+      'By replacing the designer entirely',
+      'By making all moral decisions',
+      'By accelerating experimentation and creating visual possibilities',
+      'By understanding cultural history without human help',
+    ],
+    answer: 'By accelerating experimentation and creating visual possibilities',
+  },
+  {
+    topicId: 'ethical-co-creation',
+    order: 1,
+    question: 'How can a designer prove the transparency of their creative process?',
+    options: [
+      'By hiding their tools',
+      'Through workflow documentation and screen recordings as "Proof of Process"',
+      'By claiming AI did everything',
+      'By not showing the final design to the client',
+    ],
+    answer: 'Through workflow documentation and screen recordings as "Proof of Process"',
+  },
+  {
+    topicId: 'ethical-co-creation',
+    order: 2,
+    question: 'What is the main focus of "Ethical Co creation"?',
+    options: [
+      'Using AI to copy famous works',
+      'Balancing innovation with responsible communication',
+      'Removing human emotion from branding',
+      'Prioritizing speed over authenticity',
+    ],
+    answer: 'Balancing innovation with responsible communication',
+  },
+  {
+    topicId: 'ethical-co-creation',
+    order: 3,
+    question: 'What is "Algorithmic Bias" that should be avoided in branding?',
+    options: [
+      'The computer’s favorite color',
+      'The tendency of AI to repeat existing patterns instead of creating something new',
+      'The price of an AI subscription',
+      'The brand of the computer used',
+    ],
+    answer: 'The tendency of AI to repeat existing patterns instead of creating something new',
+  },
+];
+
+async function questionAlreadyExists(question: string) {
+  const q = query(
+    collection(db, 'explore_quiz_questions'),
+    where('question', '==', question),
+  );
+
+  const snapshot = await getDocs(q);
+
+  return !snapshot.empty;
+}
+
+async function seedExploreQuestions() {
+  saving.value = true;
+  message.value = '';
+  messageType.value = '';
+
+  try {
+    let addedCount = 0;
+    let skippedCount = 0;
+
+    for (const item of questions) {
+      const exists = await questionAlreadyExists(item.question);
+
+      if (exists) {
+        skippedCount++;
+        continue;
+      }
+
+      await addDoc(collection(db, 'explore_quiz_questions'), item);
+      addedCount++;
     }
 
-    if (
-        !payload.question ||
-        !payload.options[0] ||
-        !payload.options[1] ||
-        !payload.options[2] ||
-        !payload.options[3] ||
-        !payload.answer
-        // !payload.imageUrl
-    ) {
-        message.value = 'Please fill in all fields.'
-        messageType.value = 'error'
-        return
-    }
-
-    if (!payload.options.includes(payload.answer)) {
-        message.value = 'Correct answer must exactly match one of the options.'
-        messageType.value = 'error'
-        return
-    }
-
-    saving.value = true
-
-    try {
-        await addDoc(collection(db, 'art_quiz_questions'), payload)
-
-        message.value = 'Artwork quiz question added successfully.'
-        messageType.value = 'success'
-        clearForm()
-    } catch (error) {
-        console.error('Failed to add quiz question:', error)
-        message.value = 'Failed to add quiz question.'
-        messageType.value = 'error'
-    } finally {
-        saving.value = false
-    }
+    message.value = `Explore quiz seed complete. Added: ${addedCount}. Skipped duplicates: ${skippedCount}.`;
+    messageType.value = 'success';
+  } catch (error) {
+    console.error('Failed to seed explore quiz questions:', error);
+    message.value = 'Failed to seed explore quiz questions.';
+    messageType.value = 'error';
+  } finally {
+    saving.value = false;
+  }
 }
 </script>
 
 <template>
-    <MainLayout>
-        <div
-            class="relative min-h-screen overflow-hidden bg-[linear-gradient(180deg,#fffafc_0%,#fff4ea_45%,#fffdf8_100%)] px-4 py-10 md:px-6">
-            <!-- decorative background -->
-            <div class="pointer-events-none absolute inset-0 overflow-hidden">
-                <div
-                    class="absolute -left-16 top-10 h-56 w-56 rounded-full bg-[#f7b2d2]/30 blur-3xl animate-float-slow">
-                </div>
-                <div
-                    class="absolute right-0 top-24 h-72 w-72 rounded-full bg-[#ffd580]/30 blur-3xl animate-float-delayed">
-                </div>
-                <div
-                    class="absolute bottom-10 left-1/4 h-52 w-52 rounded-full bg-[#d9c2ff]/25 blur-3xl animate-float-slow">
-                </div>
-                <div
-                    class="absolute bottom-0 right-1/4 h-64 w-64 rounded-full bg-[#ffc6a5]/25 blur-3xl animate-float-delayed">
-                </div>
+  <MainLayout>
+    <section class="seed-page">
+      <div class="seed-card">
+        <p class="seed-kicker">Temporary Seeder</p>
 
-                <div class="absolute left-10 top-1/3 rotate-12 text-7xl opacity-[0.05]">🎨</div>
-                <div class="absolute right-20 top-1/2 -rotate-12 text-7xl opacity-[0.05]">🖌️</div>
-                <div class="absolute bottom-20 left-1/2 text-7xl opacity-[0.05]">✨</div>
-            </div>
+        <h1 class="seed-title">Add Explore Quiz Questions</h1>
 
-            <div class="relative mx-auto max-w-4xl">
-                <div
-                    class="overflow-hidden rounded-[2rem] border border-white/60 bg-white/75 p-6 shadow-[0_24px_70px_rgba(179,106,146,0.14)] backdrop-blur-xl md:p-8">
-                    <!-- hero -->
-                    <div
-                        class="relative mb-8 overflow-hidden rounded-[1.8rem] border border-white/60 bg-white/70 p-8 text-center">
-                        <div class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#e67db8]/25 blur-3xl"></div>
-                        <div class="absolute -bottom-10 left-0 h-40 w-40 rounded-full bg-[#ffba2f]/25 blur-3xl"></div>
+        <p class="seed-description">
+          This page will add the topic quiz questions into Firestore collection
+          <strong>explore_quiz_questions</strong>.
+        </p>
 
-                        <div class="relative">
-                            <p
-                                class="mb-3 inline-flex rounded-full border border-[#f3c3d9] bg-[#fff3f8] px-4 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-[#b85f93]">
-                                Quiz Management
-                            </p>
+        <button class="seed-button" type="button" :disabled="saving" @click="seedExploreQuestions">
+          {{ saving ? 'Adding Questions...' : 'Seed Explore Questions' }}
+        </button>
 
-                            <h1
-                                class="bg-gradient-to-r from-[#d85fa5] via-[#f39bc4] to-[#f0a32f] bg-clip-text text-3xl font-extrabold tracking-tight text-transparent md:text-5xl">
-                                Add Artwork Question
-                            </h1>
-
-                            <p class="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600 md:text-base">
-                                Create a gallery-inspired quiz item by adding the question,
-                                artwork image, four choices, and the exact correct answer.
-                            </p>
-                        </div>
-                    </div>
-
-                    <form class="space-y-6" @submit.prevent="addQuizQuestion">
-                        <div class="grid gap-6">
-                            <div>
-                                <label class="mb-2 block text-sm font-semibold text-slate-800">
-                                    Question
-                                </label>
-                                <input v-model="question" type="text" placeholder="Enter the quiz question"
-                                    class="w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm transition focus:border-[#e67db8] focus:outline-none focus:ring-4 focus:ring-[#f8d4e7]" />
-                            </div>
-
-                            <div>
-                                <label class="mb-2 block text-sm font-semibold text-slate-800">
-                                    Artwork Image URL
-                                </label>
-                                <input v-model="imageUrl" type="text" placeholder="Paste artwork image URL"
-                                    class="w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm transition focus:border-[#e67db8] focus:outline-none focus:ring-4 focus:ring-[#f8d4e7]" />
-                                <p class="mt-2 text-xs text-slate-500">
-                                    Add the image that will appear above the quiz question.
-                                </p>
-                            </div>
-
-                            <div v-if="imageUrl"
-                                class="overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/70 shadow-[0_12px_35px_rgba(179,106,146,0.10)]">
-                                <div class="relative h-56 w-full overflow-hidden md:h-72">
-                                    <img :src="imageUrl" alt="Artwork preview" class="h-full w-full object-cover" />
-                                    <div
-                                        class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent">
-                                    </div>
-                                    <div class="absolute left-4 top-4">
-                                        <span
-                                            class="rounded-full border border-white/40 bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-md">
-                                            Artwork Preview
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="grid gap-4 md:grid-cols-2">
-                                <div>
-                                    <label class="mb-2 block text-sm font-semibold text-slate-800">
-                                        Option A
-                                    </label>
-                                    <input v-model="optionA" type="text" placeholder="Enter option A"
-                                        class="w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm transition focus:border-[#e67db8] focus:outline-none focus:ring-4 focus:ring-[#f8d4e7]" />
-                                </div>
-
-                                <div>
-                                    <label class="mb-2 block text-sm font-semibold text-slate-800">
-                                        Option B
-                                    </label>
-                                    <input v-model="optionB" type="text" placeholder="Enter option B"
-                                        class="w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm transition focus:border-[#e67db8] focus:outline-none focus:ring-4 focus:ring-[#f8d4e7]" />
-                                </div>
-
-                                <div>
-                                    <label class="mb-2 block text-sm font-semibold text-slate-800">
-                                        Option C
-                                    </label>
-                                    <input v-model="optionC" type="text" placeholder="Enter option C"
-                                        class="w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm transition focus:border-[#e67db8] focus:outline-none focus:ring-4 focus:ring-[#f8d4e7]" />
-                                </div>
-
-                                <div>
-                                    <label class="mb-2 block text-sm font-semibold text-slate-800">
-                                        Option D
-                                    </label>
-                                    <input v-model="optionD" type="text" placeholder="Enter option D"
-                                        class="w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm transition focus:border-[#e67db8] focus:outline-none focus:ring-4 focus:ring-[#f8d4e7]" />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="mb-2 block text-sm font-semibold text-slate-800">
-                                    Correct Answer
-                                </label>
-                                <input v-model="answer" type="text" placeholder="Must exactly match one of the options"
-                                    class="w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-slate-800 placeholder:text-slate-400 shadow-sm transition focus:border-[#e67db8] focus:outline-none focus:ring-4 focus:ring-[#f8d4e7]" />
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col gap-3 pt-2 sm:flex-row">
-                            <button type="submit"
-                                class="rounded-2xl bg-gradient-to-r from-[#e67db8] via-[#f39bc4] to-[#ffba2f] px-5 py-3 font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
-                                :disabled="saving">
-                                {{ saving ? 'Saving...' : 'Add Question' }}
-                            </button>
-
-                            <button type="button"
-                                class="rounded-2xl border border-slate-200 bg-white px-5 py-3 font-medium text-slate-700 transition hover:-translate-y-0.5 hover:bg-slate-50"
-                                @click="clearForm">
-                                Clear
-                            </button>
-                        </div>
-
-                        <div v-if="message" class="rounded-2xl border px-4 py-3 text-sm font-medium" :class="messageType === 'success'
-                            ? 'border-green-300 bg-green-50 text-green-700'
-                            : 'border-red-300 bg-red-50 text-red-700'
-                            ">
-                            {{ message }}
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </MainLayout>
+        <p
+          v-if="message"
+          class="seed-message"
+          :class="messageType === 'success' ? 'seed-message--success' : 'seed-message--error'"
+        >
+          {{ message }}
+        </p>
+      </div>
+    </section>
+  </MainLayout>
 </template>
 
 <style scoped>
-@keyframes floatSlow {
-
-    0%,
-    100% {
-        transform: translateY(0px) translateX(0px);
-    }
-
-    50% {
-        transform: translateY(-12px) translateX(8px);
-    }
+.seed-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: linear-gradient(180deg, #fffafc 0%, #fff4ea 45%, #fffdf8 100%);
 }
 
-@keyframes floatDelayed {
-
-    0%,
-    100% {
-        transform: translateY(0px) translateX(0px);
-    }
-
-    50% {
-        transform: translateY(10px) translateX(-10px);
-    }
+.seed-card {
+  width: 100%;
+  max-width: 760px;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 24px 70px rgba(179, 106, 146, 0.14);
+  text-align: center;
 }
 
-.animate-float-slow {
-    animation: floatSlow 7s ease-in-out infinite;
+.seed-kicker {
+  margin: 0 0 1rem;
+  color: #b85f93;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
 }
 
-.animate-float-delayed {
-    animation: floatDelayed 9s ease-in-out infinite;
+.seed-title {
+  margin: 0;
+  background: linear-gradient(90deg, #d85fa5, #f39bc4, #f0a32f);
+  background-clip: text;
+  color: transparent;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.seed-description {
+  max-width: 560px;
+  margin: 1rem auto 2rem;
+  color: #475569;
+  font-family: 'Rethink Sans', sans-serif;
+  line-height: 1.7;
+}
+
+.seed-button {
+  border: none;
+  border-radius: 18px;
+  background: linear-gradient(90deg, #e67db8, #f39bc4, #ffba2f);
+  color: #ffffff;
+  padding: 0.95rem 1.4rem;
+  font-family: 'Rethink Sans', sans-serif;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 16px 35px rgba(216, 95, 165, 0.25);
+  transition: 0.2s ease;
+}
+
+.seed-button:hover {
+  transform: translateY(-2px);
+}
+
+.seed-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+}
+
+.seed-message {
+  margin: 1.5rem 0 0;
+  border-radius: 16px;
+  padding: 1rem;
+  font-family: 'Rethink Sans', sans-serif;
+  font-weight: 700;
+}
+
+.seed-message--success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.seed-message--error {
+  background: #ffe4e6;
+  color: #9f1239;
 }
 </style>

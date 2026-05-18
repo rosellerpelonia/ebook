@@ -9,7 +9,7 @@ const imageError = ref('')
 
 onMounted(async () => {
   try {
-    homeImageUrl.value = await getStorageImageUrl('hom-image.png')
+    homeImageUrl.value = await getStorageImageUrl('Home.jpeg')
   } catch (error) {
     console.error(error)
     imageError.value = 'Failed to load home image from Firebase Storage.'
