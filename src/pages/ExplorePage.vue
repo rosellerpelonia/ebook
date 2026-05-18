@@ -984,7 +984,7 @@ const totalCorrect = computed(() => {
   max-width: 960px;
   margin: 0.8rem 0 1.5rem;
   color: #081724;
- font-size: clamp(1rem, 3vw, 2.8rem);
+  font-size: clamp(1rem, 3vw, 2.8rem);
   font-family: 'Helvetica', serif;
   font-weight: 600;
   line-height: 1.05;
@@ -1550,6 +1550,10 @@ const totalCorrect = computed(() => {
     width: 54px;
     height: 54px;
     border-radius: 18px;
+  }
+
+  .topic-title {
+    font-size: clamp(1.45rem, 5vw, 2.2rem);
   }
 }
 
