@@ -11,6 +11,7 @@ interface ExploreTopic {
   id: TopicId;
   title: string;
   kicker: string;
+  iconKey: string;
   paragraphs: string[];
 }
 
@@ -50,11 +51,22 @@ interface ImagePreview {
   label: string;
 }
 
+const moduleIconPaths: Record<string, string> = {
+  brandIdentity: 'Theoretical_Foundation_of_Brand_Identity_and_Strategic_Positioning.png',
+  aiWorkflow: 'AI_Workflow_and_Semantic_Collaboration.png',
+  ethicalCoCreation: 'Case_Studies_and_Ethical_Co-Creation.png',
+  quiz: 'quiz.png',
+};
+
+const moduleIconUrls = reactive<Record<string, string>>({});
+const moduleIconErrors = ref<string[]>([]);
+
 const topics: ExploreTopic[] = [
   {
     id: 'brand-identity',
     kicker: 'Theoretical Foundation',
     title: 'Theoretical Foundation of Brand Identity and Strategic Positioning',
+    iconKey: 'brandIdentity',
     paragraphs: [
       'Brand identity is far more than just a logo, it represents the personality, values, and emotions of a brand. While AI can generate complex visuals in seconds, it fundamentally lacks Intentionality, the profound "why" behind the art. Strategic positioning is the process of carving out a unique space in the audience’s mind. This requires Empathy, a uniquely human ability to share the feelings of a target market, which remains the definitive boundary between robotic output and soulful branding.',
       'According to Mazzone & Elgammal (2019), while AI can simulate a wide array of artistic styles through style transfer, the human creator remains the sole provider of intentionality or the true message. The Human Voice serves as the authoritative source of meaning amidst algorithms.',
@@ -66,6 +78,7 @@ const topics: ExploreTopic[] = [
     id: 'ai-workflow',
     kicker: 'Semantic Collaboration',
     title: 'AI Workflow and Semantic Collaboration',
+    iconKey: 'aiWorkflow',
     paragraphs: [
       'In a modern creative workflow, AI acts as a support tool by rapidly generating ideas and variations. However, for a brand to remain authentic, the process must begin and end with human intervention. The artist acts as a Semantic Filter, choosing only the AI outputs that resonate with human experience and cultural nuance. This Augmented Creativity speeds up experimentation while keeping the designer in total control of the narrative.',
       'Anantrasirichai & Bull (2022) emphasize that in the process of co-creation, humans provide the semantics or meaning to the raw data produced by AI. In this light, AI is an extension of the artist’s hand, much like a digital brush, but with higher computational power.',
@@ -77,6 +90,7 @@ const topics: ExploreTopic[] = [
     id: 'ethical-co-creation',
     kicker: 'Case Studies and Ethics',
     title: 'Case Studies and Ethical Co-Creation',
+    iconKey: 'ethicalCoCreation',
     paragraphs: [
       'The use of case studies and thorough documentation, such as screen recordings and version histories, serves as Proof of Process. This documentation proves that the final design underwent thoughtful human refinement and was not a mere one-click generation.',
       'Regarding ethics, designers bear the responsibility of ensuring that AI is not used to plagiarize existing works or propagate misleading content fueled by Algorithmic Bias.',
@@ -113,8 +127,8 @@ const tutorialMediaPaths: Record<string, string> = {
   billboardBefore: '2_animal1.jpg',
   billboardAfter: '2_animal2ai.jpg',
 
-  dirtBefore: '2_poor1.jpg',
-  dirtAfter: '2_poor2ai.jpg',
+  dirtBefore: '2_poor2ai.jpg',
+  dirtAfter: '2_poor1.jpg',
 
   patternBefore: '3_BEFORE.jpg',
   patternAfter: '3_AFTER.jpg',
@@ -383,10 +397,27 @@ const selectedAnswers = reactive<Record<string, string>>({});
 const isLoadingQuiz = ref(true);
 const quizError = ref('');
 
+async function loadModuleIcons() {
+  moduleIconErrors.value = [];
+
+  const loaders = Object.entries(moduleIconPaths).map(async ([key, path]) => {
+    try {
+      moduleIconUrls[key] = await getStorageImageUrl(path);
+    } catch (error) {
+      console.error(`Failed to load module icon: ${path}`, error);
+      moduleIconErrors.value.push(path);
+    }
+  });
+
+  await Promise.all(loaders);
+}
+
 onMounted(() => {
   loadExploreQuizQuestions();
   loadTutorialMedia();
+  loadModuleIcons();
 });
+
 
 async function loadTutorialMedia() {
   isLoadingTutorialMedia.value = true;
@@ -542,15 +573,18 @@ const totalCorrect = computed(() => {
           </section>
         </section>
 
-        <section
-          v-for="topic in topics"
-          :id="topic.id"
-          :key="topic.id"
-          class="topic-section scroll-mt-28"
-        >
+        <section v-for="topic in topics" :id="topic.id" :key="topic.id" class="topic-section scroll-mt-28">
           <div class="topic-card premium-card">
-            <p class="section-kicker">{{ topic.kicker }}</p>
-            <h2 class="topic-title">{{ topic.title }}</h2>
+            <div class="topic-heading-row">
+              <div v-if="moduleIconUrls[topic.iconKey]" class="topic-icon-shell">
+                <img :src="moduleIconUrls[topic.iconKey]" :alt="`${topic.title} icon`" class="topic-icon" />
+              </div>
+
+              <div class="topic-heading-copy">
+                <p class="section-kicker">{{ topic.kicker }}</p>
+                <h2 class="topic-title">{{ topic.title }}</h2>
+              </div>
+            </div>
 
             <div class="topic-copy">
               <p v-for="paragraph in topic.paragraphs" :key="paragraph" class="body-text">
@@ -561,11 +595,17 @@ const totalCorrect = computed(() => {
 
           <div class="quiz-panel">
             <div class="quiz-header">
-              <div>
-                <p class="section-kicker section-kicker--dark">Topic Quiz</p>
-                <h3 class="quiz-title">
-                  {{ topic.title }} Quiz Questions
-                </h3>
+              <div class="quiz-heading-row">
+                <div v-if="moduleIconUrls.quiz" class="quiz-icon-shell">
+                  <img :src="moduleIconUrls.quiz" alt="Quiz icon" class="quiz-icon" />
+                </div>
+
+                <div>
+                  <p class="section-kicker section-kicker--dark">Topic Quiz</p>
+                  <h3 class="quiz-title">
+                    {{ topic.title }} Quiz Questions
+                  </h3>
+                </div>
               </div>
 
               <div class="quiz-score">
@@ -586,37 +626,23 @@ const totalCorrect = computed(() => {
             </div>
 
             <div v-else class="quiz-list">
-              <article
-                v-for="question in getTopicQuestions(topic.id)"
-                :key="question.id"
-                class="quiz-card"
-              >
+              <article v-for="question in getTopicQuestions(topic.id)" :key="question.id" class="quiz-card">
                 <p class="quiz-question">
                   {{ question.order }}. {{ question.question }}
                 </p>
 
                 <div class="quiz-options">
-                  <button
-                    v-for="option in question.options"
-                    :key="option"
-                    type="button"
-                    class="quiz-option"
-                    :class="{
-                      'quiz-option--selected': selectedAnswers[question.id] === option,
-                      'quiz-option--correct': selectedAnswers[question.id] === option && option === question.answer,
-                      'quiz-option--wrong': selectedAnswers[question.id] === option && option !== question.answer,
-                    }"
-                    @click="selectAnswer(question.id, option)"
-                  >
+                  <button v-for="option in question.options" :key="option" type="button" class="quiz-option" :class="{
+                    'quiz-option--selected': selectedAnswers[question.id] === option,
+                    'quiz-option--correct': selectedAnswers[question.id] === option && option === question.answer,
+                    'quiz-option--wrong': selectedAnswers[question.id] === option && option !== question.answer,
+                  }" @click="selectAnswer(question.id, option)">
                     {{ option }}
                   </button>
                 </div>
 
-                <p
-                  v-if="selectedAnswers[question.id]"
-                  class="quiz-feedback"
-                  :class="{ 'quiz-feedback--correct': isCorrect(question) }"
-                >
+                <p v-if="selectedAnswers[question.id]" class="quiz-feedback"
+                  :class="{ 'quiz-feedback--correct': isCorrect(question) }">
                   {{ isCorrect(question) ? 'Correct answer.' : `Correct answer: ${question.answer}` }}
                 </p>
               </article>
@@ -645,12 +671,8 @@ const totalCorrect = computed(() => {
           </div>
         </section>
 
-        <section
-          v-for="tutorial in tutorialSections"
-          :id="tutorial.id"
-          :key="tutorial.id"
-          class="tutorial-section scroll-mt-28"
-        >
+        <section v-for="tutorial in tutorialSections" :id="tutorial.id" :key="tutorial.id"
+          class="tutorial-section scroll-mt-28">
           <div class="tutorial-card">
             <div class="tutorial-heading">
               <p class="section-kicker">{{ tutorial.kicker }}</p>
@@ -662,13 +684,8 @@ const totalCorrect = computed(() => {
                 Loading tutorial video...
               </div>
 
-              <video
-                v-else-if="tutorialMediaUrls[tutorial.videoKey]"
-                class="tutorial-video"
-                controls
-                playsinline
-                preload="metadata"
-              >
+              <video v-else-if="tutorialMediaUrls[tutorial.videoKey]" class="tutorial-video" controls playsinline
+                preload="metadata">
                 <source :src="tutorialMediaUrls[tutorial.videoKey]" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
@@ -684,11 +701,7 @@ const totalCorrect = computed(() => {
               </h3>
 
               <div v-if="tutorial.steps?.length" class="steps-list">
-                <article
-                  v-for="step in tutorial.steps"
-                  :key="step.title"
-                  class="step-card"
-                >
+                <article v-for="step in tutorial.steps" :key="step.title" class="step-card">
                   <h4 class="step-title">{{ step.title }}</h4>
                   <p class="body-text step-description">{{ step.description }}</p>
                 </article>
@@ -702,28 +715,17 @@ const totalCorrect = computed(() => {
               </div>
 
               <div class="sample-list">
-                <article
-                  v-for="sample in tutorial.samples"
-                  :key="sample.title"
-                  class="sample-card"
-                >
+                <article v-for="sample in tutorial.samples" :key="sample.title" class="sample-card">
                   <h4 class="sample-title">{{ sample.title }}</h4>
 
                   <div class="before-after-grid">
                     <div class="comparison-image-card">
                       <p class="comparison-label">Before</p>
 
-                      <button
-                        v-if="tutorialMediaUrls[sample.beforeKey]"
-                        type="button"
-                        class="comparison-image-button"
-                        @click="openImagePreview(tutorialMediaUrls[sample.beforeKey], sample.title, 'Before')"
-                      >
-                        <img
-                          :src="tutorialMediaUrls[sample.beforeKey]"
-                          :alt="`${sample.title} before`"
-                          class="comparison-image"
-                        />
+                      <button v-if="tutorialMediaUrls[sample.beforeKey]" type="button" class="comparison-image-button"
+                        @click="openImagePreview(tutorialMediaUrls[sample.beforeKey], sample.title, 'Before')">
+                        <img :src="tutorialMediaUrls[sample.beforeKey]" :alt="`${sample.title} before`"
+                          class="comparison-image" />
 
                         <span class="image-view-badge">Click to view</span>
                       </button>
@@ -736,17 +738,10 @@ const totalCorrect = computed(() => {
                     <div class="comparison-image-card">
                       <p class="comparison-label">After</p>
 
-                      <button
-                        v-if="tutorialMediaUrls[sample.afterKey]"
-                        type="button"
-                        class="comparison-image-button"
-                        @click="openImagePreview(tutorialMediaUrls[sample.afterKey], sample.title, 'After')"
-                      >
-                        <img
-                          :src="tutorialMediaUrls[sample.afterKey]"
-                          :alt="`${sample.title} after`"
-                          class="comparison-image"
-                        />
+                      <button v-if="tutorialMediaUrls[sample.afterKey]" type="button" class="comparison-image-button"
+                        @click="openImagePreview(tutorialMediaUrls[sample.afterKey], sample.title, 'After')">
+                        <img :src="tutorialMediaUrls[sample.afterKey]" :alt="`${sample.title} after`"
+                          class="comparison-image" />
 
                         <span class="image-view-badge">Click to view</span>
                       </button>
@@ -768,13 +763,8 @@ const totalCorrect = computed(() => {
       </div>
 
       <Teleport to="body">
-        <div
-          v-if="selectedImagePreview"
-          class="image-preview-overlay"
-          role="dialog"
-          aria-modal="true"
-          @click.self="closeImagePreview"
-        >
+        <div v-if="selectedImagePreview" class="image-preview-overlay" role="dialog" aria-modal="true"
+          @click.self="closeImagePreview">
           <div class="image-preview-shell">
             <div class="image-preview-header">
               <div>
@@ -787,11 +777,8 @@ const totalCorrect = computed(() => {
               </button>
             </div>
 
-            <img
-              :src="selectedImagePreview.src"
-              :alt="`${selectedImagePreview.title} ${selectedImagePreview.label}`"
-              class="image-preview-img"
-            />
+            <img :src="selectedImagePreview.src" :alt="`${selectedImagePreview.title} ${selectedImagePreview.label}`"
+              class="image-preview-img" />
           </div>
         </div>
       </Teleport>
@@ -821,7 +808,7 @@ const totalCorrect = computed(() => {
 
 .section-kicker {
   margin: 0;
-  color: #ffba2f;
+  color: #ffffff;
   font-size: 0.95rem;
   font-family: 'Rethink Sans', sans-serif;
   font-weight: 700;
@@ -924,6 +911,71 @@ const totalCorrect = computed(() => {
   padding-top: clamp(4rem, 9vw, 7rem);
 }
 
+.topic-heading-row {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.topic-heading-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.topic-icon-shell {
+  width: clamp(76px, 9vw, 124px);
+  height: clamp(76px, 9vw, 124px);
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.95), rgba(255, 250, 240, 0.72)),
+    rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  box-shadow:
+    0 18px 42px rgba(8, 23, 36, 0.14),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.38);
+}
+
+.topic-icon {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 10px 16px rgba(8, 23, 36, 0.16));
+}
+
+.quiz-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.quiz-icon-shell {
+  width: clamp(54px, 7vw, 76px);
+  height: clamp(54px, 7vw, 76px);
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 186, 47, 0.24), transparent 48%),
+    #fffaf0;
+  border: 1px solid rgba(8, 23, 36, 0.08);
+  box-shadow: 0 14px 30px rgba(8, 23, 36, 0.1);
+}
+
+.quiz-icon {
+  width: 74%;
+  height: 74%;
+  object-fit: contain;
+  display: block;
+}
+
 .topic-card {
   padding: clamp(1.5rem, 5vw, 3rem);
 }
@@ -932,7 +984,7 @@ const totalCorrect = computed(() => {
   max-width: 960px;
   margin: 0.8rem 0 1.5rem;
   color: #081724;
-  font-size: clamp(2.2rem, 5vw, 5rem);
+ font-size: clamp(1rem, 3vw, 2.8rem);
   font-family: 'Helvetica', serif;
   font-weight: 600;
   line-height: 1.05;
@@ -1397,6 +1449,7 @@ const totalCorrect = computed(() => {
 }
 
 @media (max-width: 1024px) {
+
   .content-grid,
   .steps-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1476,6 +1529,27 @@ const totalCorrect = computed(() => {
   .image-preview-close {
     width: 38px;
     height: 38px;
+  }
+
+  .topic-heading-row {
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .topic-icon-shell {
+    width: 68px;
+    height: 68px;
+    border-radius: 20px;
+  }
+
+  .quiz-heading-row {
+    align-items: center;
+  }
+
+  .quiz-icon-shell {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
   }
 }
 
