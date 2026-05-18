@@ -1,1173 +1,858 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref } from 'vue';
+import { collection, getDocs } from 'firebase/firestore';
 import MainLayout from '@/layouts/MainLayout.vue';
+import { db } from '@/services/firestore';
 import { getStorageImageUrl } from '@/services/storage';
 
-type ImageKey =
-  | 'explore1'
-  | 'homeImage'
-  | 'explore2'
-  | 'explore3'
-  | 'explore4'
-  | 'explore5'
-  | 'explore6'
-  | 'explore7'
-  | 'explore8'
-  | 'explore9'
-  | 'explore10'
-  | 'explore11'
-  | 'explore12'
-  | 'explore13'
-  | 'explore14'
-  | 'explore15'
-  | 'explore16'
-  | 'explore17'
-  | 'explore18'
-  | 'explore19'
-  | 'explore20'
-  | 'explore21'
-  | 'explore22';
+type TopicId = 'brand-identity' | 'ai-workflow' | 'ethical-co-creation';
 
-const imagePaths: Record<ImageKey, string> = {
-  explore1: 'explore-image-1.png',
-  homeImage: 'hom-image.png',
-  explore2: 'explore-image-2.png',
-  explore3: 'explore-image-3.png',
-  explore4: 'explore-image-4.png',
-  explore5: 'explore-image-5.png',
-  explore6: 'explore-image-6.gif',
-  explore7: 'explore-image-7.gif',
-  explore8: 'explore-image-8.png',
-  explore9: 'explore-image-9.png',
-  explore10: 'explore-image-10.gif',
-  explore11: 'explore-image-11.png',
-  explore12: 'explore-image-12.png',
-  explore13: 'explore-image-13.png',
-  explore14: 'explore-image-14.png',
-  explore15: 'explore-image-15.png',
-  explore16: 'explore-image-16.png',
-  explore17: 'explore-image-17.png',
-  explore18: 'explore-image-18.png',
-  explore19: 'brandkitcanva.gif',
-  explore20: 'coolorcontrast.png',
-  explore21: 'coolors.png',
-  explore22: 'uizard.gif',
+interface ExploreTopic {
+  id: TopicId;
+  title: string;
+  kicker: string;
+  paragraphs: string[];
+}
+
+interface QuizQuestion {
+  id: string;
+  topicId: TopicId;
+  order: number;
+  question: string;
+  options: string[];
+  answer: string;
+}
+
+interface TutorialStep {
+  title: string;
+  description: string;
+}
+
+interface TutorialSample {
+  title: string;
+  beforeKey: string;
+  afterKey: string;
+}
+
+interface TutorialSection {
+  id: string;
+  kicker: string;
+  title: string;
+  videoKey?: string;
+  guideTitle?: string;
+  steps?: TutorialStep[];
+  samples?: TutorialSample[];
+}
+
+interface ImagePreview {
+  src: string;
+  title: string;
+  label: string;
+}
+
+const topics: ExploreTopic[] = [
+  {
+    id: 'brand-identity',
+    kicker: 'Theoretical Foundation',
+    title: 'Theoretical Foundation of Brand Identity and Strategic Positioning',
+    paragraphs: [
+      'Brand identity is far more than just a logo, it represents the personality, values, and emotions of a brand. While AI can generate complex visuals in seconds, it fundamentally lacks Intentionality, the profound "why" behind the art. Strategic positioning is the process of carving out a unique space in the audience’s mind. This requires Empathy, a uniquely human ability to share the feelings of a target market, which remains the definitive boundary between robotic output and soulful branding.',
+      'According to Mazzone & Elgammal (2019), while AI can simulate a wide array of artistic styles through style transfer, the human creator remains the sole provider of intentionality or the true message. The Human Voice serves as the authoritative source of meaning amidst algorithms.',
+      'Furthermore, Margaret Boden (2004), in her theory of creativity, notes that AI excels at combinational creativity, but only humans possess the capacity for transformational creativity, the ability to break and remake the rules of art to create something with lasting cultural significance.',
+      'In the realm of marketing, research by Heding et al. (2020) on the Brand Identity Trajectory confirms that a successful brand must possess an inner core or soul. This soul is derived from lived human experience rather than statistical probability. AI serves as a mirror of historical data, but the human designer shapes the future by determining which design truly aligns with a brand’s higher purpose and evolving identity.',
+    ],
+  },
+  {
+    id: 'ai-workflow',
+    kicker: 'Semantic Collaboration',
+    title: 'AI Workflow and Semantic Collaboration',
+    paragraphs: [
+      'In a modern creative workflow, AI acts as a support tool by rapidly generating ideas and variations. However, for a brand to remain authentic, the process must begin and end with human intervention. The artist acts as a Semantic Filter, choosing only the AI outputs that resonate with human experience and cultural nuance. This Augmented Creativity speeds up experimentation while keeping the designer in total control of the narrative.',
+      'Anantrasirichai & Bull (2022) emphasize that in the process of co-creation, humans provide the semantics or meaning to the raw data produced by AI. In this light, AI is an extension of the artist’s hand, much like a digital brush, but with higher computational power.',
+      'According to Lubart’s (2005) study on Human-Computer Interaction, creativity is an iterative process. For every iteration an AI produces, a human must evaluate it against emotional and social standards.',
+      'Without this human filter, AI output remains noise without context. The true value of design emerges only when a human decides that a specific color palette or shape is right for the specific emotion being communicated to the audience.',
+    ],
+  },
+  {
+    id: 'ethical-co-creation',
+    kicker: 'Case Studies and Ethics',
+    title: 'Case Studies and Ethical Co-Creation',
+    paragraphs: [
+      'The use of case studies and thorough documentation, such as screen recordings and version histories, serves as Proof of Process. This documentation proves that the final design underwent thoughtful human refinement and was not a mere one-click generation.',
+      'Regarding ethics, designers bear the responsibility of ensuring that AI is not used to plagiarize existing works or propagate misleading content fueled by Algorithmic Bias.',
+      'Ethical Co-Creation requires a high degree of accountability. According to the journal Ethics and Information Technology, the artist is responsible for ensuring the output is authentic and does not infringe upon the voices of other creators.',
+      'Furthermore, Jobin et al. (2019), in their analysis of the global landscape of AI ethics guidelines, argue that non-maleficence and justice must be integrated into creative workflows. This means designers must be vigilant against biases that AI might have learned from flawed datasets. Being an ethical co-creator means using technology to elevate communication while remaining committed to truth and originality.',
+    ],
+  },
+];
+
+const tutorialMediaPaths: Record<string, string> = {
+  tutorial1: 'tutorial1.mp4',
+  tutorial2: 'tutorial2.mp4',
+  tutorial3: 'tutorial3.mp4',
+  tutorial4: 'tutorial4.mp4',
+
+  bokehBefore: '1_BEFORE.JPG',
+  bokehAfter: '1_AFTER.jpg',
+
+  starsBefore: '1_moon1.jpg',
+  starsAfter: '1_moon2ai.jpg',
+
+  beachBefore: '1_beach1.jpg',
+  beachAfter: '1_beach2ai.jpg',
+
+  cloudsBefore: '1_boat1.jpg',
+  cloudsAfter: '1_boat2ai.jpg',
+
+  spillsBefore: '2_BEFORE.JPG',
+  spillsAfter: '2_AFTER.jpg',
+
+  peopleBefore: '2_shoot1.jpg',
+  peopleAfter: '2_shoot2 ai.jpg',
+
+  billboardBefore: '2_animal1.jpg',
+  billboardAfter: '2_animal2ai.jpg',
+
+  dirtBefore: '2_poor1.jpg',
+  dirtAfter: '2_poor2ai.jpg',
+
+  patternBefore: '3_BEFORE.jpg',
+  patternAfter: '3_AFTER.jpg',
+
+  coupleBefore: '3_heart1.jpg',
+  coupleAfter: '3_heart2ai.jpg',
+
+  relativesBefore: '3_graduare1.jpg',
+  relativesAfter: '3_graduate2ai.jpg',
+
+  churchBefore: '3_church1.jpg',
+  churchAfter: '3_church2ai.jpg',
+
+  harmonizeOneBefore: '4_harmonize before4.png',
+  harmonizeOneAfter: '4_harmonize_after4.png',
+
+  harmonizeTwoBefore: '4_harmonize before2.png',
+  harmonizeTwoAfter: '4_harmonize_after2.png',
+
+  harmonizeThreeBefore: '4_harmonize_before3.png',
+  harmonizeThreeAfter: '4_harmonize_after3.png',
+
+  harmonizeFourBefore: '4_harmonize before4.png',
+  harmonizeFourAfter: '4_harmonize_after4.png',
 };
 
-const imageUrls = reactive<Record<ImageKey, string>>({
-  explore1: '',
-  homeImage: '',
-  explore2: '',
-  explore3: '',
-  explore4: '',
-  explore5: '',
-  explore6: '',
-  explore7: '',
-  explore8: '',
-  explore9: '',
-  explore10: '',
-  explore11: '',
-  explore12: '',
-  explore13: '',
-  explore14: '',
-  explore15: '',
-  explore16: '',
-  explore17: '',
-  explore18: '',
-  explore19: '',
-  explore20: '',
-  explore21: '',
-  explore22: '',
+const tutorialMediaUrls = reactive<Record<string, string>>({});
+const isLoadingTutorialMedia = ref(true);
+const tutorialMediaErrors = ref<string[]>([]);
+const selectedImagePreview = ref<ImagePreview | null>(null);
+
+const tutorialSections: TutorialSection[] = [
+  {
+    id: 'tutorial-1',
+    kicker: 'Tutorial 1',
+    title: 'Adding Realistic Subjects Using Photoshop AI',
+    videoKey: 'tutorial1',
+  },
+  {
+    id: 'generative-fill',
+    kicker: 'Photoshop AI Workflow',
+    title: 'How to Use Photoshop AI Generative Fill',
+    guideTitle: 'Step-by-Step Guide',
+    steps: [
+      {
+        title: 'Step 1 - Select the Area',
+        description:
+          'Use any selection tool in Adobe Photoshop to highlight the object or area where you want to apply AI enhancement.',
+      },
+      {
+        title: 'Step 2 - Enter Your Prompt',
+        description:
+          'Type a clear description of what you want to add or generate. Example: “Add goggles”, “Create realistic ball”, or “Add a camping chair”.',
+      },
+      {
+        title: 'Step 3 - Click Generative Fill',
+        description:
+          'Press the Generative Fill button and let Photoshop AI generate the enhancement automatically.',
+      },
+      {
+        title: 'Step 4 - Choose Your Preferred Result',
+        description:
+          'Photoshop will generate three or more variations based on your prompt. Browse the generated designs and select the version that best matches your project.',
+      },
+      {
+        title: 'Step 5 - Refine if Needed',
+        description:
+          'You can regenerate more variations or adjust your selection and prompt for better results.',
+      },
+    ],
+    samples: [
+      {
+        title: 'Bokeh Lights',
+        beforeKey: 'bokehBefore',
+        afterKey: 'bokehAfter',
+      },
+      {
+        title: 'Stars',
+        beforeKey: 'starsBefore',
+        afterKey: 'starsAfter',
+      },
+      {
+        title: 'Human Body and Beach Sand',
+        beforeKey: 'beachBefore',
+        afterKey: 'beachAfter',
+      },
+      {
+        title: 'Clouds and Soil',
+        beforeKey: 'cloudsBefore',
+        afterKey: 'cloudsAfter',
+      },
+    ],
+  },
+  {
+    id: 'tutorial-2',
+    kicker: 'Tutorial 2',
+    title: 'AI Object Replacement',
+    videoKey: 'tutorial2',
+    guideTitle: 'How to Replace an Object Using Generative Fill',
+    steps: [
+      {
+        title: 'Step 1 - Select the Object',
+        description:
+          'Use any selection tool in Adobe Photoshop to highlight the object you want to replace.',
+      },
+      {
+        title: 'Step 2 - Open Generative Fill',
+        description:
+          'After selecting the object, click the Generative Fill option from the contextual task bar.',
+      },
+      {
+        title: 'Step 3 - Enter Your Prompt',
+        description: 'Type your replacement prompt. Example: “blue water”.',
+      },
+      {
+        title: 'Step 4 - Generate the Replacement',
+        description:
+          'Click Generate and let Photoshop AI create new versions based on your prompt.',
+      },
+      {
+        title: 'Step 5 - Choose the Best Result',
+        description:
+          'Photoshop will provide three or more generated variations. Select the version that fits your image best.',
+      },
+      {
+        title: 'Step 6 - Refine if Needed',
+        description:
+          'If the result is not perfect, try adjusting the selection area, using a more detailed prompt, or generating additional variations.',
+      },
+    ],
+    samples: [
+      {
+        title: 'Spills Removed',
+        beforeKey: 'spillsBefore',
+        afterKey: 'spillsAfter',
+      },
+      {
+        title: 'People Removed',
+        beforeKey: 'peopleBefore',
+        afterKey: 'peopleAfter',
+      },
+      {
+        title: 'Small Billboard and Lights Removed, Added Smoke',
+        beforeKey: 'billboardBefore',
+        afterKey: 'billboardAfter',
+      },
+      {
+        title: 'Dirts Lessen',
+        beforeKey: 'dirtBefore',
+        afterKey: 'dirtAfter',
+      },
+    ],
+  },
+  {
+    id: 'tutorial-3',
+    kicker: 'Tutorial 3',
+    title: 'Adobe Photoshop Generative Expand',
+    videoKey: 'tutorial3',
+    guideTitle: 'Photoshop Generative Expand Workflow',
+    steps: [
+      {
+        title: 'Step 1 - Select the Subject',
+        description:
+          'Use a selection tool to highlight the subject you want to enhance.',
+      },
+      {
+        title: 'Step 2 - Expand the Canvas',
+        description:
+          'Drag the image borders outward using the Crop Tool to add empty space.',
+      },
+      {
+        title: 'Step 3 - Use AI Generative Expand',
+        description: 'Click Generative Expand from the task bar.',
+      },
+      {
+        title: 'Step 4 - Enter a Prompt',
+        description:
+          'Type how you want the background extended. Example: “extend the sky and mountains”.',
+      },
+      {
+        title: 'Step 5 - Generate the Image',
+        description:
+          'Click Generate and let Photoshop AI enhance and extend the background.',
+      },
+      {
+        title: 'Step 6 - Choose the Best Version',
+        description: 'Select the AI-generated result that looks best.',
+      },
+    ],
+    samples: [
+      {
+        title: 'Expanded Design Pattern',
+        beforeKey: 'patternBefore',
+        afterKey: 'patternAfter',
+      },
+      {
+        title: 'Expanded Picture of Couple',
+        beforeKey: 'coupleBefore',
+        afterKey: 'coupleAfter',
+      },
+      {
+        title: 'Expanded Picture of Relatives',
+        beforeKey: 'relativesBefore',
+        afterKey: 'relativesAfter',
+      },
+      {
+        title: 'Expanded Church',
+        beforeKey: 'churchBefore',
+        afterKey: 'churchAfter',
+      },
+    ],
+  },
+  {
+    id: 'tutorial-4',
+    kicker: 'Tutorial 4',
+    title: 'Lighting & Color Harmonization AI',
+    videoKey: 'tutorial4',
+    guideTitle: 'Easy Guide to Photoshop Harmonize Tool',
+    steps: [
+      {
+        title: 'Step 1 - Select the Subject',
+        description:
+          'Use a selection tool to highlight the object or subject you want to blend.',
+      },
+      {
+        title: 'Step 2 - Open Harmonize',
+        description: 'Click Harmonize from the contextual task bar.',
+      },
+      {
+        title: 'Step 3 - Apply AI Enhancement',
+        description:
+          'No prompt needed. Just click Harmonize and Photoshop AI will automatically match the lighting, color, and tone.',
+      },
+      {
+        title: 'Step 4 - Choose the Best Result',
+        description: 'Select the version that blends naturally with the background.',
+      },
+    ],
+    samples: [
+      {
+        title: 'Harmonize Sample 1',
+        beforeKey: 'harmonizeOneBefore',
+        afterKey: 'harmonizeOneAfter',
+      },
+      {
+        title: 'Harmonize Sample 2',
+        beforeKey: 'harmonizeTwoBefore',
+        afterKey: 'harmonizeTwoAfter',
+      },
+      {
+        title: 'Harmonize Sample 3',
+        beforeKey: 'harmonizeThreeBefore',
+        afterKey: 'harmonizeThreeAfter',
+      },
+      {
+        title: 'Harmonize Sample 4',
+        beforeKey: 'harmonizeFourBefore',
+        afterKey: 'harmonizeFourAfter',
+      },
+    ],
+  },
+];
+
+const quizQuestions = ref<QuizQuestion[]>([]);
+const selectedAnswers = reactive<Record<string, string>>({});
+const isLoadingQuiz = ref(true);
+const quizError = ref('');
+
+onMounted(() => {
+  loadExploreQuizQuestions();
+  loadTutorialMedia();
 });
 
-const isLoading = ref(true);
-const imageErrors = ref<string[]>([]);
+async function loadTutorialMedia() {
+  isLoadingTutorialMedia.value = true;
+  tutorialMediaErrors.value = [];
 
-
-
-onMounted(async () => {
-  const loaders = Object.entries(imagePaths).map(async ([key, path]) => {
+  const loaders = Object.entries(tutorialMediaPaths).map(async ([key, path]) => {
     try {
-      imageUrls[key as ImageKey] = await getStorageImageUrl(path);
+      tutorialMediaUrls[key] = await getStorageImageUrl(path);
     } catch (error) {
-      console.error(`Failed to load image: ${path}`, error);
-      imageErrors.value.push(path);
+      console.error(`Failed to load tutorial media: ${path}`, error);
+      tutorialMediaErrors.value.push(path);
     }
   });
 
   await Promise.all(loaders);
-  isLoading.value = false;
+  isLoadingTutorialMedia.value = false;
+}
+
+async function loadExploreQuizQuestions() {
+  isLoadingQuiz.value = true;
+  quizError.value = '';
+
+  try {
+    const snapshot = await getDocs(collection(db, 'explore_quiz_questions'));
+
+    quizQuestions.value = snapshot.docs
+      .map((doc) => {
+        const data = doc.data();
+
+        return {
+          id: doc.id,
+          topicId: data.topicId,
+          order: Number(data.order ?? 0),
+          question: String(data.question ?? ''),
+          options: Array.isArray(data.options) ? data.options : [],
+          answer: String(data.answer ?? ''),
+        } as QuizQuestion;
+      })
+      .filter((item) => item.topicId && item.question && item.options.length && item.answer)
+      .sort((a, b) => a.order - b.order);
+  } catch (error) {
+    console.error('Failed to load explore quiz questions:', error);
+    quizError.value = 'Unable to load quiz questions right now.';
+  } finally {
+    isLoadingQuiz.value = false;
+  }
+}
+
+function getTopicQuestions(topicId: TopicId) {
+  return quizQuestions.value.filter((question) => question.topicId === topicId);
+}
+
+function selectAnswer(questionId: string, option: string) {
+  selectedAnswers[questionId] = option;
+}
+
+function isCorrect(question: QuizQuestion) {
+  return selectedAnswers[question.id] === question.answer;
+}
+
+function openImagePreview(src: string, title: string, label: string) {
+  selectedImagePreview.value = {
+    src,
+    title,
+    label,
+  };
+}
+
+function closeImagePreview() {
+  selectedImagePreview.value = null;
+}
+
+const totalAnswered = computed(() => Object.keys(selectedAnswers).length);
+
+const totalCorrect = computed(() => {
+  return quizQuestions.value.filter((question) => selectedAnswers[question.id] === question.answer).length;
 });
-
-const selectedImage = ref<string | null>(null)
-
-function openImage(src: string) {
-  selectedImage.value = src
-}
-
-function closeImage() {
-  selectedImage.value = null
-}
-
-const hasImageErrors = computed(() => imageErrors.value.length > 0);
-
-function getYoutubeEmbedUrl(videoId: string): string {
-  return `https://www.youtube.com/embed/${videoId}`;
-}
-
 </script>
 
 <template>
-  <div v-if="selectedImage"
-    class="fixed inset-0 z-[2000] flex items-center justify-center bg-black/90 px-4 backdrop-blur-md"
-    @click="closeImage">
-    <img :src="selectedImage" alt="Expanded preview" class="max-h-[90vh] max-w-[90vw] rounded-2xl shadow-2xl"
-      @click.stop />
-
-    <button class="absolute right-6 top-6 text-3xl font-bold text-white" @click="closeImage">
-      ✕
-    </button>
-  </div>
   <MainLayout>
     <section class="explore-page">
-
       <div class="explore-page__inner">
-
         <section id="co-creation" class="co-creation scroll-mt-28">
           <section class="page-hero">
-
+            <p class="section-kicker">Explore Module</p>
             <h1 class="hero-title">What Is Co-Creation?</h1>
-
           </section>
 
-          <section v-if="isLoading" class="status-box">
-            Loading explore images...
-          </section>
-
-          <section v-else-if="hasImageErrors" class="status-box status-box--warning">
-            Some images could not be loaded from Firebase Storage:
-            <br />
-            {{ imageErrors.join(', ') }}
-          </section>
-
-          <!-- 1. WHAT IS CO-CREATION -->
           <section class="content-section">
-            <div class="text-box">
+            <div class="text-box premium-card">
               <p class="body-text">
-                 To cocreate is to <strong>create something together</strong> resulting in something that neither
-  could easily be created alone. In this context, <strong>co-creation with AI</strong> describes
-  the collaborative process in which artists with the assistance of AI work
-  together to develop <strong>ideas, content, and or solutions</strong>.
+                To cocreate is to <strong>create something together</strong>, resulting in something that neither
+                could easily be created alone. In this context, <strong>co-creation with AI</strong> describes
+                the collaborative process in which artists, with the assistance of AI, work together to develop
+                <strong>ideas, content, and solutions</strong>.
               </p>
             </div>
 
             <div class="content-grid">
-              <div class="learning-header">
+              <div class="learning-header premium-card">
                 <p class="body-text">
-                  <strong>Artists provide the core elements of creativity</strong>, such as:
+                  <strong>Artists provide the core elements of creativity, such as:</strong>
                 </p>
               </div>
-              <div class="learning-card">
+
+              <div class="learning-card premium-card">
                 <p class="body-text"><strong>Vision</strong> – the main idea or concept of the project</p>
               </div>
-              <div class="learning-card">
+
+              <div class="learning-card premium-card">
                 <p class="body-text"><strong>Theme</strong> – personal style and aesthetic judgment</p>
               </div>
-              <div class="learning-card">
+
+              <div class="learning-card premium-card">
                 <p class="body-text"><strong>Direction</strong> – guiding the project toward a goal</p>
               </div>
-              <div class="learning-card">
+
+              <div class="learning-card premium-card">
                 <p class="body-text">
                   <strong>Meaning</strong> – giving the work emotional, cultural, or symbolic value
                 </p>
               </div>
 
-              <div class="learning-header">
+              <div class="learning-header premium-card">
                 <p class="body-text">
                   <strong>While AI supports the process by providing:</strong>
                 </p>
               </div>
-              <div class="learning-card">
+
+              <div class="learning-card premium-card">
                 <p class="body-text"><strong>Suggestions</strong> – offering possible ideas or concepts</p>
               </div>
-              <div class="learning-card">
+
+              <div class="learning-card premium-card">
                 <p class="body-text">
                   <strong>Variations</strong> – generating multiple versions of a prompt
                 </p>
               </div>
-              <div class="learning-card">
+
+              <div class="learning-card premium-card">
                 <p class="body-text">
-                  <strong>Speed</strong> – quickly producing concepts and references that would take artists
-                  longer
+                  <strong>Speed</strong> – quickly producing concepts and references that would take artists longer
                 </p>
               </div>
-              <div class="learning-card">
+
+              <div class="learning-card premium-card">
                 <p class="body-text">
                   <strong>Exploration</strong> – helping creators test different combinations and possibilities
                 </p>
               </div>
             </div>
           </section>
-
-          <section class="image-section">
-            <img v-if="imageUrls.explore1" :src="imageUrls.explore1"
-              alt="Cat Coquillette using ChatGPT image generation to find inspiration"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore1)" />
-            <div class="caption-box">
-              <p class="caption">
-                Caption: Cat Coquillette's using ChatGPT image generation to find inspiration
-              </p>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <div class="text-box quote-box">
-              <p class="body-text">
-                "<strong>Just like inspiration tools such as Pinterest, AI can be used to gather ideas
-  and explore visual possibilities.</strong> However, artists should treat these results
-  as inspiration rather than copying them directly." - Cat Coquillette
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                In her process, Cat Coquillette used <strong>AI image generation to quickly explore
-  visual styles and concepts</strong> that could inspire her illustrations. The generated
-  images helped her <strong>experiment with colors, themes, and compositions</strong> before
-  developing her own artwork based on the ideas she found most interesting.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Please refer to the link provided for more information:
-              </p>
-              <a href="https://catcoq.com/blog/ethical-ai-for-artists" target="_blank" rel="noopener noreferrer"
-                class="hero-utility__link">
-                The Ethical Use of AI for Artists and Creative Entrepreneurs — CatCoq
-              </a>
-            </div>
-          </section>
-
-          <section class="image-section">
-            <img v-if="imageUrls.homeImage" :src="imageUrls.homeImage" alt="Zachary Kelbaugh stamp design"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.homeImage)" />
-            <div class=" caption-box">
-              <p class="caption">
-                Caption: Zachary Kelbaugh's stamp design after using DALL-E image generation to
-                help with arm anatomy
-              </p>
-            </div>
-
-            <div class="text-box quote-box">
-              <p class="body-text">
-                "I generated several options and kept the ones that had <strong>elements I liked</strong>, using
-  them as references while I developed my own sketches."
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                To create the stamp design, Kelbaugh generated several AI images to <strong>study a
-  difficult pose</strong> involving lighting, arm position, and costume details. He
-  selected a few results that had useful elements and kept them beside his
-  workspace while sketching in Procreate, gradually refining the drawing before
-  inking the final design. The AI images were used purely as references, while
-  the final illustration was <strong>drawn and finished by the artist himself</strong>.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Please refer to the link provided for more information:
-              </p>
-              <a href="https://www.facebook.com/groups/discgolfart/posts/8070716616277225/" target="_blank"
-                rel="noopener noreferrer" class="hero-utility__link">
-                Disc Golf Art | I used AI to assist in making this stamp | Facebook
-              </a>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Even though AI can <strong>generate ideas</strong>, us artists will make the
-  <strong>final decisions</strong>. Depending on the artist's workflow, AI assistance is used in
-  situations where they need the most help in. The artist works on the product,
-  <strong>chooses what to keep, what to change</strong>, and what the final work should appear visually
-  as well as the purpose behind the final output. Because of this, AI is best
-  understood as a <strong>tool or creative assistant, not the author</strong>.
-              </p>
-            </div>
-          </section>
         </section>
 
-        <!-- 2. HOW ARTISTS USE AI -->
-        <section id="how-artists-use-ai" class="how-artist-use-ai scroll-mt-28">
-          <section class="content-section">
-            <h2 class="main-title">How Artists Use AI</h2>
+        <section
+          v-for="topic in topics"
+          :id="topic.id"
+          :key="topic.id"
+          class="topic-section scroll-mt-28"
+        >
+          <div class="topic-card premium-card">
+            <p class="section-kicker">{{ topic.kicker }}</p>
+            <h2 class="topic-title">{{ topic.title }}</h2>
 
-            <div class="text-box">
-              <p class="body-text">
-                Artists often use AI as a <strong>tool to help them experiment with ideas</strong> and assist
-  with time-consuming parts of the creative process either from external AI
-  websites to built-in smart software tool features. From these 2 case studies
-  provided below, AI assistance in their workflow act as <strong>visual references
-  that help the artist explore possibilities more quickly</strong> before refining the
-  final artwork manually in their own style.
+            <div class="topic-copy">
+              <p v-for="paragraph in topic.paragraphs" :key="paragraph" class="body-text">
+                {{ paragraph }}
               </p>
             </div>
-          </section>
+          </div>
 
-          <section class="content-section">
-            <h2 class="main-title">Case Study 1: Gary Hanna's AI-Assisted Workflow</h2>
+          <div class="quiz-panel">
+            <div class="quiz-header">
+              <div>
+                <p class="section-kicker section-kicker--dark">Topic Quiz</p>
+                <h3 class="quiz-title">
+                  {{ topic.title }} Quiz Questions
+                </h3>
+              </div>
 
-            <div class="text-box">
-              <p class="body-text">
-                Digital artist Gary Hanna shares how he uses AI as part of his creative process
-                while still maintaining full artistic control over the final result.
-              </p>
+              <div class="quiz-score">
+                {{ totalCorrect }} / {{ totalAnswered }}
+              </div>
             </div>
 
-            <div class="text-box">
-              <p class="body-text">
-                In his workflow, AI is mainly used during the <strong>early idea generation stage</strong>.
-  The artist begins by generating multiple visual concepts using AI tools to
-  explore possible compositions, lighting, and environments. These AI outputs
-  act as <strong>inspiration, similar to a mood board</strong>.
-              </p>
+            <div v-if="isLoadingQuiz" class="quiz-status">
+              Loading quiz questions...
             </div>
 
-            <div class="content-grid">
-              <div class="learning-header">
-                <p class="body-text learning-title">
-                  After selecting the most interesting results, the artist then:
+            <div v-else-if="quizError" class="quiz-status quiz-status--error">
+              {{ quizError }}
+            </div>
+
+            <div v-else-if="getTopicQuestions(topic.id).length === 0" class="quiz-status">
+              No quiz questions added yet.
+            </div>
+
+            <div v-else class="quiz-list">
+              <article
+                v-for="question in getTopicQuestions(topic.id)"
+                :key="question.id"
+                class="quiz-card"
+              >
+                <p class="quiz-question">
+                  {{ question.order }}. {{ question.question }}
                 </p>
-              </div>
 
-              <ul class="thesis-bullet-list">
-                <li>sketches over the generated images</li>
-                <li>adjusts composition and perspective</li>
-                <li>modifies design elements</li>
-                <li>repaints and refines details manually</li>
-              </ul>
+                <div class="quiz-options">
+                  <button
+                    v-for="option in question.options"
+                    :key="option"
+                    type="button"
+                    class="quiz-option"
+                    :class="{
+                      'quiz-option--selected': selectedAnswers[question.id] === option,
+                      'quiz-option--correct': selectedAnswers[question.id] === option && option === question.answer,
+                      'quiz-option--wrong': selectedAnswers[question.id] === option && option !== question.answer,
+                    }"
+                    @click="selectAnswer(question.id, option)"
+                  >
+                    {{ option }}
+                  </button>
+                </div>
+
+                <p
+                  v-if="selectedAnswers[question.id]"
+                  class="quiz-feedback"
+                  :class="{ 'quiz-feedback--correct': isCorrect(question) }"
+                >
+                  {{ isCorrect(question) ? 'Correct answer.' : `Correct answer: ${question.answer}` }}
+                </p>
+              </article>
             </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                  Instead of producing the final artwork, the AI helps the artist quickly explore
-  visual ideas that would normally take much longer to develop manually. The
-  final artwork is still shaped through the artist's own <strong>drawing, painting,
-  and editing decisions</strong>.
-              </p>
-            </div>
-          </section>
-
-          <section class="image-section">
-            <div class="text-box">
-              <p class="body-text">
-                Please refer to the link provided for more information:
-              </p>
-              <a href="https://www.facebook.com/groups/discgolfart/posts/8070716616277225/" target="_blank"
-                rel="noopener noreferrer" class="hero-utility__link">
-                Disc Golf Art | I used AI to assist in making this stamp | Facebook
-              </a>
-            </div>
-
-            <img v-if="imageUrls.explore2" :src="imageUrls.explore2" alt="Gary Hanna AI assisted workflow"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore2)" />
-            <img v-if="imageUrls.explore3" :src="imageUrls.explore3" alt="Gary Hanna process images"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore3)" />
-            <div class=" caption-box">
-              <p class="caption">
-                Caption: Gary Hanna's art process with the goal to speed up their workflow
-                using Stable Diffusion XL
-              </p>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <h2 class="main-title">
-              Case Study 2: Wu Jin Long's AI-Assisted Illustration Process
-            </h2>
-
-            <div class="text-box">
-              <p class="body-text">
-                Digital artist Wu Jin Long demonstrated how AI can be <strong>integrated into a full
-  illustration workflow</strong> while still relying on traditional artistic skills.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                For his artwork Dreamwalkers: The Origin of the Worlds, he first generated
-  visual inspiration using AI tools such as DALL·E 3 and Midjourney to explore
-  possible compositions and color ideas. After gathering inspiration, he created
-  <strong>pencil sketches to plan the scene and overall layout</strong>.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                The sketch was then used to generate <strong>additional AI variations</strong>, helping the
-  artist experiment with different lighting and color palettes. Using these
-  references, he continued refining the artwork digitally in Procreate and later
-  finalized the piece in Adobe Photoshop, where he added details, fixed
-  artifacts, and improved the overall composition.
-              </p>
-            </div>
-          </section>
-
-          <section class="image-section">
-            <img v-if="imageUrls.explore4" :src="imageUrls.explore4" alt="Wu Jin Long artwork"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore4)" />
-            <img v-if="imageUrls.explore5" :src="imageUrls.explore5" alt="Wu Jin Long process"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore5)" />
-            <div class="caption-box">
-              <p class="caption">
-                Caption: Wu Jin Long's AI-assisted illustration process
-              </p>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <div class="text-box">
-              <p class="body-text">
-                In this workflow, AI helped <strong>generate ideas and visual references</strong>, while the
-  artist remained responsible for the drawing, painting, and
-  <strong>final creative decisions</strong>.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Please refer to the link provided for more information:
-              </p>
-              <a href="https://www.artstation.com/artwork/4NO811" target="_blank" rel="noopener noreferrer"
-                class="hero-utility__link">
-                Mixed Media Workflow Tutorial – From AI Inspiration to Final Digital
-                Illustration, Wu Jin Long
-              </a>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                In the end, AI should act as an <strong>assistant while the human remains the author</strong>.
-  AI can generate ideas and variations, but it does not have emotions, personal
-  experiences, or creative intentions. Instead, it produces outputs based on
-  patterns learned from large datasets. Because of this, the artist still makes
-  the <strong>final decisions</strong>, choosing which ideas to develop and shaping the final
-  message of the artwork.
-              </p>
-            </div>
-          </section>
+          </div>
         </section>
 
-        <section id="branding-consistency" class="branding scroll-mt-28">
-          <section class="content-section">
-            <h2 class="main-title">
-              Branding Consistency
-            </h2>
-          </section>
+        <section id="photoshop-ai-tutorials" class="tutorial-master-section scroll-mt-28">
+          <div class="topic-card tutorial-master-card premium-card">
+            <p class="section-kicker">Master Tutorials</p>
 
-          <section id="branding-consistency" class="content-section">
-            <div class="text-box">
+            <h2 class="topic-title">Master Photoshop AI Tutorials</h2>
+
+            <div class="topic-copy">
               <p class="body-text">
-                AI is also transforming how artists approach <strong>branding</strong> by assisting with <strong>visual
-  consistency, color decisions, and user interface design.</strong> These tools help streamline creative workflows while maintaining
-                strong brand identity across different platforms.
+                Unlock the power of AI inside Adobe Photoshop through step-by-step tutorials designed for creators,
+                photographers, designers, and beginners. Our tutorials use original video lessons, real editing
+                workflows, and exclusive before-and-after sample images so you can learn exactly how professional
+                AI retouching and enhancement works.
+              </p>
+
+              <p class="tutorial-tagline">
+                Watch. Learn. Edit. Create.
               </p>
             </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Some design platforms now include AI-powered color tools that help designers create cohesive and
-                appealing
-                palettes based on brand identity or mood
-              </p>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <h2 class="main-title">Coolors</h2>
-          </section>
-
-          <section class="content-section">
-            <div class="text-box">
-              <p class="body-text">
-                Coolors generate <strong>color palettes based on user preferences</strong>. Designers can use the AI by selecting colors
-                they like, and the system will generate combinations tailored to their taste. This helps in developing
-                brand color schemes that are visually harmonious and aligned with a brand’s personality and allows users
-                to quickly explore variations for branding projects.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Coolors is also a feature that can be used in Figma, which is ideal for UI UX projects.
-              </p>
-            </div>
-          </section>
-
-          <section class="image-section">
-            <img v-if="imageUrls.explore21" :src="imageUrls.explore21" alt="Wu Jin Long artwork"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore21)" />
-
-            <div class="caption-box">
-              <p class="caption">
-                There is also a color contrast checker by Coolors to see if your chosen colors are an ideal match in
-                terms
-                of text color and background color for readability.
-              </p>
-            </div>
-            <img v-if="imageUrls.explore20" :src="imageUrls.explore20" alt="Wu Jin Long process"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore20)" />
-          </section>
-
-          <section class=" content-section">
-            <h2 class="main-title">Uizard</h2>
-          </section>
-
-          <section class="content-section">
-            <div class="text-box">
-              <p class="body-text">
-                Uizard allows designers to <strong>generate UI layouts from text prompts, sketches, or wireframes.</strong> It can
-                transform hand-drawn ideas into digital mockups, making it useful for quickly prototyping app or website
-                designs. This is ideal for artists who do not know how to code and the UI is simple to navigate around,
-                similar to Canva.
-              </p>
-            </div>
-          </section>
-
-          <section class="image-section">
-            <img v-if="imageUrls.explore22" :src="imageUrls.explore22" alt="Wu Jin Long artwork"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore22)" />
-          </section>
-
-          <section class="content-section">
-            <div class="text-box">
-              <p class="body-text">
-                You can drag and drop an image of what your desired UI design, and it will generate it for you from the
-                buttons and text placements to the overall layout and structure of the interface. The tool analyzes the
-                visual elements in the uploaded image and converts them into editable UI components, allowing designers
-                to
-                quickly transform ideas into functional prototypes.
-              </p>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <h2 class="main-title">Canva’s Brand Kit</h2>
-          </section>
-
-          <section class="content-section">
-            <div class="text-box">
-              <p class="body-text">
-                Canva’s Brand Kit allows designers to <strong>store brand assets such as logos,
-  fonts, colors, and templates directly to the design platform.</strong> Once set up, these elements can be automatically applied to any design,
-                ensuring that all outputs follow the same visual identity. This reduces the need to manually check brand
-                guidelines every time a new design is created.
-              </p>
-            </div>
-          </section>
-
-          <section class="image-section">
-            <img v-if="imageUrls.explore19" :src="imageUrls.explore19" alt="Wu Jin Long artwork"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore19)" />
-          </section>
-
-          <section class="content-section">
-            <div class="text-box">
-              <p class="body-text">
-                The tool also integrates with their AI-powered features like Magic Studio in Canva, allowing designs to
-                be
-                generated or adjusted while keeping brand elements consistent. This means that even AI-generated layouts
-                or content will follow predefined brand styles, improving efficiency while maintaining accuracy.
-              </p>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <div class="text-box">
-              <p class="body-text">
-                Another useful feature is the ability to manage multiple Brand Kits for different campaigns or
-                sub-brands.
-                Designers can quickly switch between them, making it easier to maintain consistency across various
-                projects without confusion.
-              </p>
-            </div>
-          </section>
-
+          </div>
         </section>
 
-
-        <!-- 3. AI INSIDE ADOBE PHOTOSHOP -->
-        <section id="ai-inside-photoshop" class="ai-inside-adobe scroll-mt-28">
-          <section class="content-section">
-            <h2 class="main-title">AI Inside Adobe Photoshop</h2>
-          </section>
-
-          <section class="content-section">
-            <h2 class="main-title">Generative Fill</h2>
-
-            <div class="text-box">
-              <p class="body-text">
-                 Generative Fill is an AI feature that allows users to <strong>add, remove, or modify
-  parts of an image</strong> using text prompts.
-              </p>
+        <section
+          v-for="tutorial in tutorialSections"
+          :id="tutorial.id"
+          :key="tutorial.id"
+          class="tutorial-section scroll-mt-28"
+        >
+          <div class="tutorial-card">
+            <div class="tutorial-heading">
+              <p class="section-kicker">{{ tutorial.kicker }}</p>
+              <h2 class="topic-title tutorial-title">{{ tutorial.title }}</h2>
             </div>
 
-            <div class="content-grid">
-              <div class="learning-header">
-                <p class="body-text learning-title">How to use Generative Fill</p>
+            <div v-if="tutorial.videoKey" class="video-shell">
+              <div v-if="isLoadingTutorialMedia" class="media-placeholder">
+                Loading tutorial video...
               </div>
 
-              <ul class="thesis-bullet-list">
-                <li>Open an image in Photoshop</li>
-                <li>Select the area you want to edit</li>
-                <li>Click Generative Fill</li>
-                <li>Enter a text prompt (optional)</li>
-                <li>Choose from several AI-generated results</li>
-              </ul>
-            </div>
+              <video
+                v-else-if="tutorialMediaUrls[tutorial.videoKey]"
+                class="tutorial-video"
+                controls
+                playsinline
+                preload="metadata"
+              >
+                <source :src="tutorialMediaUrls[tutorial.videoKey]" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
 
-            <img v-if="imageUrls.explore6" :src="imageUrls.explore6" alt="Generative Fill demo"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore6)" />
-
-            <div class="video-box">
-              <p class="video-box__title">
-                Introduction to Generative Fill | Adobe Photoshop
-              </p>
-
-              <div class="video-box__frame-wrapper">
-                <iframe :src="getYoutubeEmbedUrl('Sp6K3qpVFO0')"
-                  title="Introduction to Generative Fill | Adobe Photoshop" class="video-box__frame" frameborder="0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen></iframe>
+              <div v-else class="media-placeholder">
+                Video unavailable.
               </div>
             </div>
-          </section>
 
-          <section class="content-section">
-            <h2 class="main-title">Content-Aware Fill</h2>
+            <div v-if="tutorial.guideTitle || tutorial.steps?.length" class="guide-box">
+              <h3 v-if="tutorial.guideTitle" class="guide-title">
+                {{ tutorial.guideTitle }}
+              </h3>
 
-            <div class="text-box">
-              <p class="body-text">
-                Content-Aware Fill <strong>removes objects from an image and automatically fills the
-  empty space.</strong>
-              </p>
-            </div>
-
-            <div class="content-grid">
-              <div class="learning-header">
-                <p class="body-text learning-title">How to use Content-Aware Fill</p>
-              </div>
-
-              <ul class="thesis-bullet-list">
-                <li>Select the object you want to remove with a Lasso tool</li>
-                <li>Choose Edit → Content-Aware Fill</li>
-                <li>Adjust the preview if needed</li>
-                <li>Apply the fill</li>
-              </ul>
-            </div>
-
-            <img v-if="imageUrls.explore7" :src="imageUrls.explore7" alt="Content-Aware Fill demo"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore3)" />
-
-            <div class="video-box">
-              <p class="video-box__title">
-                Content-Aware Fill in Photoshop | Learn from the Experts | Adobe Creative Cloud
-              </p>
-
-              <div class="video-box__frame-wrapper">
-                <iframe :src="getYoutubeEmbedUrl('B6dS3zYlJW8')" title="Content-Aware Fill in Photoshop"
-                  class="video-box__frame" frameborder="0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen></iframe>
+              <div v-if="tutorial.steps?.length" class="steps-list">
+                <article
+                  v-for="step in tutorial.steps"
+                  :key="step.title"
+                  class="step-card"
+                >
+                  <h4 class="step-title">{{ step.title }}</h4>
+                  <p class="body-text step-description">{{ step.description }}</p>
+                </article>
               </div>
             </div>
-          </section>
 
-          <section class="content-section">
-            <h2 class="main-title">AI Selection &amp; Masking</h2>
+            <div v-if="tutorial.samples?.length" class="samples-section">
+              <div class="samples-header">
+                <p class="section-kicker section-kicker--dark">Before & After</p>
+                <h3 class="guide-title">Other Samples</h3>
+              </div>
 
-            <div class="text-box">
-              <p class="body-text">
-                Tools like Select Subject or Object Selection automatically detect and isolate
-                objects in a photo. This makes it easier to select complex shapes such as hair
-                or fur without manually outlining them, allowing artists to change backgrounds
-                or combine images much faster.
-              </p>
-            </div>
+              <div class="sample-list">
+                <article
+                  v-for="sample in tutorial.samples"
+                  :key="sample.title"
+                  class="sample-card"
+                >
+                  <h4 class="sample-title">{{ sample.title }}</h4>
 
-            <div class="video-box">
-              <p class="video-box__title">
-                Select and Mask in Photoshop | Learn from the Experts | Adobe Creative Cloud
-              </p>
+                  <div class="before-after-grid">
+                    <div class="comparison-image-card">
+                      <p class="comparison-label">Before</p>
 
-              <div class="video-box__frame-wrapper">
-                <iframe :src="getYoutubeEmbedUrl('lgeYBcriWk4')" title="Select and Mask in Photoshop"
-                  class="video-box__frame" frameborder="0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen></iframe>
+                      <button
+                        v-if="tutorialMediaUrls[sample.beforeKey]"
+                        type="button"
+                        class="comparison-image-button"
+                        @click="openImagePreview(tutorialMediaUrls[sample.beforeKey], sample.title, 'Before')"
+                      >
+                        <img
+                          :src="tutorialMediaUrls[sample.beforeKey]"
+                          :alt="`${sample.title} before`"
+                          class="comparison-image"
+                        />
+
+                        <span class="image-view-badge">Click to view</span>
+                      </button>
+
+                      <div v-else class="image-fallback">
+                        Before image unavailable.
+                      </div>
+                    </div>
+
+                    <div class="comparison-image-card">
+                      <p class="comparison-label">After</p>
+
+                      <button
+                        v-if="tutorialMediaUrls[sample.afterKey]"
+                        type="button"
+                        class="comparison-image-button"
+                        @click="openImagePreview(tutorialMediaUrls[sample.afterKey], sample.title, 'After')"
+                      >
+                        <img
+                          :src="tutorialMediaUrls[sample.afterKey]"
+                          :alt="`${sample.title} after`"
+                          class="comparison-image"
+                        />
+
+                        <span class="image-view-badge">Click to view</span>
+                      </button>
+
+                      <div v-else class="image-fallback">
+                        After image unavailable.
+                      </div>
+                    </div>
+                  </div>
+                </article>
               </div>
             </div>
-          </section>
 
-          <section class="content-section">
-            <h2 class="main-title">Smart Retouching Tools</h2>
-
-            <div class="text-box">
-              <p class="body-text">
-                Tools such as <strong>Spot Healing Brush, Healing Brush, and Patch Tool help fix imperfections in photos</strong> by analyzing nearby pixels and blending them naturally
-                into the edited area. This allows users to quickly remove blemishes or
-                unwanted marks while keeping the image looking clean and polished.
-              </p>
+            <div v-if="tutorialMediaErrors.length" class="media-error-note">
+              Some tutorial media could not be loaded. Please check the Firebase Storage filenames.
             </div>
-
-            <div class="video-box">
-              <p class="video-box__title">
-                Photoshop - 5 Basic Retouching Tools
-              </p>
-
-              <div class="video-box__frame-wrapper">
-                <iframe :src="getYoutubeEmbedUrl('30lc8fW7m2Y')" title="Photoshop - 5 Basic Retouching Tools"
-                  class="video-box__frame" frameborder="0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen></iframe>
-              </div>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <div class="text-box quote-box">
-              <p class="body-text">
-                These examples show some of the <strong>fundamental AI-assisted tools</strong> in Adobe
-  Photoshop that are widely used by artists and designers. By simplifying tasks
-  such as <strong>object removal, selection, and image generation</strong>, these features
-  support the <strong>creative process</strong> and enable users to explore ideas more
-  efficiently.
-              </p>
-            </div>
-          </section>
-
-          <!-- 4. AI INSIDE OTHER DIGITAL SOFTWARES -->
-          <section class="content-section">
-            <h2 class="main-title">AI Inside Other Digital Softwares</h2>
-
-            <div class="text-box">
-              <p class="body-text">
-                AI features are also being introduced in other illustration programs to help
-    artists <strong>speed up workflows and improve drawing accuracy</strong>. These tools often
-    assist with tasks such as <strong>line art creation, automatic coloring, and pose
-    referencing</strong>.
-              </p>
-            </div>
-          </section>
-        </section>
-
-        <section id="ai-inside-krita" class="inside-krita scroll-mt-28">
-          <section class="content-section">
-            <h2 class="main-title">AI Line Art Assistance Tool in Krita</h2>
-
-            <div class="text-box">
-              <p class="body-text">
-                Some illustration programs experiment with AI tools that help artists <strong>refine
-    sketches into clean line art</strong>. One example is the <strong>Fast Line Art project</strong> in
-    Krita.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Fast Line Art is an experimental AI feature that <strong>converts rough sketches into
-    clean line art</strong> using neural networks. Instead of manually tracing over a sketch
-    multiple times, the tool automatically generates <strong>smoother lines</strong> that follow the
-    artist's original drawing.
-              </p>
-            </div>
-
-            <img v-if="imageUrls.explore8" :src="imageUrls.explore8" alt="Krita Fast Line Art example"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore8)" />
-            <img v-if="imageUrls.explore9" :src="imageUrls.explore9" alt="Krita Fast Line Art process"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore9)" />
-
-            <div class="text-box">
-              <p class="body-text">
-                This tool is designed to <strong>assist artists on linework</strong> rather than generate
-    entirely new artwork, meaning it <strong>closely follows the sketch</strong> provided by the
-    user.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Please refer to the link provided for more information:
-              </p>
-              <a href="https://krita-artists.org/t/introducing-a-new-project-fast-line-art/94265" target="_blank"
-                rel="noopener noreferrer" class="hero-utility__link">
-                Introducing a New Project: Fast Line Art
-              </a>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <h2 class="main-title">User-made Image Generation Tools in Krita</h2>
-
-            <div class="text-box">
-              <p class="body-text">
-                Because Krita is <strong>open-source software</strong>, developers and artists can create
-    additional tools and extensions that <strong>expand its capabilities</strong>. One example is
-    Krita AI by Acly, which integrates <strong>AI image generation features</strong> directly inside
-    the program and function similarly to Adobe Photoshop's AI features.
-              </p>
-            </div>
-
-            <img v-if="imageUrls.explore10" :src="imageUrls.explore10" alt="Krita AI diffusion interface"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore10)" />
-
-            <div class="text-box">
-              <p class="body-text">
-                This tool allows artists to <strong>generate images from text prompts</strong> or from existing
-    sketches within the Krita workspace with the help of Stable Diffusion AI.
-    Artists can use it to <strong>quickly create concept ideas</strong>, experiment with
-    compositions, or generate <strong>references that help guide their illustrations</strong>.
-              </p>
-            </div>
-
-            <div class="video-box">
-              <p class="video-box__title">
-                Generative AI for Krita - With ControlNet
-              </p>
-
-              <div class="video-box__frame-wrapper">
-                <iframe :src="getYoutubeEmbedUrl('Ly6USRwTHe0')" title="Generative AI for Krita - With ControlNet"
-                  class="video-box__frame" frameborder="0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen></iframe>
-              </div>
-            </div>
-          </section>
-        </section>
-
-        <section id="ai-tools-clip-studio" class="tools-in-clip-studio scroll-mt-28">
-          <section class="content-section">
-            <h2 class="main-title">AI Tools in Clip Studio Paint</h2>
-
-            <div class="text-box">
-              <p class="body-text">
-                Clip Studio Paint includes several <strong>AI-based tools</strong> that assist artists with
-    <strong>coloring, posing, and image adjustments</strong>.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                <strong>AI Colorize</strong><br />
-                The Colorize feature automatically <strong>fills line drawings with colors</strong> using
-    machine learning. Artists can either let the AI generate colors automatically
-    or provide color hints for more control.
-              </p>
-            </div>
-
-            <img v-if="imageUrls.explore11" :src="imageUrls.explore11" alt="Clip Studio Paint AI Colorize"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore11)" />
-
-            <div class="text-box">
-              <p class="body-text">
-                <strong>Pose Scanner</strong><br />
-                Pose Scanner is an AI feature that <strong>extracts poses from photos</strong> and applies them
-    to 3D drawing figures in the program.
-              </p>
-            </div>
-
-            <img v-if="imageUrls.explore12" :src="imageUrls.explore12" alt="Clip Studio Paint Pose Scanner"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore12)" />
-            <img v-if="imageUrls.explore13" :src="imageUrls.explore13" alt="Clip Studio Paint Pose Scanner example"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore13)" />
-
-            <div class="text-box">
-              <p class="body-text">
-                <strong>Smart Smoothing</strong><br />
-                Smart Smoothing is another <strong>AI-assisted tool</strong> that improves image quality by
-    <strong>smoothing jagged edges and reducing noise</strong> when images are enlarged or edited.
-    This feature is also common on other digital software like Adobe Photoshop and
-    IbisPaintX.
-              </p>
-            </div>
-
-            <img v-if="imageUrls.explore14" :src="imageUrls.explore14" alt="Clip Studio Paint Smart Smoothing 1"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore14)" />
-            <img v-if="imageUrls.explore15" :src="imageUrls.explore15" alt="Clip Studio Paint Smart Smoothing 2"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore15)" />
-
-            <div class="text-box">
-              <p class="body-text">
-                Please refer to the link provided for more information:
-              </p>
-              <a href="https://help.clip-studio.com/en-us/manual_en/390_filters/AI_Tools.htm" target="_blank"
-                rel="noopener noreferrer" class="hero-utility__link">
-                Clip Studio Paint Official User Guide
-              </a>
-            </div>
-          </section>
-        </section>
-
-        <!-- 5. ETHICS -->
-        <section id="ethics-ai-art" class="ethics-and-creativity scroll-mt-28">
-          <section class="content-section">
-            <h2 class="main-title">Ethics &amp; Creative Responsibility in AI Art</h2>
-
-            <div class="text-box">
-              <p class="body-text">
-                As AI becomes more common in creative work, it is important for artists and
-    designers to use it <strong>responsibly and ethically</strong>. While AI can be a helpful
-    creative tool, artists should still follow certain principles to ensure
-    <strong>fairness, transparency, and respect</strong> for other artists. These guidelines help
-    maintain <strong>trust within the creative community</strong> and prevent misuse of AI-generated
-    content.
-              </p>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <div class="text-box">
-              <h2 class="main-title">Transparency</h2>
-              <p class="body-text">
-                Creators should clearly explain <strong>when and how AI tools are used</strong>. Being open
-  about AI involvement helps maintain <strong>trust with audiences and collaborators</strong>.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <h2 class="main-title">Credit and Consent</h2>
-              <p class="body-text">
-                Many AI models are trained using <strong>large collections of existing creative works</strong>.
-    This raises concerns about <strong>credit, ownership, and fair compensation</strong> for
-    original creators.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <h2 class="main-title">Avoiding Over-Reliance</h2>
-              <p class="body-text">
-                While AI can make tasks easier, <strong>relying too heavily on it</strong> may reduce creative
-    engagement and skill development. Humans should still <strong>stay actively involved in
-    the creative process</strong>.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <h2 class="main-title">Authenticity</h2>
-              <p class="body-text">
-                Real creative meaning often comes from <strong>human experiences, emotions, and
-    cultural context</strong>. AI should enhance creativity without <strong>replacing the artist's
-    personal voice</strong>.
-              </p>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <div class="text-box">
-              <h2 class="main-title">
-                PHILRECA Digital Poster-Making Contest Controversy
-              </h2>
-              <p class="body-text">
-                One example of these concerns occurred in a <strong>nationwide digital poster-making
-    contest</strong> organized by the Philippine Rural Electric Cooperatives Association
-    (PHILRECA). The competition faced backlash after an <strong>artwork suspected of being
-    AI-generated</strong> was recognized by a local electric cooperative. Many online users
-    questioned the decision because the contest rules required entries to be
-    <strong>original works</strong> and emphasized creativity and <strong>unique design</strong>.
-              </p>
-            </div>
-
-            <img v-if="imageUrls.explore16" :src="imageUrls.explore16" alt="PHILRECA contest artwork"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore16)" />
-            <img v-if="imageUrls.explore17" :src="imageUrls.explore17" alt="Contest winner ceremony"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore17)" />
-
-            <div class="caption-box">
-              <p class="caption">
-                Caption: AI-generated artwork that was recognized in the PHILRECA digital
-                poster-making contest alongside a photo of the contest winner with the judges
-                during the awarding ceremony
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Critics argued that allowing <strong>AI-generated images</strong> in the competition could
-    undermine the <strong>effort and skill of artists</strong> who created their work manually. The
-    incident sparked discussions online about <strong>transparency</strong> and whether
-    AI-generated images should be allowed in art competitions as well as educating
-    others who are not knowledgeable about AI art.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Please refer to the link provided for more information:
-              </p>
-              <a href="https://interaksyon.philstar.com/trends-spotlights/2024/09/13/283483/poster-making-contest-draws-flak-for-recognizing-ai-generated-work/"
-                target="_blank" rel="noopener noreferrer" class="hero-utility__link">
-                Digit-AI art? Poster-making contest draws flak for recognizing 'AI-generated'
-                work
-              </a>
-            </div>
-          </section>
-
-          <section class="content-section">
-            <div class="text-box">
-              <h2 class="main-title">DeviantArt's DreamUp AI Controversy</h2>
-              <p class="body-text">
-                Another example is the controversy surrounding DreamUp, an AI image generator
-                introduced by DeviantArt. Many artists criticized the tool because the AI
-                model Stable Diffusion were trained on large datasets that may have included
-                artworks from users without their clear consent. What's worse was that the
-                feature is enabled by default when introduced and to opt-out of the service
-                will take a few days.
-              </p>
-            </div>
-
-            <img v-if="imageUrls.explore18" :src="imageUrls.explore18" alt="DreamUp AI samples"
-              class="section-image cursor-zoom-in transition duration-300 hover:scale-[1.02]"
-              @click="openImage(imageUrls.explore18)" />
-
-            <div class=" caption-box">
-              <p class="caption">
-                Caption: Sample AI-generated images produced using DreamUp
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                This raised concerns about artist rights, ownership, and whether AI-generated
-                images were benefiting from the styles and labor of human creators. The issue
-                sparked widespread discussions about transparency and how artists' works are
-                used in training AI systems.
-              </p>
-            </div>
-
-            <div class="text-box">
-              <p class="body-text">
-                Please refer to the link provided for more information:
-              </p>
-              <a href="https://www.deviantart.com/team/journal/933537821" target="_blank" rel="noopener noreferrer"
-                class="hero-utility__link">
-                Create AI-Generated Art Fairly with DreamUp by Team on DeviantArt
-              </a>
-            </div>
-          </section>
+          </div>
         </section>
       </div>
+
+      <Teleport to="body">
+        <div
+          v-if="selectedImagePreview"
+          class="image-preview-overlay"
+          role="dialog"
+          aria-modal="true"
+          @click.self="closeImagePreview"
+        >
+          <div class="image-preview-shell">
+            <div class="image-preview-header">
+              <div>
+                <p class="image-preview-label">{{ selectedImagePreview.label }}</p>
+                <h3 class="image-preview-title">{{ selectedImagePreview.title }}</h3>
+              </div>
+
+              <button type="button" class="image-preview-close" @click="closeImagePreview">
+                ×
+              </button>
+            </div>
+
+            <img
+              :src="selectedImagePreview.src"
+              :alt="`${selectedImagePreview.title} ${selectedImagePreview.label}`"
+              class="image-preview-img"
+            />
+          </div>
+        </div>
+      </Teleport>
     </section>
   </MainLayout>
-
 </template>
 
 <style scoped>
-/* .explore-page {
-  background: #e67db8;
-} */
+.explore-page {
+  min-height: 100vh;
+  overflow: hidden;
+}
 
 .explore-page__inner {
-  max-width: 1280px;
+  width: min(100% - 2rem, 1280px);
   margin: 0 auto;
-  padding: clamp(1.5rem, 4vw, 2rem) clamp(1rem, 3vw, 1.25rem) clamp(3rem, 8vw, 6rem);
+  padding: clamp(2rem, 4vw, 3rem) 0 clamp(4rem, 8vw, 7rem);
 }
 
 .page-hero {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.hero-utility {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  background: #ffba2f;
-  border-radius: 16px;
-  padding: 1rem 1.25rem;
-}
-
-.hero-utility--top {
-  margin-bottom: clamp(2rem, 6vw, 3rem);
-  text-align: left;
-}
-
-.hero-utility--bottom {
-  margin-top: clamp(1.5rem, 5vw, 2.5rem);
-  margin-bottom: clamp(3rem, 8vw, 4.5rem);
+  gap: 1.5rem;
   text-align: center;
-  background: transparent;
-  padding: 0;
 }
 
-.hero-utility__link {
-  color: #000000;
+.section-kicker {
+  margin: 0;
+  color: #ffba2f;
+  font-size: 0.95rem;
   font-family: 'Rethink Sans', sans-serif;
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.section-kicker--dark {
+  color: #b36a00;
 }
 
 .hero-title {
+  max-width: 900px;
+  margin: 0 auto;
   color: #f2f2f2;
-  font-size: clamp(2rem, 4vw, 6.25rem);
+  font-size: clamp(2.8rem, 7vw, 6.4rem);
   font-family: 'Helvetica', serif;
   font-weight: 700;
-  line-height: 0.95;
+  line-height: 0.92;
   text-align: center;
-  margin: 0 auto;
-  max-width: 800px;
-}
-
-.main-title {
-  color: #f2f2f2;
-  font-size: clamp(2rem, 4vw, 6.25rem);
-  font-family: 'Helvetica', serif;
-  font-weight: 600;
-  line-height: 1.1;
-  text-align: center;
-}
-
-.caption {
-  color: #f2f2f2;
-  font-size: clamp(1.15rem, 1vw, 1.6rem);
-  font-family: 'Gowun Batang', serif;
-  font-weight: 500;
-  line-height: 1.35;
-  text-align: justify;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
 }
 
 .body-text {
-  color: black;
-  font-size: clamp(1.15rem, 1vw, 1.6rem);
+  margin: 0;
+  color: #111111;
+  font-size: clamp(1.05rem, 1.15vw, 1.3rem);
   font-family: 'Gowun Batang', serif;
   font-weight: 500;
-  line-height: 1.35;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
   text-align: justify;
 }
 
@@ -1175,30 +860,34 @@ function getYoutubeEmbedUrl(videoId: string): string {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(1rem, 1vw, 3.5rem);
-  padding: clamp(2rem, 6vw, 3rem) 0 0;
+  gap: clamp(1.25rem, 2vw, 2rem);
+  padding-top: clamp(2rem, 6vw, 3rem);
+}
+
+.premium-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.28), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 48%),
+    rgba(255, 186, 47, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 28px;
+  box-shadow:
+    0 22px 60px rgba(8, 23, 36, 0.14),
+    0 0 26px rgba(255, 186, 47, 0.12);
+  backdrop-filter: blur(14px);
 }
 
 .text-box {
   width: 100%;
   max-width: 1000px;
-  background: #ffba2f;
-  border-radius: 16px;
   padding: clamp(1.5rem, 5vw, 3rem);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-}
-
-.quote-box {
-  font-weight: 700;
 }
 
 .content-grid {
   display: grid;
-  min-height: 100px;
+  width: 100%;
   max-width: 1000px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.25rem;
@@ -1206,169 +895,619 @@ function getYoutubeEmbedUrl(videoId: string): string {
 
 .learning-header,
 .learning-card {
-  background: #ffba2f;
-  border-radius: 16px;
-  padding: clamp(1.5rem, 5vw, 3rem);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .learning-header {
   grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  min-height: 100px;
-  max-width: 1000px;
-  gap: 1rem;
-  align-items: stretch;
 }
 
 .learning-card {
-  min-height: 100px;
-
-  align-items: center;
-  justify-content: center;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.image-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.learning-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 26px 66px rgba(8, 23, 36, 0.18),
+    0 0 34px rgba(255, 186, 47, 0.2);
+}
+
+.topic-section,
+.tutorial-master-section,
+.tutorial-section {
+  width: 100%;
+  display: grid;
   gap: 1.5rem;
-  padding-top: clamp(2rem, 6vw, 3rem);
+  padding-top: clamp(4rem, 9vw, 7rem);
 }
 
-.section-image {
+.topic-card {
+  padding: clamp(1.5rem, 5vw, 3rem);
+}
+
+.topic-title {
+  max-width: 960px;
+  margin: 0.8rem 0 1.5rem;
+  color: #081724;
+  font-size: clamp(2.2rem, 5vw, 5rem);
+  font-family: 'Helvetica', serif;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.topic-copy {
+  display: grid;
+  gap: 1rem;
+}
+
+.quiz-panel {
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 20px 60px rgba(8, 23, 36, 0.1);
+  backdrop-filter: blur(16px);
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.quiz-title {
+  margin: 0.5rem 0 0;
+  color: #081724;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.quiz-score {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: #081724;
+  color: #ffba2f;
+  padding: 0.6rem 1rem;
+  font-family: 'Rethink Sans', sans-serif;
+  font-weight: 800;
+  box-shadow: 0 10px 24px rgba(8, 23, 36, 0.18);
+}
+
+.quiz-status {
+  border-radius: 18px;
+  background: #fff6df;
+  padding: 1rem;
+  color: #081724;
+  font-family: 'Rethink Sans', sans-serif;
+  font-weight: 700;
+}
+
+.quiz-status--error {
+  background: #ffe4e4;
+  color: #9f1239;
+}
+
+.quiz-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.quiz-card {
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid rgba(8, 23, 36, 0.08);
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 14px 34px rgba(8, 23, 36, 0.07);
+}
+
+.quiz-question {
+  margin: 0 0 1rem;
+  color: #081724;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: clamp(1rem, 1.15vw, 1.2rem);
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.quiz-option {
+  width: 100%;
+  border: 1px solid rgba(8, 23, 36, 0.12);
+  background: #fffaf0;
+  color: #081724;
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.quiz-option:hover {
+  transform: translateY(-1px);
+  border-color: #ffba2f;
+  box-shadow: 0 10px 25px rgba(8, 23, 36, 0.08);
+}
+
+.quiz-option--selected {
+  border-color: #081724;
+  background: #081724;
+  color: #ffffff;
+}
+
+.quiz-option--correct {
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.quiz-option--wrong {
+  border-color: #e11d48;
+  background: #ffe4e6;
+  color: #9f1239;
+}
+
+.quiz-feedback {
+  margin: 0.9rem 0 0;
+  color: #9f1239;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.quiz-feedback--correct {
+  color: #15803d;
+}
+
+.tutorial-master-card {
+  overflow: hidden;
+}
+
+.tutorial-tagline {
+  margin: 0;
+  color: #081724;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tutorial-card {
+  width: 100%;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.28), transparent 28%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 42%),
+    #ffba2f;
+  border-radius: 32px;
+  box-shadow:
+    0 28px 78px rgba(8, 23, 36, 0.18),
+    0 0 34px rgba(255, 186, 47, 0.14);
+}
+
+.tutorial-heading {
+  max-width: 1040px;
+}
+
+.tutorial-title {
+  max-width: 1080px;
+}
+
+.video-shell {
+  width: 100%;
+  margin-top: 1.5rem;
+  overflow: hidden;
+  border-radius: 28px;
+  background: #081724;
+  box-shadow:
+    0 24px 64px rgba(8, 23, 36, 0.3),
+    0 0 28px rgba(255, 186, 47, 0.18);
+}
+
+.tutorial-video {
   width: 100%;
   display: block;
-  border-radius: 18px;
-  object-fit: cover;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  background: #f3f3f3;
+  aspect-ratio: 16 / 9;
+  background: #081724;
 }
 
-.caption-box {
-  width: 100%;
-  max-width: 1100px;
-  text-align: justify;
-}
-
-.status-box {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto 2rem;
-  background: #ffba2f;
-  padding: 1rem 1.25rem;
-  text-align: center;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+.media-placeholder,
+.image-fallback {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(8, 23, 36, 0.94);
+  color: #ffba2f;
   font-family: 'Rethink Sans', sans-serif;
-}
-
-.status-box--warning {
-  background: #ffba2f;
-  color: #000000;
-}
-
-.hero-utility__button {
-  border: none;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  text-align: left;
-}
-
-.video-box {
-  width: 100%;
-  max-width: 1000px;
-  background: #ffba2f;
-  border-radius: 18px;
-  padding: clamp(1.25rem, 4vw, 2rem);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-}
-
-.video-box__title {
-  margin: 0 0 1rem;
-  color: #000000;
-  font-family: 'Rethink Sans', sans-serif;
-  font-size: clamp(1rem, 2vw, 1.25rem);
   font-weight: 700;
   text-align: center;
 }
 
-.video-box__frame-wrapper {
+.guide-box {
+  margin-top: 1.5rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  box-shadow: 0 18px 48px rgba(8, 23, 36, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+.guide-title {
+  margin: 0 0 1rem;
+  color: #081724;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.steps-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.step-card {
+  padding: 1rem;
+  border-radius: 20px;
+  background: #fffaf0;
+  border: 1px solid rgba(8, 23, 36, 0.08);
+  box-shadow: 0 10px 26px rgba(8, 23, 36, 0.06);
+}
+
+.step-title {
+  margin: 0 0 0.35rem;
+  color: #081724;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.step-description {
+  text-align: left;
+}
+
+.samples-section {
+  margin-top: 1.5rem;
+}
+
+.samples-header {
+  margin-bottom: 1rem;
+}
+
+.sample-list {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.sample-card {
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border-radius: 30px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 250, 240, 0.88));
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow: 0 22px 58px rgba(8, 23, 36, 0.12);
+}
+
+.sample-title {
+  margin: 0 0 1rem;
+  color: #081724;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 800;
+}
+
+.before-after-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
+}
+
+.comparison-image-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at top, rgba(255, 186, 47, 0.12), transparent 30%),
+    #081724;
+  box-shadow:
+    0 20px 54px rgba(8, 23, 36, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.comparison-label {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  background: rgba(8, 23, 36, 0.96);
+  color: #ffba2f;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.comparison-image-button {
   position: relative;
   width: 100%;
-  padding-top: 56.25%;
+  border: none;
+  padding: 0;
+  background: #0b1724;
+  cursor: zoom-in;
   overflow: hidden;
-  border-radius: 16px;
-  background: #000000;
 }
 
-.video-box__frame {
+.comparison-image-button::after {
+  content: '';
   position: absolute;
   inset: 0;
+  background:
+    linear-gradient(180deg, transparent 52%, rgba(8, 23, 36, 0.62)),
+    radial-gradient(circle at center, rgba(255, 186, 47, 0.12), transparent 48%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.comparison-image-button:hover::after {
+  opacity: 1;
+}
+
+.comparison-image-button:hover .comparison-image {
+  transform: scale(1.025);
+}
+
+.comparison-image {
   width: 100%;
-  height: 100%;
+  height: clamp(320px, 34vw, 620px);
+  display: block;
+  object-fit: contain;
+  background: #0b1724;
+  transition: transform 0.3s ease;
 }
 
-.learning-title {
-  font-weight: 800;
-  text-align: center;
-}
-
-.thesis-bullet-list {
-  grid-column: 1 / -1;
-  width: 100%;
-  max-width: 1000px;
-  margin: 0;
-  padding: clamp(1.5rem, 5vw, 3rem) clamp(2.5rem, 6vw, 4.5rem);
-  background: #ffba2f;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  color: #000000;
-  font-family: 'Gowun Batang', serif;
-  font-size: clamp(1.15rem, 1vw, 1.6rem);
-  font-weight: 500;
-  line-height: 1.5;
-  list-style-type: disc;
-  list-style-position: outside;
-}
-
-.thesis-bullet-list li {
-  display: list-item;
-  margin-bottom: 0.8rem;
-  padding-left: 0.35rem;
-}
-
-.thesis-bullet-list li::marker {
+.image-view-badge {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 2;
+  border-radius: 999px;
+  background: rgba(255, 186, 47, 0.95);
   color: #081724;
-  font-size: 1.1em;
+  padding: 0.55rem 0.85rem;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  box-shadow: 0 12px 28px rgba(8, 23, 36, 0.28);
 }
 
-.section-image {
-  cursor: zoom-in;
-  touch-action: manipulation;
+.media-error-note {
+  margin-top: 1rem;
+  border-radius: 18px;
+  background: rgba(255, 228, 230, 0.9);
+  color: #9f1239;
+  padding: 1rem;
+  font-family: 'Rethink Sans', sans-serif;
+  font-weight: 700;
 }
 
-@media (max-width: 768px) {
-  .video-modal {
-    border-radius: 18px;
-    padding: 1rem 1rem 0.9rem;
+.image-preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2rem);
+  background: rgba(3, 10, 18, 0.86);
+  backdrop-filter: blur(16px);
+}
+
+.image-preview-shell {
+  width: min(100%, 1280px);
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 30px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent),
+    #081724;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+}
+
+.image-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.image-preview-label {
+  margin: 0 0 0.25rem;
+  color: #ffba2f;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.image-preview-title {
+  margin: 0;
+  color: #ffffff;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 800;
+}
+
+.image-preview-close {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.image-preview-close:hover {
+  background: rgba(255, 186, 47, 0.95);
+  color: #081724;
+  transform: rotate(90deg);
+}
+
+.image-preview-img {
+  width: 100%;
+  max-height: calc(92vh - 86px);
+  display: block;
+  object-fit: contain;
+  background: #050b12;
+}
+
+@media (max-width: 1024px) {
+  .content-grid,
+  .steps-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .video-modal__close {
-    top: 0.5rem;
-    right: 0.75rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .content-grid {
+  .before-after-grid {
     grid-template-columns: 1fr;
   }
 
-  .hero-utility {
-    border-radius: 12px;
+  .comparison-image {
+    height: auto;
+    max-height: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .explore-page__inner {
+    width: min(100% - 1.5rem, 1280px);
+    padding-top: 1.5rem;
+  }
+
+  .content-grid,
+  .steps-list,
+  .before-after-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title,
+  .topic-title {
+    line-height: 1.05;
+  }
+
+  .body-text {
+    text-align: left;
+  }
+
+  .quiz-header {
+    flex-direction: column;
+  }
+
+  .quiz-score {
+    align-self: flex-start;
+  }
+
+  .topic-card,
+  .tutorial-card,
+  .sample-card,
+  .guide-box,
+  .quiz-panel {
+    border-radius: 22px;
+  }
+
+  .comparison-image {
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+  }
+
+  .tutorial-video {
+    aspect-ratio: 16 / 9;
+  }
+
+  .image-view-badge {
+    right: 0.75rem;
+    bottom: 0.75rem;
+    font-size: 0.72rem;
+  }
+
+  .image-preview-shell {
+    border-radius: 22px;
+  }
+
+  .image-preview-header {
+    padding: 0.85rem;
+  }
+
+  .image-preview-close {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .explore-page__inner {
+    width: min(100% - 4rem, 1440px);
+  }
+
+  .comparison-image {
+    height: clamp(420px, 30vw, 680px);
+  }
+
+  .tutorial-video {
+    max-height: 760px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .explore-page__inner {
+    width: min(100% - 6rem, 1680px);
+  }
+
+  .topic-title {
+    max-width: 1200px;
+  }
+
+  .comparison-image {
+    height: clamp(500px, 28vw, 760px);
+  }
+
+  .before-after-grid {
+    gap: 2rem;
   }
 }
 </style>
