@@ -5,28 +5,17 @@
     </RouterLink>
 
     <div class="nav-dropdown" @keydown.esc="closeDropdown">
-      <button
-        type="button"
-        :class="['nav-link nav-dropdown__button', { active: isExploreActive }]"
-        @click.stop="handleExploreClick"
-      >
+      <button type="button" :class="['nav-link nav-dropdown__button', { active: isExploreActive }]"
+        @click.stop="handleExploreClick">
         Explore
-        <span
-          v-if="isExploreActive"
-          :class="['nav-dropdown__chevron', { open: isDropdownOpen }]"
-        >
+        <span v-if="isExploreActive" :class="['nav-dropdown__chevron', { open: isDropdownOpen }]">
           ⌄
         </span>
       </button>
 
       <div v-if="isExploreActive && isDropdownOpen" class="nav-dropdown__menu">
-        <button
-          v-for="section in sections"
-          :key="section.id"
-          type="button"
-          class="nav-dropdown__item"
-          @click="goToExploreSection(section.id)"
-        >
+        <button v-for="section in sections" :key="section.id" type="button" class="nav-dropdown__item"
+          @click="goToExploreSection(section.id)">
           {{ section.label }}
         </button>
       </div>
@@ -152,6 +141,8 @@ onUnmounted(() => {
 }
 
 .nav-link {
+  position: relative;
+  isolation: isolate;
   color: #ffffff;
   font-family: 'Rethink Sans', sans-serif;
   font-size: 0.95rem;
@@ -159,30 +150,81 @@ onUnmounted(() => {
   padding: 0.58rem 1rem;
   border-radius: 999px;
   cursor: pointer;
+  overflow: hidden;
+  transform: translateY(0) scale(1);
   transition:
-    background 0.25s ease,
     color 0.25s ease,
     transform 0.25s ease,
-    box-shadow 0.25s ease;
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgba(255, 186, 47, 0.16);
+  opacity: 0;
+  transform: scale(0.82);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0.28rem;
+  width: 34%;
+  height: 2px;
+  border-radius: 999px;
+  background: #ffba2f;
+  opacity: 0;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 .nav-link:hover {
-  background: rgba(255, 186, 47, 0.16);
   color: #ffba2f;
   transform: translateY(-1px);
+  box-shadow: none;
+}
+
+.nav-link:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.nav-link:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scaleX(1);
 }
 
 .nav-link.active {
   background: #ffba2f;
   color: #081724;
   font-weight: 800;
-  box-shadow: 0 10px 28px rgba(255, 186, 47, 0.32);
+  box-shadow:
+    0 10px 28px rgba(255, 186, 47, 0.32),
+    0 0 18px rgba(255, 186, 47, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .nav-link.active:hover {
   background: #ffba2f;
   color: #081724;
-  transform: none;
+  transform: translateY(-1px) scale(1.02);
+}
+
+.nav-link.active::before,
+.nav-link.active::after {
+  display: none;
 }
 
 .nav-dropdown {
@@ -261,6 +303,23 @@ onUnmounted(() => {
   to {
     opacity: 1;
     transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@keyframes activePulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 10px 28px rgba(255, 186, 47, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  50% {
+    box-shadow:
+      0 12px 34px rgba(255, 186, 47, 0.46),
+      0 0 18px rgba(255, 186, 47, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.42);
   }
 }
 

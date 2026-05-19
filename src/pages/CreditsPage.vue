@@ -7,36 +7,36 @@ const tools = [
     description: 'AI generative fill and image editing',
     icon: '/images/ps.png',
   },
-  {
-    name: 'Stable Diffusion',
-    description: 'Text-to-image concept exploration',
-    icon: '/images/diffusion.png',
-  },
-  {
-    name: 'Krita',
-    description: 'AI-assisted drawing',
-    icon: '/images/krita.png',
-  },
-  {
-    name: 'ChatGPT Image',
-    description: 'Idea exploration',
-    icon: '/images/chatgpt.png',
-  },
-  {
-    name: 'DALL·E',
-    description: 'Concept image generation',
-    icon: '/images/dalle.png',
-  },
-  {
-    name: 'Canva',
-    description: 'Layout & design',
-    icon: '/images/canva.png',
-  },
-  {
-    name: 'Coolors',
-    description: 'Color palette generation',
-    icon: '/images/coolors.png',
-  },
+  // {
+  //   name: 'Stable Diffusion',
+  //   description: 'Text-to-image concept exploration',
+  //   icon: '/images/diffusion.png',
+  // },
+  // {
+  //   name: 'Krita',
+  //   description: 'AI-assisted drawing',
+  //   icon: '/images/krita.png',
+  // },
+  // {
+  //   name: 'ChatGPT Image',
+  //   description: 'Idea exploration',
+  //   icon: '/images/chatgpt.png',
+  // },
+  // {
+  //   name: 'DALL·E',
+  //   description: 'Concept image generation',
+  //   icon: '/images/dalle.png',
+  // },
+  // {
+  //   name: 'Canva',
+  //   description: 'Layout & design',
+  //   icon: '/images/canva.png',
+  // },
+  // {
+  //   name: 'Coolors',
+  //   description: 'Color palette generation',
+  //   icon: '/images/coolors.png',
+  // },
   {
     name: 'Figma',
     description: 'UI/UX design',
@@ -72,7 +72,7 @@ const tools = [
             </p>
           </div>
 
-          <section class="tools-grid fade-up fade-delay-3">
+          <section class="tools-section fade-up fade-delay-3">
             <div class="tools-header">
               <p class="body-text">
                 These tools were used for research, design support, visual exploration,
@@ -81,16 +81,14 @@ const tools = [
               <p class="tools-title">AI Tools Referenced</p>
             </div>
 
-            <div v-for="(tool, index) in tools" :key="tool.name" class="tool-card">
-              <span class="card-number">
-                {{ String(index + 1).padStart(2, '0') }}
-              </span>
+            <div class="tools-grid">
+              <div v-for="tool in tools" :key="tool.name" class="tool-card">
+                <img :src="tool.icon" class="tool-icon" />
 
-              <img :src="tool.icon" class="tool-icon" />
+                <h3 class="tool-name">{{ tool.name }}</h3>
 
-              <h3 class="tool-name">{{ tool.name }}</h3>
-
-              <p class="tool-role">{{ tool.description }}</p>
+                <p class="tool-role">{{ tool.description }}</p>
+              </div>
             </div>
           </section>
 
@@ -180,6 +178,10 @@ const tools = [
 }
 
 .tool-card {
+  align-items: center;
+}
+
+.tool-card {
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
@@ -238,13 +240,24 @@ const tools = [
   display: grid;
   width: 100%;
   max-width: 1100px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(240px, 280px));
+  justify-content: center;
   gap: 1.4rem;
 }
 
 .tools-header {
   grid-column: 1 / -1;
+  width: 100%;
+  max-width: 1100px;
   padding: clamp(1.4rem, 3vw, 2rem);
+}
+
+.tools-section {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
 }
 
 .tools-title {
@@ -384,7 +397,7 @@ const tools = [
   background: rgba(255, 255, 255, 0.25);
   padding: 0.6rem;
   border-radius: 12px;
-  align-self: flex-start;
+  align-self: center;
 
 }
 

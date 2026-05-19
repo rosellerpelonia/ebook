@@ -68,10 +68,11 @@ const topics: ExploreTopic[] = [
     title: 'Theoretical Foundation of Brand Identity and Strategic Positioning',
     iconKey: 'brandIdentity',
     paragraphs: [
-      'Brand identity is far more than just a logo, it represents the personality, values, and emotions of a brand. While AI can generate complex visuals in seconds, it fundamentally lacks Intentionality, the profound "why" behind the art. Strategic positioning is the process of carving out a unique space in the audience’s mind. This requires Empathy, a uniquely human ability to share the feelings of a target market, which remains the definitive boundary between robotic output and soulful branding.',
-      'According to Mazzone & Elgammal (2019), while AI can simulate a wide array of artistic styles through style transfer, the human creator remains the sole provider of intentionality or the true message. The Human Voice serves as the authoritative source of meaning amidst algorithms.',
-      'Furthermore, Margaret Boden (2004), in her theory of creativity, notes that AI excels at combinational creativity, but only humans possess the capacity for transformational creativity, the ability to break and remake the rules of art to create something with lasting cultural significance.',
-      'In the realm of marketing, research by Heding et al. (2020) on the Brand Identity Trajectory confirms that a successful brand must possess an inner core or soul. This soul is derived from lived human experience rather than statistical probability. AI serves as a mirror of historical data, but the human designer shapes the future by determining which design truly aligns with a brand’s higher purpose and evolving identity.',
+      'Brand identity is far more than just a logo, it represents the personality, values, and emotions of a brand. While AI can generate complex visuals in seconds, it fundamentally lacks <span class="highlight-term">Intentionality</span>, the profound "why" behind the art. Strategic positioning is the process of carving out a unique space in the audience’s mind. This requires <span class="highlight-term">Empathy</span>, a uniquely human ability to share the feelings of a target market, which remains the definitive boundary between robotic output and soulful branding.',
+
+      'According to <span class="highlight-researcher">Mazzone & Elgammal (2019)</span>, while AI can simulate a wide array of artistic styles through style transfer, the human creator remains the sole provider of intentionality or the true message. The <span class="highlight-term">Human Voice</span> serves as the authoritative source of meaning amidst algorithms. Furthermore, <span class="highlight-researcher">Margaret Boden (2004)</span>, in her theory of creativity, notes that AI excels at combinational creativity, but only humans possess the capacity for transformational creativity, the ability to break and remake the rules of art to create something with lasting cultural significance.',
+
+      'In the realm of marketing, research by <span class="highlight-researcher">Heding et al. (2020)</span> on the <span class="highlight-case">Brand Identity Trajectory</span> confirms that a successful brand must possess an inner core or soul. This soul is derived from lived human experience rather than statistical probability. AI serves as a mirror of historical data, but the human designer shapes the future by determining which design truly aligns with a brand’s higher purpose and evolving identity.',
     ],
   },
   {
@@ -80,9 +81,10 @@ const topics: ExploreTopic[] = [
     title: 'AI Workflow and Semantic Collaboration',
     iconKey: 'aiWorkflow',
     paragraphs: [
-      'In a modern creative workflow, AI acts as a support tool by rapidly generating ideas and variations. However, for a brand to remain authentic, the process must begin and end with human intervention. The artist acts as a Semantic Filter, choosing only the AI outputs that resonate with human experience and cultural nuance. This Augmented Creativity speeds up experimentation while keeping the designer in total control of the narrative.',
-      'Anantrasirichai & Bull (2022) emphasize that in the process of co-creation, humans provide the semantics or meaning to the raw data produced by AI. In this light, AI is an extension of the artist’s hand, much like a digital brush, but with higher computational power.',
-      'According to Lubart’s (2005) study on Human-Computer Interaction, creativity is an iterative process. For every iteration an AI produces, a human must evaluate it against emotional and social standards.',
+      'In a modern creative workflow, AI acts as a support tool by rapidly generating ideas and variations. However, for a brand to remain authentic, the process must begin and end with human intervention. The artist acts as a <span class="highlight-term">Semantic Filter</span>, choosing only the AI outputs that resonate with human experience and cultural nuance. This <span class="highlight-term">Augmented Creativity</span> speeds up experimentation while keeping the designer in total control of the narrative.',
+
+      '<span class="highlight-researcher">Anantrasirichai & Bull (2022)</span> emphasize that in the process of co-creation, humans provide the semantics or meaning to the raw data produced by AI. In this light, AI is an extension of the artist’s hand, much like a digital brush, but with higher computational power. According to <span class="highlight-researcher">Lubart’s (2005)</span> study on <span class="highlight-case">Human-Computer Interaction</span>, creativity is an iterative process. For every iteration an AI produces, a human must evaluate it against emotional and social standards.',
+
       'Without this human filter, AI output remains noise without context. The true value of design emerges only when a human decides that a specific color palette or shape is right for the specific emotion being communicated to the audience.',
     ],
   },
@@ -92,10 +94,11 @@ const topics: ExploreTopic[] = [
     title: 'Case Studies and Ethical Co-Creation',
     iconKey: 'ethicalCoCreation',
     paragraphs: [
-      'The use of case studies and thorough documentation, such as screen recordings and version histories, serves as Proof of Process. This documentation proves that the final design underwent thoughtful human refinement and was not a mere one-click generation.',
-      'Regarding ethics, designers bear the responsibility of ensuring that AI is not used to plagiarize existing works or propagate misleading content fueled by Algorithmic Bias.',
-      'Ethical Co-Creation requires a high degree of accountability. According to the journal Ethics and Information Technology, the artist is responsible for ensuring the output is authentic and does not infringe upon the voices of other creators.',
-      'Furthermore, Jobin et al. (2019), in their analysis of the global landscape of AI ethics guidelines, argue that non-maleficence and justice must be integrated into creative workflows. This means designers must be vigilant against biases that AI might have learned from flawed datasets. Being an ethical co-creator means using technology to elevate communication while remaining committed to truth and originality.',
+      'The use of <span class="highlight-case">case studies</span> and thorough documentation, such as screen recordings and version histories, serves as <span class="highlight-term">Proof of Process</span>. This documentation proves that the final design underwent thoughtful human refinement and was not a mere one-click generation.',
+
+      'Regarding ethics, designers bear the responsibility of ensuring that AI is not used to plagiarize existing works or propagate misleading content fueled by <span class="highlight-term">Algorithmic Bias</span>. Ethical Co-Creation requires a high degree of accountability. According to the journal <span class="highlight-researcher">Ethics and Information Technology</span>, the artist is responsible for ensuring the output is authentic and does not infringe upon the voices of other creators.',
+
+      'Furthermore, <span class="highlight-researcher">Jobin et al. (2019)</span>, in their analysis of the global landscape of AI ethics guidelines, argue that <span class="highlight-term">non-maleficence</span> and <span class="highlight-term">justice</span> must be integrated into creative workflows. This means designers must be vigilant against biases that AI might have learned from flawed datasets. Being an ethical co-creator means using technology to elevate communication while remaining committed to truth and originality.',
     ],
   },
 ];
@@ -397,6 +400,24 @@ const selectedAnswers = reactive<Record<string, string>>({});
 const isLoadingQuiz = ref(true);
 const quizError = ref('');
 
+const startedQuizTopics = reactive<Record<TopicId, boolean>>({
+  'brand-identity': false,
+  'ai-workflow': false,
+  'ethical-co-creation': false,
+});
+
+const finishedQuizTopics = reactive<Record<TopicId, boolean>>({
+  'brand-identity': false,
+  'ai-workflow': false,
+  'ethical-co-creation': false,
+});
+
+const activeQuestionIndex = reactive<Record<TopicId, number>>({
+  'brand-identity': 0,
+  'ai-workflow': 0,
+  'ethical-co-creation': 0,
+});
+
 async function loadModuleIcons() {
   moduleIconErrors.value = [];
 
@@ -468,6 +489,75 @@ async function loadExploreQuizQuestions() {
 
 function getTopicQuestions(topicId: TopicId) {
   return quizQuestions.value.filter((question) => question.topicId === topicId);
+}
+
+function startQuiz(topicId: TopicId) {
+  startedQuizTopics[topicId] = true;
+  finishedQuizTopics[topicId] = false;
+  activeQuestionIndex[topicId] = 0;
+}
+
+function restartQuiz(topicId: TopicId) {
+  getTopicQuestions(topicId).forEach((question) => {
+    delete selectedAnswers[question.id];
+  });
+
+  startedQuizTopics[topicId] = false;
+  finishedQuizTopics[topicId] = false;
+  activeQuestionIndex[topicId] = 0;
+}
+
+function getActiveQuestion(topicId: TopicId) {
+  return getTopicQuestions(topicId)[activeQuestionIndex[topicId]];
+}
+
+function goToNextQuestion(topicId: TopicId) {
+  const questions = getTopicQuestions(topicId);
+
+  if (activeQuestionIndex[topicId] < questions.length - 1) {
+    activeQuestionIndex[topicId] += 1;
+    return;
+  }
+
+  finishedQuizTopics[topicId] = true;
+}
+
+function goToPreviousQuestion(topicId: TopicId) {
+  if (activeQuestionIndex[topicId] > 0) {
+    activeQuestionIndex[topicId] -= 1;
+  }
+}
+
+function getTopicAnsweredCount(topicId: TopicId) {
+  return getTopicQuestions(topicId).filter((question) => selectedAnswers[question.id]).length;
+}
+
+function getTopicCorrectCount(topicId: TopicId) {
+  return getTopicQuestions(topicId).filter(
+    (question) => selectedAnswers[question.id] === question.answer
+  ).length;
+}
+
+function getQuizResultTitle(topicId: TopicId) {
+  return getTopicCorrectCount(topicId) === getTopicQuestions(topicId).length
+    ? 'Excellent Work'
+    : 'Quiz Completed';
+}
+
+function getQuizResultMessage(topicId: TopicId) {
+  return getTopicCorrectCount(topicId) === getTopicQuestions(topicId).length
+    ? 'Great job! You understood this topic very well.'
+    : 'Review the topic section above, then retake the quiz to improve your score.';
+}
+
+function getQuizProgressWidth(topicId: TopicId) {
+  const questions = getTopicQuestions(topicId);
+
+  if (!questions.length) {
+    return '0%';
+  }
+
+  return `${((activeQuestionIndex[topicId] + 1) / questions.length) * 100}%`;
 }
 
 function selectAnswer(questionId: string, option: string) {
@@ -587,9 +677,7 @@ const totalCorrect = computed(() => {
             </div>
 
             <div class="topic-copy">
-              <p v-for="paragraph in topic.paragraphs" :key="paragraph" class="body-text">
-                {{ paragraph }}
-              </p>
+              <p v-for="paragraph in topic.paragraphs" :key="paragraph" class="body-text" v-html="paragraph" />
             </div>
           </div>
 
@@ -601,15 +689,15 @@ const totalCorrect = computed(() => {
                 </div>
 
                 <div>
-                  <p class="section-kicker section-kicker--dark">Topic Quiz</p>
+                  <p class="section-kicker section-kicker--dark">check your knowledge</p>
                   <h3 class="quiz-title">
-                    {{ topic.title }} Quiz Questions
+                    {{ topic.title }} Quiz
                   </h3>
                 </div>
               </div>
 
-              <div class="quiz-score">
-                {{ totalCorrect }} / {{ totalAnswered }}
+              <div v-if="startedQuizTopics[topic.id] && !finishedQuizTopics[topic.id]" class="quiz-score">
+                {{ getTopicCorrectCount(topic.id) }} / {{ getTopicQuestions(topic.id).length }}
               </div>
             </div>
 
@@ -625,26 +713,99 @@ const totalCorrect = computed(() => {
               No quiz questions added yet.
             </div>
 
-            <div v-else class="quiz-list">
-              <article v-for="question in getTopicQuestions(topic.id)" :key="question.id" class="quiz-card">
+            <div v-else class="quiz-slider">
+              <div v-if="!startedQuizTopics[topic.id]" class="quiz-start-card">
+                <p class="quiz-start-kicker">Ready to test your knowledge?</p>
+
+                <h4 class="quiz-start-title">
+                  {{ topic.title }} Quiz
+                </h4>
+
+                <p class="quiz-start-description">
+                  Answer each question one at a time. Click start when you are ready.
+                </p>
+
+                <button type="button" class="quiz-start-button" @click="startQuiz(topic.id)">
+                  Start Quiz
+                </button>
+              </div>
+
+              <div v-else-if="finishedQuizTopics[topic.id]" class="quiz-result-card">
+                <p class="quiz-start-kicker">
+                  {{ getQuizResultTitle(topic.id) }}
+                </p>
+
+                <h4 class="quiz-start-title">
+                  Your Score: {{ getTopicCorrectCount(topic.id) }} / {{ getTopicQuestions(topic.id).length }}
+                </h4>
+
+                <p class="quiz-start-description">
+                  {{ getQuizResultMessage(topic.id) }}
+                </p>
+
+                <button type="button" class="quiz-start-button" @click="restartQuiz(topic.id)">
+                  Retake Quiz
+                </button>
+              </div>
+
+              <article v-else-if="getActiveQuestion(topic.id)" class="quiz-card quiz-card--single">
+                <div class="quiz-progress-row">
+                  <span class="quiz-progress-pill">
+                    Question {{ activeQuestionIndex[topic.id] + 1 }} of {{ getTopicQuestions(topic.id).length }}
+                  </span>
+
+                  <span class="quiz-progress-pill quiz-progress-pill--score">
+                    {{ getTopicCorrectCount(topic.id) }} correct
+                  </span>
+                </div>
+
+                <div class="quiz-progress-track">
+                  <div class="quiz-progress-fill" :style="{ width: getQuizProgressWidth(topic.id) }" />
+                </div>
+
                 <p class="quiz-question">
-                  {{ question.order }}. {{ question.question }}
+                  {{ getActiveQuestion(topic.id).order }}. {{ getActiveQuestion(topic.id).question }}
                 </p>
 
                 <div class="quiz-options">
-                  <button v-for="option in question.options" :key="option" type="button" class="quiz-option" :class="{
-                    'quiz-option--selected': selectedAnswers[question.id] === option,
-                    'quiz-option--correct': selectedAnswers[question.id] === option && option === question.answer,
-                    'quiz-option--wrong': selectedAnswers[question.id] === option && option !== question.answer,
-                  }" @click="selectAnswer(question.id, option)">
+                  <button v-for="option in getActiveQuestion(topic.id).options" :key="option" type="button"
+                    class="quiz-option" :class="{
+                      'quiz-option--selected': selectedAnswers[getActiveQuestion(topic.id).id] === option,
+                      'quiz-option--correct':
+                        selectedAnswers[getActiveQuestion(topic.id).id] === option &&
+                        option === getActiveQuestion(topic.id).answer,
+                      'quiz-option--wrong':
+                        selectedAnswers[getActiveQuestion(topic.id).id] === option &&
+                        option !== getActiveQuestion(topic.id).answer,
+                    }" @click="selectAnswer(getActiveQuestion(topic.id).id, option)">
                     {{ option }}
                   </button>
                 </div>
 
-                <p v-if="selectedAnswers[question.id]" class="quiz-feedback"
-                  :class="{ 'quiz-feedback--correct': isCorrect(question) }">
-                  {{ isCorrect(question) ? 'Correct answer.' : `Correct answer: ${question.answer}` }}
+                <p v-if="selectedAnswers[getActiveQuestion(topic.id).id]" class="quiz-feedback"
+                  :class="{ 'quiz-feedback--correct': isCorrect(getActiveQuestion(topic.id)) }">
+                  {{
+                    isCorrect(getActiveQuestion(topic.id))
+                      ? 'Correct answer.'
+                      : `Correct answer: ${getActiveQuestion(topic.id).answer}`
+                  }}
                 </p>
+
+                <div class="quiz-navigation">
+                  <button type="button" class="quiz-nav-button quiz-nav-button--secondary"
+                    :disabled="activeQuestionIndex[topic.id] === 0" @click="goToPreviousQuestion(topic.id)">
+                    Previous
+                  </button>
+
+                  <button type="button" class="quiz-nav-button"
+                    :disabled="!selectedAnswers[getActiveQuestion(topic.id).id]" @click="goToNextQuestion(topic.id)">
+                    {{
+                      activeQuestionIndex[topic.id] === getTopicQuestions(topic.id).length - 1
+                        ? 'Finish Quiz'
+                        : 'Next Question'
+                    }}
+                  </button>
+                </div>
               </article>
             </div>
           </div>
@@ -838,9 +999,11 @@ const totalCorrect = computed(() => {
   font-size: clamp(1.05rem, 1.15vw, 1.3rem);
   font-family: 'Gowun Batang', serif;
   font-weight: 500;
-  line-height: 1.8;
+  line-height: 1.75;
   letter-spacing: 0.01em;
   text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 
 .content-section {
@@ -908,14 +1071,16 @@ const totalCorrect = computed(() => {
   width: 100%;
   display: grid;
   gap: 1.5rem;
-  padding-top: clamp(4rem, 9vw, 7rem);
+  padding-top: clamp(3rem, 7vw, 5rem);
 }
 
 .topic-heading-row {
   display: flex;
-  align-items: flex-start;
-  gap: clamp(1rem, 2.5vw, 1.75rem);
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin-bottom: 1.5rem;
 }
+
 
 .topic-heading-copy {
   min-width: 0;
@@ -923,19 +1088,19 @@ const totalCorrect = computed(() => {
 }
 
 .topic-icon-shell {
-  width: clamp(76px, 9vw, 124px);
-  height: clamp(76px, 9vw, 124px);
+  width: clamp(72px, 7vw, 104px);
+  height: clamp(72px, 7vw, 104px);
   flex: 0 0 auto;
   display: grid;
   place-items: center;
   overflow: hidden;
-  border-radius: 26px;
+  border-radius: 24px;
   background:
     radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.95), rgba(255, 250, 240, 0.72)),
     rgba(255, 255, 255, 0.58);
   border: 1px solid rgba(255, 255, 255, 0.68);
   box-shadow:
-    0 18px 42px rgba(8, 23, 36, 0.14),
+    0 16px 34px rgba(8, 23, 36, 0.12),
     inset 0 0 0 1px rgba(255, 255, 255, 0.38);
 }
 
@@ -945,6 +1110,32 @@ const totalCorrect = computed(() => {
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 10px 16px rgba(8, 23, 36, 0.16));
+}
+
+.topic-icon-shell {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.topic-icon {
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+
+.topic-card:hover .topic-icon-shell {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 20px 44px rgba(8, 23, 36, 0.16),
+    0 0 22px rgba(255, 255, 255, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.42);
+}
+
+.topic-card:hover .topic-icon {
+  transform: scale(1.05);
+  filter: drop-shadow(0 12px 18px rgba(8, 23, 36, 0.18));
 }
 
 .quiz-heading-row {
@@ -981,27 +1172,35 @@ const totalCorrect = computed(() => {
 }
 
 .topic-title {
-  max-width: 960px;
-  margin: 0.8rem 0 1.5rem;
+  max-width: 1120px;
+  margin: 0.35rem 0 0;
   color: #081724;
-  font-size: clamp(1rem, 3vw, 2.8rem);
+  font-size: clamp(1.9rem, 2.7vw, 2.65rem);
   font-family: 'Helvetica', serif;
-  font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.topic-heading-copy .section-kicker {
+  margin-bottom: 0.45rem;
 }
 
 .topic-copy {
   display: grid;
-  gap: 1rem;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
 }
 
 .quiz-panel {
   padding: clamp(1.25rem, 4vw, 2rem);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: 28px;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 20px 60px rgba(8, 23, 36, 0.1);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 250, 240, 0.92));
+  box-shadow:
+    0 24px 70px rgba(8, 23, 36, 0.16),
+    0 0 30px rgba(255, 186, 47, 0.08);
   backdrop-filter: blur(16px);
 }
 
@@ -1103,9 +1302,9 @@ const totalCorrect = computed(() => {
 }
 
 .quiz-option--correct {
-  border-color: #16a34a;
-  background: #dcfce7;
-  color: #166534;
+  border-color: #22c55e;
+  background: #e8fceF;
+  color: #14532d;
 }
 
 .quiz-option--wrong {
@@ -1366,6 +1565,161 @@ const totalCorrect = computed(() => {
   font-weight: 700;
 }
 
+.quiz-slider {
+  width: 100%;
+}
+
+.quiz-start-card,
+.quiz-result-card {
+  min-height: 280px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: 26px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at center, rgba(255, 186, 47, 0.18), transparent 42%),
+    #ffffff;
+  border: 1px solid rgba(8, 23, 36, 0.08);
+  box-shadow: 0 18px 46px rgba(8, 23, 36, 0.08);
+}
+
+.quiz-result-card::before {
+  content: '✓';
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 0.75rem;
+  border-radius: 999px;
+  background: #081724;
+  color: #ffba2f;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  box-shadow: 0 14px 30px rgba(8, 23, 36, 0.18);
+}
+
+.quiz-start-kicker {
+  margin: 0;
+  color: #b36a00;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.quiz-start-title {
+  margin: 0.75rem 0;
+  color: #081724;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.quiz-start-description {
+  max-width: 560px;
+  margin: 0 auto 1.5rem;
+  color: rgba(8, 23, 36, 0.72);
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.quiz-start-button,
+.quiz-nav-button {
+  border: none;
+  border-radius: 999px;
+  background: #081724;
+  color: #ffba2f;
+  padding: 0.9rem 1.4rem;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+  box-shadow: 0 14px 30px rgba(8, 23, 36, 0.18);
+}
+
+.quiz-start-button:hover,
+.quiz-nav-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 38px rgba(8, 23, 36, 0.22);
+}
+
+.quiz-card--single {
+  min-height: 420px;
+}
+
+.quiz-progress-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.quiz-progress-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #fff6df;
+  color: #081724;
+  padding: 0.5rem 0.85rem;
+  font-family: 'Rethink Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.quiz-progress-pill--score {
+  background: #081724;
+  color: #ffba2f;
+}
+
+.quiz-progress-track {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(8, 23, 36, 0.1);
+  margin-bottom: 1.25rem;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ffba2f, #f4a900);
+  transition: width 0.3s ease;
+}
+
+.quiz-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.quiz-nav-button--secondary {
+  background: #fff6df;
+  color: #081724;
+  border: 1px solid rgba(8, 23, 36, 0.12);
+}
+
+.quiz-nav-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 .image-preview-overlay {
   position: fixed;
   inset: 0;
@@ -1463,6 +1817,16 @@ const totalCorrect = computed(() => {
     height: auto;
     max-height: none;
   }
+
+  .quiz-progress-row,
+  .quiz-navigation {
+    flex-direction: column;
+  }
+
+  .quiz-nav-button,
+  .quiz-start-button {
+    width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -1482,9 +1846,9 @@ const totalCorrect = computed(() => {
     line-height: 1.05;
   }
 
-  .body-text {
+  /* .body-text {
     text-align: left;
-  }
+  } */
 
   .quiz-header {
     flex-direction: column;
@@ -1532,14 +1896,15 @@ const totalCorrect = computed(() => {
   }
 
   .topic-heading-row {
-    align-items: center;
-    gap: 0.9rem;
+    align-items: flex-start;
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
   }
 
   .topic-icon-shell {
-    width: 68px;
-    height: 68px;
-    border-radius: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
   }
 
   .quiz-heading-row {
@@ -1553,9 +1918,37 @@ const totalCorrect = computed(() => {
   }
 
   .topic-title {
-    font-size: clamp(1.45rem, 5vw, 2.2rem);
+    font-size: clamp(1.35rem, 5vw, 2rem);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
   }
 }
+
+:deep(.highlight-researcher) {
+  color: #111111;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-weight: 900;
+  box-shadow: none;
+}
+
+:deep(.highlight-case) {
+  color: #111111;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-weight: 900;
+}
+
+/* :deep(.highlight-term) {
+  color: #081724;
+  font-weight: 900;
+  text-decoration: underline;
+  text-decoration-thickness: 0.1em;
+  text-decoration-color: rgba(255, 255, 255, 0.8);
+  text-underline-offset: 0.16em;
+} */
 
 @media (min-width: 1440px) {
   .explore-page__inner {
