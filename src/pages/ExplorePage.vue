@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { collection, getDocs } from 'firebase/firestore';
 import MainLayout from '@/layouts/MainLayout.vue';
 import { db } from '@/services/firestore';
