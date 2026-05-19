@@ -151,8 +151,8 @@ const tutorialMediaPaths: Record<string, string> = {
   harmonizeThreeBefore: '4_harmonize_before3.png',
   harmonizeThreeAfter: '4_harmonize_after3.png',
 
-  harmonizeFourBefore: '4_harmonize before4.png',
-  harmonizeFourAfter: '4_harmonize_after4.png',
+  harmonizeFourBefore: '4_harmonize_before5.png',
+  harmonizeFourAfter: '4_harmonize_after5.png',
 };
 
 const tutorialMediaUrls = reactive<Record<string, string>>({});
