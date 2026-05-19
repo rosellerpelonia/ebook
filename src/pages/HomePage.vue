@@ -20,9 +20,6 @@ onMounted(async () => {
 
 const selectedImage = ref<string | null>(null)
 
-function openImage(src: string) {
-  selectedImage.value = src
-}
 
 function closeImage() {
   selectedImage.value = null

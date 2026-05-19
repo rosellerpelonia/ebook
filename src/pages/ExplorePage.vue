@@ -528,10 +528,6 @@ function goToPreviousQuestion(topicId: TopicId) {
   }
 }
 
-function getTopicAnsweredCount(topicId: TopicId) {
-  return getTopicQuestions(topicId).filter((question) => selectedAnswers[question.id]).length;
-}
-
 function getTopicCorrectCount(topicId: TopicId) {
   return getTopicQuestions(topicId).filter(
     (question) => selectedAnswers[question.id] === question.answer
@@ -580,11 +576,7 @@ function closeImagePreview() {
   selectedImagePreview.value = null;
 }
 
-const totalAnswered = computed(() => Object.keys(selectedAnswers).length);
 
-const totalCorrect = computed(() => {
-  return quizQuestions.value.filter((question) => selectedAnswers[question.id] === question.answer).length;
-});
 </script>
 
 <template>
