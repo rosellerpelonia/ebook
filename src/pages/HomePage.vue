@@ -9,7 +9,7 @@ const imageError = ref('')
 
 onMounted(async () => {
   try {
-    homeImageUrl.value = await getStorageImageUrl('Home.jpeg')
+    homeImageUrl.value = await getStorageImageUrl('HOME.jpeg')
   } catch (error) {
     console.error(error)
     imageError.value = 'Failed to load home image from Firebase Storage.'
@@ -40,102 +40,105 @@ function closeImage() {
       <div class="home-page__inner">
         <header class="hero-section fade-up">
           <!-- <p class="hero-kicker">Interactive Thesis Ebook</p> -->
-          <h1 class="hero-title">Co-Creation<br />Human X AI</h1>
+          <h1 class="hero-title">Co-Creation<br />Human x AI</h1>
           <p class="hero-subtitle">
-  Exploring how <strong>artists</strong> and <strong>artificial intelligence</strong> collaborate while keeping
-  <strong>human imagination</strong>, <strong>authorship</strong>, and <strong>creative direction</strong> at the center.
-</p>
-</header>
+            Exploring how <strong>artists</strong> and <strong>Artificial Intelligence</strong> collaborate while
+            keeping
+            <strong>human imagination</strong>, <strong>authorship</strong>, and <strong>creative direction</strong> at
+            the center.
+          </p>
+        </header>
 
-<div class="hero-image-container fade-up fade-delay-1 cursor-zoom-in"
-  @click="homeImageUrl && !isLoadingImage && openImage(homeImageUrl)">
-  <img v-if="homeImageUrl && !isLoadingImage" :src="homeImageUrl" alt="AI and human co-creation showcase"
-    class="hero-image" />
+        <div class="hero-image-container fade-up fade-delay-1 cursor-zoom-in">
+          <img v-if="homeImageUrl && !isLoadingImage" :src="homeImageUrl" alt="AI and human co-creation showcase"
+            class="hero-image" />
 
-  <div v-else-if="isLoadingImage" class="image-placeholder">
-    Loading image...
-  </div>
+          <div v-else-if="isLoadingImage" class="image-placeholder">
+            Loading image...
+          </div>
 
-  <div v-else class="image-placeholder">
-    {{ imageError || 'No image available.' }}
-  </div>
+          <div v-else class="image-placeholder">
+            {{ imageError || 'No image available.' }}
+          </div>
 
-  <div class="hero-image-overlay"></div>
-</div>
+          <div class="hero-image-overlay"></div>
+        </div>
 
-<main class="content-section">
-  <h2 class="main-title fade-up fade-delay-2">Artists in the Age of AI</h2>
+        <main class="content-section">
+          <h2 class="main-title fade-up fade-delay-2">Artists in the Age of AI</h2>
 
-  <div class="text-box text-box--left fade-up fade-delay-2">
-    <p class="body-text">
-      <strong>Artificial Intelligence</strong> is becoming an important part of modern creative work.
-      Today, many <strong>artists, designers, writers, and photographers</strong> use AI tools to
-      support their ideas, <strong>speed up their workflow</strong>, and explore new creative
-      possibilities. Rather than replacing human creativity, AI works best as a
-      <strong>collaborative partner</strong> that helps creators experiment and refine their work.
+          <div class="text-box text-box--left fade-up fade-delay-2">
+            <p class="body-text">
+              <strong>Artificial Intelligence</strong> is becoming an important part of modern creative work.
+              Today, many <strong>artists, designers, writers, and photographers</strong> use AI tools to
+              support their ideas, <strong>speed up their workflow</strong>, and explore new creative
+              possibilities. Rather than replacing human creativity, AI works best as a
+              <strong>collaborative partner</strong> that helps creators experiment and refine their work.
 
-      <br><br>
+              <br><br>
 
-      However, creativity is not only about producing content—it is also about how ideas
-      are <strong>communicated to an audience</strong>. This is where <strong>Brand Communication</strong> becomes
-      important. It allows artists to express their <strong>identity, message, and creative intent</strong>
-      through their work. Even when AI is involved, it ensures that the
-      <strong>human voice remains clear, meaningful, and recognizable</strong>.
-    </p>
-  </div>
+              However, creativity is not only about producing content—it is also about how ideas
+              are <strong>communicated to an audience</strong>. This is where <strong>Brand Communication</strong>
+              becomes
+              important. It allows artists to express their <strong>identity, message, and creative intent</strong>
+              through their work. Even when AI is involved, it ensures that the
+              <strong>human voice remains clear, meaningful, and recognizable</strong>.
+            </p>
+          </div>
 
-  <div class="text-box text-box--right fade-up fade-delay-3">
-    <p class="body-text">
-      This website explores how <strong>humans and AI can work together</strong> in the creative process,
-      also known as <strong>co-creation</strong>, while highlighting how <strong>communication plays a key role</strong>
-      in preserving human creativity.
-    </p>
-  </div>
+          <div class="text-box text-box--right fade-up fade-delay-3">
+            <p class="body-text">
+              This website explores how <strong>humans and AI can work together</strong> in the creative process,
+              also known as <strong>co-creation</strong>, while highlighting how <strong>communication plays a key
+                role</strong>
+              in preserving human creativity.
+            </p>
+          </div>
 
-  <section class="content-grid fade-up fade-delay-3">
-    <div class="learning-header">
-      <p class="body-text">
-        By understanding how to use AI <strong>responsibly and effectively</strong>, creators can
-        <strong>expand their imagination</strong> while maintaining <strong>authorship and originality</strong>.
-      </p>
-      <p class="learning-title">What You'll Learn</p>
-    </div>
+          <section class="content-grid fade-up fade-delay-3">
+            <div class="learning-header">
+              <p class="body-text">
+                By understanding how to use AI <strong>responsibly and effectively</strong>, creators can
+                <strong>expand their imagination</strong> while maintaining <strong>authorship and originality</strong>.
+              </p>
+              <!-- <p class="learning-title">What You'll Learn</p> -->
+            </div>
+            <p class="learning-title">What You'll Learn</p>
+            <div class="learning-card">
+              <span class="card-number">01</span>
+              <p class="body-text body-text--card">
+                What <strong>co-creation</strong> means and how <strong>artists and AI collaborate creatively</strong>
+              </p>
+            </div>
 
-    <div class="learning-card">
-      <span class="card-number">01</span>
-      <p class="body-text body-text--card">
-        What <strong>co-creation</strong> means and how <strong>artists and AI collaborate creatively</strong>
-      </p>
-    </div>
+            <div class="learning-card">
+              <span class="card-number">02</span>
+              <p class="body-text body-text--card">
+                How AI is used in creative software, such as tools in <strong>Adobe Photoshop</strong>
+              </p>
+            </div>
 
-    <div class="learning-card">
-      <span class="card-number">02</span>
-      <p class="body-text body-text--card">
-        How AI is used in creative software, such as tools in <strong>Adobe Photoshop</strong>
-      </p>
-    </div>
+            <div class="learning-card">
+              <span class="card-number">03</span>
+              <p class="body-text body-text--card">
+                Using AI as a <strong>reference or assistant</strong> under human guidance rather than the
+                final output
+              </p>
+            </div>
 
-    <div class="learning-card">
-      <span class="card-number">03</span>
-      <p class="body-text body-text--card">
-        Using AI as a <strong>reference or assistant</strong> under human guidance rather than the
-        final output
-      </p>
-    </div>
+            <div class="learning-card">
+              <span class="card-number">04</span>
+              <p class="body-text body-text--card">
+                The <strong>ethical responsibilities</strong> of artists using AI within creative fields
+              </p>
+            </div>
+          </section>
 
-    <div class="learning-card">
-      <span class="card-number">04</span>
-      <p class="body-text body-text--card">
-        The <strong>ethical responsibilities</strong> of artists using AI within creative fields
-      </p>
-    </div>
-  </section>
-
-  <div class="closing-text fade-up fade-delay-4">
-    <p class="body-text closing-copy">
-      This site aims to explain how AI can <strong>enhance creativity</strong> while keeping the
-      <strong>human creator in control</strong> of the artistic vision.
-    </p>
+          <div class="closing-text fade-up fade-delay-4">
+            <p class="body-text closing-copy">
+              This site aims to explain how AI can <strong>enhance creativity</strong> while keeping the
+              <strong>human creator in control</strong> of the artistic vision.
+            </p>
           </div>
         </main>
       </div>
@@ -335,7 +338,7 @@ function closeImage() {
 .content-grid {
   display: grid;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1200px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1.4rem;
 }
@@ -371,13 +374,16 @@ function closeImage() {
 }
 
 .learning-title {
-  margin: 0;
-  color: #111111;
-  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  grid-column: 1 / -1;
+  margin: 0.2rem 0 -0.6rem;
+  color: #f2f2f2;
+  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
   font-family: 'Rethink Sans', sans-serif;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  text-align: center;
+  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
 }
 
 .learning-card {
@@ -417,7 +423,8 @@ function closeImage() {
 }
 
 .closing-text {
-  max-width: 760px;
+  width: 100%;
+  max-width: 1200px;
   text-align: center;
   margin-top: 0.5rem;
 }
@@ -426,6 +433,42 @@ function closeImage() {
   color: #f2f2f2;
   text-align: center;
   opacity: 0.94;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .home-page__inner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .hero-image-container,
+  .hero-image,
+  .image-placeholder {
+    min-height: 250px;
+  }
+
+  .hero-caption {
+    position: static;
+    margin: 1rem;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .learning-card {
+    min-height: auto;
+  }
+
+  .hero-subtitle {
+    line-height: 1.6;
+  }
+
+  .closing-copy {
+    white-space: normal;
+    text-align: center;
+  }
 }
 
 .fade-up {
